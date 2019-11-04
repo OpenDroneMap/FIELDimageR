@@ -48,7 +48,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img width="300" height="600" src="./inst/readme/F1.jpeg">
+  <img width="260" height="600" src="./inst/readme/F1.jpeg">
 </p>
 
 <br />
@@ -217,7 +217,7 @@ EX1.Info$fieldShape@data
 <br />
 
 <p align="center">
-  <img width="600" height="400" src="./inst/readme/F8.jpeg">
+  <img width="500" height="350" src="./inst/readme/F8.jpeg">
 </p>
 
 <br />
@@ -256,7 +256,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="600" height="470" src="./inst/readme/F13.jpeg">
+  <img width="600" height="450" src="./inst/readme/F13.jpeg">
 </p>
 
 <br />
@@ -388,7 +388,7 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F15.jpeg">
+  <img width="700" height="550" src="./inst/readme/F15.jpeg">
 </p>
 
 <br />
@@ -400,13 +400,13 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F17.jpeg">
+  <img width="700" height="550" src="./inst/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F18.jpeg">
+  <img width="700" height="550" src="./inst/readme/F18.jpeg">
 </p>
 
 <br />
@@ -465,7 +465,7 @@ fieldPlot(fieldShape=New.Shape,fieldAttribute="myIndex", mosaic=EX1.Indices, col
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F12.jpeg">
+  <img width="700" height="550" src="./inst/readme/F12.jpeg">
 </p>
 
 <br />
