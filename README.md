@@ -48,7 +48,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="./inst/readme/F1.jpeg">
+  <img width="300" height="600" src="./inst/readme/F1.jpeg">
 </p>
 
 <br />
@@ -93,7 +93,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
 <br />
 
 <p align="center">
-  <img width="600" height="400" src="./inst/readme/F3.jpeg">
+  <img width="600" height="500" src="./inst/readme/F3.jpeg">
 </p>
 
 <br />
@@ -109,7 +109,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 <br />
 
 <p align="center">
-  <img width="400" height="400" src="./inst/readme/F5.jpeg">
+  <img width="400" height="500" src="./inst/readme/F5.jpeg">
 </p>
 
 <br />
@@ -126,7 +126,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F10.jpeg">
+  <img width="600" height="500" src="./inst/readme/F10.jpeg">
 </p>
 
 <br />
@@ -141,7 +141,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="400" height="400" src="./inst/readme/F11.jpeg">
+  <img width="600" height="400" src="./inst/readme/f11.jpeg">
 </p>
 
 <br />
@@ -156,7 +156,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F6.jpeg">
+  <img width="700" height="500" src="./inst/readme/F6.jpeg">
 </p>
 <br />
 
@@ -187,7 +187,7 @@ EX1.SC$standCount
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F9.jpeg">
+  <img width="900" height="500" src="./inst/readme/F9.jpeg">
 </p>
 
 <br />
@@ -217,7 +217,7 @@ EX1.Info$fieldShape@data
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F8.jpeg">
+  <img width="600" height="400" src="./inst/readme/F8.jpeg">
 </p>
 
 <br />
@@ -256,7 +256,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="600" height="500" src="./inst/readme/F13.jpeg">
+  <img width="600" height="470" src="./inst/readme/F13.jpeg">
 </p>
 
 <br />
