@@ -1,0 +1,11 @@
+citHeader("To cite the FIELDimageR package in publications, please use")
+
+citEntry(entry="Article",
+	title="Software for field image analysis ...",
+	author=personList(as.person("F. I. Matias"),as.person("J. B. Endelman")),
+	year=2020,
+	journal="Plant Genome",
+    volume="9",
+    pages="doi:10.3835/plantgenome2020",	
+    textVersion="Matias FI, Endelman JB (2020) Software for field image analysis ... Plant Genome X, doi:10.3835/plantgenome2020"
+)
