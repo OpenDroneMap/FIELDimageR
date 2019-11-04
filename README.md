@@ -1,9 +1,4 @@
----
-output:
-  html_document: default
-  word_document: default
-  pdf_document: default
----
+
 ## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): an [R](https://www.r-project.org) package to analyze images from field trials in agricultural science.
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields and allows to crop the image; remove soil effect; build vegetation indices; rotate the image; build the plot shapefile; extract information for each plot; and evaluate stand count, canopy percentage, and plant height.
@@ -53,7 +48,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img width="200" height="200" src="./inst/readme/F1.jpeg">
+  <img width="400" height="500" src="./inst/readme/F1.jpeg">
 </p>
 
 <br />
@@ -65,7 +60,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
 <br />
 
 <p align="center">
-  <img width="400" height="400" src="./inst/readme/F2.jpeg">
+  <img width="400" height="500" src="./inst/readme/F2.jpeg">
 </p>
 
 <br />
@@ -82,7 +77,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 <br />
 
 <p align="center">
-  <img width="400" height="400" src="./inst/readme/F4.jpeg">
+  <img width="400" height="500" src="./inst/readme/F4.jpeg">
 </p>
 
 <br />
@@ -98,7 +93,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F3.jpeg">
+  <img width="600" height="400" src="./inst/readme/F3.jpeg">
 </p>
 
 <br />
@@ -146,7 +141,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F11.jpeg">
+  <img width="400" height="400" src="./inst/readme/F11.jpeg">
 </p>
 
 <br />
@@ -161,7 +156,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="900" height="900" src="./inst/readme/F6.jpeg">
+  <img width="700" height="600" src="./inst/readme/F6.jpeg">
 </p>
 <br />
 
@@ -192,7 +187,7 @@ EX1.SC$standCount
 <br />
 
 <p align="center">
-  <img width="800" height="800" src="./inst/readme/F9.jpeg">
+  <img width="600" height="600" src="./inst/readme/F9.jpeg">
 </p>
 
 <br />
@@ -222,7 +217,7 @@ EX1.Info$fieldShape@data
 <br />
 
 <p align="center">
-  <img width="800" height="800" src="./inst/readme/F8.jpeg">
+  <img width="600" height="600" src="./inst/readme/F8.jpeg">
 </p>
 
 <br />
@@ -261,7 +256,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="600" height="600" src="./inst/readme/F13.jpeg">
+  <img width="600" height="500" src="./inst/readme/F13.jpeg">
 </p>
 
 <br />
@@ -393,25 +388,25 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F15.jpeg">
+  <img width="700" height="600" src="./inst/readme/F15.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F16.jpeg">
+  <img width="700" height="600" src="./inst/readme/F16.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F17.jpeg">
+  <img width="700" height="600" src="./inst/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F18.jpeg">
+  <img width="700" height="600" src="./inst/readme/F18.jpeg">
 </p>
 
 <br />
@@ -470,7 +465,7 @@ fieldPlot(fieldShape=New.Shape,fieldAttribute="myIndex", mosaic=EX1.Indices, col
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F12.jpeg">
+  <img width="700" height="600" src="./inst/readme/F12.jpeg">
 </p>
 
 <br />
