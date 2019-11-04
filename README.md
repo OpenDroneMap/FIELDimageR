@@ -478,7 +478,7 @@ fieldPlot(fieldShape=New.Shape,fieldAttribute="myIndex", mosaic=EX1.Indices, col
 
 ### Author
 
-> * Filipe Inacio Matias
+> * [Filipe Inacio Matias](https://github.com/filipematias23)
 
 <br />
 
