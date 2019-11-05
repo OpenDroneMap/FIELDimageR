@@ -223,7 +223,7 @@ EX1.Info$fieldShape@data
 <br />
 
 <p align="center">
-  <img width="500" height="350" src="./inst/readme/F8.jpeg">
+  <img width="300" height="250" src="./inst/readme/F8.jpeg">
 </p>
 
 <br />
