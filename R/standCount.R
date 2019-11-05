@@ -32,13 +32,20 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, pch=16, cex=0.7
     x<-NULL
     for (i in 2:length(x1)) {x<-c(x,round(100*(x1[i]/sum(x1)),3))}
     x<-x[y$seqName]
-    PS<-data.frame(plantCanopy=x[x>=minSize],
-                   x=y$Position[x>=minSize,1],
-                   y=y$Position[x>=minSize,2])
+    
+    if(dim(as.matrix(y$Position))[2]==1){
+    PS <- data.frame(plantCanopy = x[x >= minSize], x = y$Position[1][x >= minSize], y = y$Position[2][x >= minSize])
+    PR <- data.frame(plantCanopy = x[x < minSize], x = y$Position[1][x < minSize], y = y$Position[2][x < minSize])
+  }
+  if(dim(as.matrix(y$Position))[2]!=1){
+  PS <- data.frame(plantCanopy = x[x >= minSize], 
+                   x = y$Position[x >= minSize, 1], 
+                   y = y$Position[x >= minSize, 2])
+  PR <- data.frame(plantCanopy = x[x < minSize], 
+                   x = y$Position[x < minSize, 1], 
+                   y = y$Position[x < minSize, 2])
+  }
     rownames(PS)<-NULL
-    PR<-data.frame(plantCanopy=x[x<minSize],
-                   x=y$Position[x<minSize,1],
-                   y=y$Position[x<minSize,2])
     rownames(PR)<-NULL
     plantSel[[j]]<-PS
     plantReject[[j]]<-PR
