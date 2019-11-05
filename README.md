@@ -247,7 +247,7 @@ CHM.R<-fieldRotate(CHM, theta = 2.3)
 CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
 
 # Extracting the estimate plant height average (EPH):
-EPH <- getInfo(CHM.S, fieldShape = EX1.Shape$fieldShape, fun = "mean")
+EPH <- getInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
 EPH$plotValue
 
 ```
