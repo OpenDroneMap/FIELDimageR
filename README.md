@@ -27,9 +27,15 @@ install_github("filipematias23/FIELDimageR")
 #### 1. Packages
 
 > * **[FIELDimageR](https://github.com/filipematias23/FIELDimageR)** 
+> * **[sp](https://CRAN.R-project.org/package=sp)** 
 > * **[raster](https://CRAN.R-project.org/package=raster)** 
+> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
 
 ```r
+install.packages("sp")
+install.packages("raster")
+install.packages("rgdal")
+
 library(FIELDimageR)
 library(raster)
 
