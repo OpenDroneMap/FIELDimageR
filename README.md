@@ -237,9 +237,6 @@ DSM0.C <- fieldCrop(mosaic = DSM0,fieldShape = EX1.Crop)
 DSM1.C <- fieldCrop(mosaic = DSM1,fieldShape = EX1.Crop)
 
 # Canopy Height Model (CHM):
-CHM <- DSM1.C-DSM0.C
-
-# If the function above did not work resample the soil base in function of vegetative growth image before calculate the CHM:
 DSM0.R <- resample(DSM0.C, DSM1.C)
 CHM <- DSM1.C-DSM0.R
 
