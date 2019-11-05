@@ -38,7 +38,7 @@ library(raster)
 
 #### 2. Selecting the targeted field from the original image
 
-> The reduction of image/mosaic size around the field boundaries is necessary for faster image analysis. Function: **`fieldCrop`**. [Download EX1_RGB.tif](https://drive.google.com/open?id=1V06hLwdeKlW7xwLoyh0ez6giQD9k9moe). 
+> The reduction of image/mosaic size around the field boundaries is necessary for faster image analysis. Function: **`fieldCrop`**. [Download EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
 
 ```r
 EX1<-stack("EX1_RGB.tif")
@@ -114,7 +114,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 <br />
 
-> The plots are identified from left to rigth and top to bottom. The **`fieldMap`** can be used to include the plot *ID*. The column **PlotName** in the output will be the new ID. [Download DataTable.csv](https://drive.google.com/open?id=1vYTvVhvL82gm8orWnrSdZ167_b7VikRB).
+> The plots are identified from left to rigth and top to bottom. The **`fieldMap`** can be used to include the plot *ID*. The column **PlotName** in the output will be the new ID. [Download DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
 
 ```r
 ### Field map ID identification. 'fieldPlot' argument is the plot ID (number or name).
@@ -224,7 +224,7 @@ EX1.Info$fieldShape@data
 
 #### 10. Estimating plant height
 
-> The plant height can be estimated using the *mask* from step 4 to remove the soil and the *fieldshape* from step 5. The estimate plant height is the difference between the Digital Surface Model (DSM) from soil base (before sprouting, [Download EX_DSM0.tif](https://drive.google.com/open?id=1R0t6P7kr55kjIB_Zwut3l4-7BybfFi_H)) and the DSM file with plants (growth cycle, [Download EX_DSM1.tif](https://drive.google.com/open?id=1qApVa5Ra7miTQJPoEeO4vuOwhoMAEC94)). The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
+> The plant height can be estimated using the *mask* from step 4 to remove the soil and the *fieldshape* from step 5. The estimate plant height is the difference between the Digital Surface Model (DSM) from soil base (before sprouting, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file with plants (growth cycle, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
 
 ```r
 # Uploading files from soil base (EX_DSM0.tif) and vegetative growth (EX_DSM1.tif):
@@ -263,7 +263,7 @@ EPH$plotValue
 
 #### 11. Resolution and time
 
-> The influence of image resolution was evaluated in different steps of FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1J0SQn3dss3aBM_4KgszS439mGLIfYUed) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). Two factors were used to reduce the original image with 0.4x0.4 cm (15m AGS), the factor 2 to simulate pixel resolution of 0.8x0.8 cm (30m AGS), and the factor 4 to simulate pixel resolution of 1.6x1.6 (60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function system.time output elapsed (R base).
+> The influence of image resolution was evaluated in different steps of FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). Two factors were used to reduce the original image with 0.4x0.4 cm (15m AGS), the factor 2 to simulate pixel resolution of 0.8x0.8 cm (30m AGS), and the factor 4 to simulate pixel resolution of 1.6x1.6 (60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function system.time output elapsed (R base).
 
 ```r
 ### Images (resolution evaluating)
@@ -349,7 +349,7 @@ cor(DataRed)
 
 #### 12. Crop growth cycle
 
-> The same rotation theta, mask, and plot shape file can be used to evaluate mosaics from other stages in the crop growth cycle (e.g. [**Flowering**](https://drive.google.com/open?id=18R-X1SfrpsuCg-kZRrIO2PDWwZe5LkH7) and [**Senescence**](https://drive.google.com/open?id=1JByDD1gBj9Ssr90-e3XRbu-fP-Bsm2Ff))
+> The same rotation theta, mask, and plot shape file can be used to evaluate mosaics from other stages in the crop growth cycle (e.g. [**Flowering**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
 
 ```r
 # Uploading files from Flowering (EX2_RGB.tif) and Senescence (EX3_RGB.tif):
@@ -413,7 +413,7 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 
 #### 13. Multispectral images
 
-> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. [**EX1_5Band.tif**](https://drive.google.com/open?id=1ptfiJnFL6OiRygpyUBJ1hYIX1aZD2MYD) 
+> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
 
 ---
 
