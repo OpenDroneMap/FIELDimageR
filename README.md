@@ -1,5 +1,5 @@
 
-## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): an [R](https://www.r-project.org) package to analyze images from field trials in agricultural science.
+## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A [R](https://www.r-project.org) Package to Analyze Orthomosaic Images from Agricultural Field Trials.
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields and allows to crop the image; remove soil effect; build vegetation indices; rotate the image; build the plot shapefile; extract information for each plot; and evaluate stand count, canopy percentage, and plant height.
 
