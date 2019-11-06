@@ -484,7 +484,6 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 > * [University of Wisconsin](https://horticulture.wisc.edu)
 > * [UW Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu)
-> * [Sentera](https://sentera.com) 
 
 <br />
 <br />
