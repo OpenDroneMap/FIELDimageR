@@ -1,11 +1,10 @@
 citHeader("To cite the FIELDimageR package in publications, please use")
 
-citEntry(entry="Article",
-	title="Software for field image analysis ...",
-	author=personList(as.person("F. I. Matias"),as.person("J. B. Endelman")),
-	year=2020,
-	journal="Plant Genome",
-    volume="9",
-    pages="doi:10.3835/plantgenome2020",	
-    textVersion="Matias FI, Endelman JB (2020) Software for field image analysis ... Plant Genome X, doi:10.3835/plantgenome2020"
+citEntry(entry="Manual",
+	title="FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials",
+	author=personList(as.person("F. I. Matias")),
+	year = {2019},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/filipematias23/FIELDimageR}}
 )
