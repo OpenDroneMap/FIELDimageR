@@ -5,7 +5,7 @@
 
 ### Installation
 
-> Install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR). Within R, You first need to install the [R/qtl](http://rqtl.org), [htmlwidgets](http://www.htmlwidgets.org), and [devtools](https://github.com/hadley/devtools) packages.
+> Install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR). Within R, You first need to install the [devtools](https://github.com/hadley/devtools) packages.
 
 ```r
 install.packages("devtools")
