@@ -54,7 +54,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img width="260" height="600" src="./inst/readme/F1.jpeg">
+  <img width="260" height="600" src="https://github.com/filipematias23/images/blob/master/readme/F1.jpeg">
 </p>
 
 <br />
@@ -66,7 +66,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="./inst/readme/F2.jpeg">
+  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F2.jpeg">
 </p>
 
 <br />
@@ -83,7 +83,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="./inst/readme/F4.jpeg">
+  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F4.jpeg">
 </p>
 
 <br />
@@ -99,7 +99,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
 <br />
 
 <p align="center">
-  <img width="600" height="500" src="./inst/readme/F3.jpeg">
+  <img width="600" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F3.jpeg">
 </p>
 
 <br />
@@ -115,7 +115,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="./inst/readme/F5.jpeg">
+  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F5.jpeg">
 </p>
 
 <br />
@@ -132,7 +132,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="500" src="./inst/readme/F10.jpeg">
+  <img width="600" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F10.jpeg">
 </p>
 
 <br />
@@ -147,7 +147,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="400" src="./inst/readme/f11.jpeg">
+  <img width="600" height="400" src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
 </p>
 
 <br />
@@ -162,7 +162,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="700" height="500" src="./inst/readme/F6.jpeg">
+  <img width="700" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F6.jpeg">
 </p>
 <br />
 
@@ -176,7 +176,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 <br />
 
 <p align="center">
-  <img width="800" height="800" src="./inst/readme/F7.jpeg">
+  <img width="800" height="800" src="https://github.com/filipematias23/images/blob/master/readme/F7.jpeg">
 </p>
 
 <br />
@@ -193,7 +193,7 @@ EX1.SC$standCount
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="./inst/readme/F9.jpeg">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F9.jpeg">
 </p>
 
 <br />
@@ -254,7 +254,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="600" height="450" src="./inst/readme/F13.jpeg">
+  <img width="600" height="450" src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
 </p>
 
 <br />
@@ -340,7 +340,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="./inst/readme/F14.jpeg">
+  <img width="700" height="700" src="https://github.com/filipematias23/images/blob/master/readme/F14.jpeg">
 </p>
 
 <br />
@@ -386,25 +386,25 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="./inst/readme/F15.jpeg">
+  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="./inst/readme/F16.jpeg">
+  <img width="700" height="600" src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="./inst/readme/F17.jpeg">
+  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="./inst/readme/F18.jpeg">
+  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
 </p>
 
 <br />
@@ -463,7 +463,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="./inst/readme/F12.jpeg">
+  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
 </p>
 
 <br />
