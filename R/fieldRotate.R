@@ -27,7 +27,8 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
     if((c1$y[2]>=c1$y[1])&(c1$x[1]>=c1$x[2])){theta = (atan2((c1$y[2] - c1$y[1]), (c1$x[1] - c1$x[2])))*(180/pi)}
     if(!h){theta=90-theta}
     if(clockwise){theta=-theta}
-  print(paste("Theta rotation: ",round(theta,3),sep = ""))
+    theta=round(theta,3)
+  print(paste("Theta rotation: ",theta,sep = ""))
   }
   r<-rotate(mosaic,angle = theta)
   r <- stack(r)
