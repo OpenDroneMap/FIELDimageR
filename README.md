@@ -198,6 +198,58 @@ EX1.SC$standCount
 
 <br />
 
+> Example how eliminate weeds (small plants) or outlying branches from stand count using the parameter *min Size*. [Download EX_StandCount.tif](https://drive.google.com/open?id=1PzWcIsYQMxgEozR5HHUhT0RKcstMOfSk)
+
+```r
+EX.SC<-stack("EX_StandCount.tif")
+plotRGB(EX.SC, r = 1, g = 2, b = 3)
+EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Blue = 1, Green = 2, Red = 3, index = "HUE")
+EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
+```
+<br />
+
+<p align="center">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F20.jpeg">
+</p>
+
+<br />
+
+```r
+### All plant and shape sizes: minSize = 0.00
+
+EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
+                   fieldShape = EX.SC.Shape$fieldShape,
+                   minSize = 0.00)
+                   
+EX1.SC$plantSel[[4]] # Point 6 and 9 are weeds (small plants) or outlying branches
+EX1.SC$plantReject[[4]] # No shape rejected
+```
+<br />
+
+<p align="center">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F21.jpeg">
+</p>
+
+<br />
+
+```r
+### Only plant and shape sizes bigger than 0.04% of plot: minSize = 0.04
+
+EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
+                   fieldShape = EX.SC.Shape$fieldShape,
+                   minSize = 0.04)
+
+EX1.SC$plantSel[[4]]
+EX1.SC$plantReject[[4]] # 2 points rejected (6 and 9)
+```
+<br />
+
+<p align="center">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
+</p>
+
+<br />
+
 #### 8. Evaluating the canopy percentage
 
 > *FIELDimageR* can be used to evaluate canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function: **`canopy`**. 
