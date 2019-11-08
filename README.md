@@ -184,7 +184,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 > To choose another index to remove soil or weeds, first is necessary identify which values should be cropped out. At the example below using index BGI, all values above 1 were removed.
 
 ```r
-plot(EX1.Indices.indice$BGI)
+plot(EX1.Indices$BGI)
 
 EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, 
                    index = "BGI", cropValue = 1, cropAbove = T)
