@@ -181,6 +181,23 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 
 <br />
 
+> To choose another index to remove soil or weeds, first is necessary identify which values should be cropped out. At the example below using index BGI, all values above 1 were removed.
+
+```r
+plot(EX1.Indices.indice$BGI)
+
+EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, 
+                   index = "BGI", cropValue = 1, cropAbove = T)
+                          
+```
+<br />
+
+<p align="center">
+  <img width="800" height="450" src="https://github.com/filipematias23/images/blob/master/readme/F23.jpeg">
+</p>
+
+<br />
+
 #### 7. Counting the number of plants
 
 > *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function: **`standCount`**. 
@@ -306,7 +323,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="600" height="450" src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
 </p>
 
 <br />
@@ -438,25 +455,25 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
+  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="600" src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
+  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
+  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
+  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
 </p>
 
 <br />
@@ -515,7 +532,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 <br />
 
 <p align="center">
-  <img width="700" height="550" src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
+  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
 </p>
 
 <br />
@@ -536,6 +553,8 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 > * [University of Wisconsin](https://horticulture.wisc.edu)
 > * [UW Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu)
+> * [Professor Jeffrey Endelman, PhD Student Maria Caraza-Harter, and MS Student 
+Lin Song](https://potatobreeding.cals.wisc.edu/people/)
 
 <br />
 <br />
