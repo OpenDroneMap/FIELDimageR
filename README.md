@@ -1,11 +1,11 @@
 
-## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A [R](https://www.r-project.org) Package to Analyze Orthomosaic Images from Agricultural Field Trials.
+## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A tool to analyze orthomosaic images from agricultural field trials in [R](https://www.r-project.org).
 
-> This package is a compilation of functions to analyze orthomosaic images from research fields and allows to crop the image; remove soil effect; build vegetation indices; rotate the image; build the plot shapefile; extract information for each plot; and evaluate stand count, canopy percentage, and plant height.
+> This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
 ### Installation
 
-> Install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR). Within R, You first need to install the [devtools](https://github.com/hadley/devtools) packages.
+> In order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), first you need to install the [devtools](https://github.com/hadley/devtools) package in R.
 
 ```r
 install.packages("devtools")
@@ -13,7 +13,7 @@ install.packages("devtools")
 ```
 <br />
 
-> Then install R/FIELDimageR using the `install_github` function in the [devtools](https://github.com/hadley/devtools) package.
+> Now install R/FIELDimageR using the `install_github` function from [devtools](https://github.com/hadley/devtools) package.
 
 ```r
 library(devtools)
@@ -22,9 +22,9 @@ install_github("filipematias23/FIELDimageR")
 ```
 <br />
 
-### Example use
+### Using R/FIELDimageR
 
-#### 1. Packages
+#### 1. Required packages
 
 > * **[FIELDimageR](https://github.com/filipematias23/FIELDimageR)** 
 > * **[sp](https://CRAN.R-project.org/package=sp)** 
@@ -44,7 +44,7 @@ library(raster)
 
 #### 2. Selecting the targeted field from the original image
 
-> The reduction of image/mosaic size around the field boundaries is necessary for faster image analysis. Function: **`fieldCrop`**. [Download EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
+> It is necessary to first reduce the image/mosaic size around the field boundaries for faster image analysis. Function to use: **`fieldCrop`**. The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
 
 ```r
 EX1<-stack("EX1_RGB.tif")
@@ -73,7 +73,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
 
 #### 3. Rotating the image
 
-> To build the plot shape file, the image must have the trial base line at the correct position to draw the experiment field design (horizontal). Therefore, for a right straight trial, it is necessary to find the right-angle *theta* to rotate the field. Function: **`fieldRotate`** 
+> To build the plot shape file first we need to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). If not, it is necessary to find the right-angle *theta* to rotate the field, **`fieldRotate`** allows you to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
 
 ```r
 EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F)
@@ -90,7 +90,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 
 #### 4. Removing soil using vegetation indices 
 
-> The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function: **`fieldMask`** 
+> The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
 EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, index = "HUE")
@@ -106,7 +106,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
 
 #### 5. Building the plot shape file
 
-> The plot shape file can be drawn after rotation by selecting four points at the corners of experiment. The number of ranges and rows must be informed. And the borders can also be eliminated in this step. Function: **`fieldShape`** 
+> Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use: **`fieldShape`** 
 
 ```r
 EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
@@ -120,10 +120,10 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 <br />
 
-> The plots are identified from left to rigth and top to bottom. The **`fieldMap`** can be used to include the plot *ID*. The column **PlotName** in the output will be the new ID. [Download DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
+> **Attention:** The plots are identified from left to rigth and top to bottom. To identify the plots the function **`fieldMap`** can be used to include an specific plot *ID* from an external table file. The column **PlotName** in the output will be the new ID. You can dowload an example of an ID table here: [DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
 
 ```r
-### Field map ID identification. 'fieldPlot' argument is the plot ID (number or name).
+### Field map ID identification. 'fieldPlot' argument comes from the plot ID (number or name).
 
 DataTable<-read.csv("DataTable.csv",header = T)  
 fieldMap<-fieldMap(fieldPlot=DataTable$Plot, fieldRange=DataTable$Range, fieldRow=DataTable$Row, decreasing=T)
@@ -141,7 +141,8 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 ```r
 ### Joing all information in one "fieldShape" file:
 
-EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, fieldData = DataTable, ID = "Plot")
+EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
+                      fieldData = DataTable, ID = "Plot")
 
 ```
 <br />
@@ -157,7 +158,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 
 #### 6. Building vegetation indices 
 
-> A general number of indices are implemented in *FIELDimageR*. Function: **`indices`** 
+> A general number of indices are implemented in *FIELDimageR* using the function **`indices`**. Also, yo can build your own index using the parameter `myIndex`. 
 
 <br />
 
@@ -181,7 +182,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 
 <br />
 
-> To choose another index to remove soil or weeds, first is necessary identify which values should be cropped out. At the example below using index BGI, all values above 1 were removed.
+> *Sugestion:* This function could also be used to build an index to remove soil or weeds. First it is necessary to identify the threshold to differentiate soil from the plant material. At the example below (B), all values above 1 were considered as soil and further removed using **`fieldMask`** (C & D).
 
 ```r
 plot(EX1.Indices$BGI)
@@ -200,7 +201,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3,
 
 #### 7. Counting the number of plants
 
-> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function: **`standCount`**. 
+> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`standCount`**. 
 
 ```r
 EX1.SC<-standCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, cex=0.4, col="blue")
@@ -215,7 +216,7 @@ EX1.SC$standCount
 
 <br />
 
-> Example how eliminate weeds (small plants) or outlying branches from stand count using the parameter *min Size*. [Download EX_StandCount.tif](https://drive.google.com/open?id=1PzWcIsYQMxgEozR5HHUhT0RKcstMOfSk)
+> To refine stand count, we can further eliminate weeds (small plants) or outlying branches from the output using the parameter *min Size*. The following example uses an image available to download here:[EX_StandCount.tif](https://drive.google.com/open?id=1PzWcIsYQMxgEozR5HHUhT0RKcstMOfSk)
 
 ```r
 EX.SC<-stack("EX_StandCount.tif")
@@ -232,14 +233,14 @@ EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 <br />
 
 ```r
-### All plant and shape sizes: minSize = 0.00
+### When all shapes are counted: minSize = 0.00
 
 EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
                    fieldShape = EX.SC.Shape$fieldShape,
                    minSize = 0.00)
                    
-EX1.SC$plantSel[[4]] # Point 6 and 9 are weeds (small plants) or outlying branches
-EX1.SC$plantReject[[4]] # No shape rejected
+EX1.SC$plantSel[[4]] # Identifies 14 points, but point 6 and 9 are small artifacts
+EX1.SC$plantReject[[4]] # No shape rejected because minSize = 0.00
 ```
 <br />
 
@@ -250,14 +251,14 @@ EX1.SC$plantReject[[4]] # No shape rejected
 <br />
 
 ```r
-### Only plant and shape sizes bigger than 0.04% of plot: minSize = 0.04
+### When all shapes with size greater than 0.04% of plot area are counted: minSize = 0.04
 
 EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
                    fieldShape = EX.SC.Shape$fieldShape,
                    minSize = 0.04)
 
-EX1.SC$plantSel[[4]]
-EX1.SC$plantReject[[4]] # 2 points rejected (6 and 9)
+EX1.SC$plantSel[[4]] # Identifies 12 points
+EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from previous example)
 ```
 <br />
 
