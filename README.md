@@ -270,7 +270,7 @@ EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pre
 
 #### 8. Evaluating the canopy percentage
 
-> *FIELDimageR* can be used to evaluate canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function: **`canopy`**. 
+> *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`canopy`**. 
 
 ```r
 EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape)
@@ -295,7 +295,7 @@ EX1.Info$fieldShape@data
 
 #### 10. Estimating plant height
 
-> The plant height can be estimated using the *mask* from step 4 to remove the soil and the *fieldshape* from step 5. The estimate plant height is the difference between the Digital Surface Model (DSM) from soil base (before sprouting, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file with plants (growth cycle, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
+> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
 
 ```r
 # Uploading files from soil base (EX_DSM0.tif) and vegetative growth (EX_DSM1.tif):
@@ -329,12 +329,12 @@ EPH$plotValue
 
 <br />
 
-#### 11. Resolution and time
+#### 11. Resolution and computing time
 
-> The influence of image resolution was evaluated in different steps of FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). Two factors were used to reduce the original image with 0.4x0.4 cm (15m AGS), the factor 2 to simulate pixel resolution of 0.8x0.8 cm (30m AGS), and the factor 4 to simulate pixel resolution of 1.6x1.6 (60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function system.time output elapsed (R base).
+> The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
 
 ```r
-### Images (resolution evaluating)
+### Image and resolution decrease 
 
 RES_1<-stack("EX1_RGB_HighResolution.tif")
 RES_2<-aggregate(RES_1, fact=2)
@@ -417,10 +417,10 @@ cor(DataRed)
 
 #### 12. Crop growth cycle
 
-> The same rotation theta, mask, and plot shape file can be used to evaluate mosaics from other stages in the crop growth cycle (e.g. [**Flowering**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
+> The same rotation theta from step 3, mask from step 4, and plot shape file from step 5, can be used to evaluate mosaics from other stages in the crop growth cycle. Here you can download specific images from flowering and senecense stages in potatoes.  ([**Flowering: EX2_RGB.tif**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence: EX3_RGB.tif**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
 
 ```r
-# Uploading files from Flowering (EX2_RGB.tif) and Senescence (EX3_RGB.tif):
+# Uploading Flowering (EX2_RGB.tif) and Senescence (EX3_RGB.tif) files:
 EX2 <- stack("EX2_RGB.tif")
 EX3 <- stack("EX3_RGB.tif")
 
@@ -434,7 +434,7 @@ EX3.Crop <- fieldCrop(mosaic = EX3,fieldShape = EX1.Crop, plot = T)
 EX2.Rotated<-fieldRotate(EX2.Crop,theta = 2.3, plot = T)
 EX3.Rotated<-fieldRotate(EX3.Crop,theta = 2.3, plot = T)
 
-# Removing the soil using index and mask:
+# Removing the soil using index and mask from step 4:
 
 EX2.RemSoil<-fieldMask(EX2.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
 EX3.RS<-fieldMask(EX3.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T) # Removing soil at senescence stage
@@ -481,11 +481,11 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 
 #### 13. Multispectral images
 
-> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
+> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
 
 ---
 
-> **Attention:** HYPERSPECTRAL images were not evaluated in *`FIELDimageR`*
+> **Attention:** HYPERSPECTRAL images were not tested in *`FIELDimageR`*
 
 
 ```r
@@ -500,7 +500,7 @@ EX1.5b.Crop <- fieldCrop(mosaic = EX1.5b,fieldShape = EX1.Crop, plot = T)
 
 EX1.5b.Rotated<-fieldRotate(EX1.5b.Crop,theta = 2.3, plot = T)
 
-# Removing the soil using index and mask:
+# Removing the soil using index and mask from step 4:
 
 EX1.5b.RemSoil<-fieldMask(EX1.5b.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
 
@@ -518,7 +518,7 @@ EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldS
 
 #### 14. Making plots
 
-> Graphic visualization of trait values for each plot using the **fieldShape file** and any **Mosaic**. Function: **`fieldPlot`**.
+> Graphic visualization of trait values for each plot using the **fieldShape file** and the **Mosaic** of your preference. Function to use: **`fieldPlot`**.
 
 ```r
 ### Interpolating colors: c("white","black")
@@ -552,9 +552,9 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 ### Acknowledgments
 
-> * [University of Wisconsin](https://horticulture.wisc.edu)
+> * [University of Wisconsin - Madison](https://horticulture.wisc.edu)
 > * [UW Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu)
-> * [Professor Jeffrey Endelman, PhD Student Maria Caraza-Harter, and MS Student 
+> * [Dr Jeffrey Endelman, PhD Student Maria Caraza-Harter, and MS Student 
 Lin Song](https://potatobreeding.cals.wisc.edu/people/)
 
 <br />
