@@ -54,7 +54,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img width="260" height="600" src="https://github.com/filipematias23/images/blob/master/readme/F1.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F1.jpeg">
 </p>
 
 <br />
@@ -66,7 +66,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F2.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F2.jpeg">
 </p>
 
 <br />
@@ -83,7 +83,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F4.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F4.jpeg">
 </p>
 
 <br />
@@ -99,7 +99,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
 <br />
 
 <p align="center">
-  <img width="600" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F3.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F3.jpeg">
 </p>
 
 <br />
@@ -115,12 +115,22 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 <br />
 
 <p align="center">
-  <img width="400" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F5.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F5.jpeg">
 </p>
 
 <br />
 
-> **Attention:** The plots are identified from left to rigth and top to bottom. To identify the plots the function **`fieldMap`** can be used to include an specific plot *ID* from an external table file. The column **PlotName** in the output will be the new ID. You can dowload an example of an ID table here: [DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
+> **Attention:** The plots are identified from left to rigth and top to bottom. 
+
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F24.jpeg">
+</p>
+
+<br />
+
+> To identify the plots the function **`fieldMap`** can be used to include an specific plot *ID* from an external table file. The column **PlotName** in the output will be the new ID. You can dowload an example of an ID table here: [DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
 
 ```r
 ### Field map ID identification. 'fieldPlot' argument comes from the plot ID (number or name).
@@ -132,7 +142,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F10.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F10.jpeg">
 </p>
 
 <br />
@@ -148,7 +158,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="600" height="400" src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
 </p>
 
 <br />
@@ -163,7 +173,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img width="700" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F6.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F6.jpeg">
 </p>
 <br />
 
@@ -177,7 +187,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 <br />
 
 <p align="center">
-  <img width="800" height="800" src="https://github.com/filipematias23/images/blob/master/readme/F7.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F7.jpeg">
 </p>
 
 <br />
@@ -194,7 +204,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3,
 <br />
 
 <p align="center">
-  <img width="800" height="450" src="https://github.com/filipematias23/images/blob/master/readme/F23.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F23.jpeg">
 </p>
 
 <br />
@@ -211,7 +221,7 @@ EX1.SC$standCount
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F9.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F9.jpeg">
 </p>
 
 <br />
@@ -227,7 +237,7 @@ EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F20.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F20.jpeg">
 </p>
 
 <br />
@@ -245,7 +255,7 @@ EX1.SC$plantReject[[4]] # No shape rejected because minSize = 0.00
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F21.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F21.jpeg">
 </p>
 
 <br />
@@ -263,7 +273,7 @@ EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pre
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
 </p>
 
 <br />
@@ -324,7 +334,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
 </p>
 
 <br />
@@ -410,7 +420,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img width="700" height="700" src="https://github.com/filipematias23/images/blob/master/readme/F14.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F14.jpeg">
 </p>
 
 <br />
@@ -456,25 +466,25 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 <br />
 
 <p align="center">
-  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img width="800" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
 </p>
 
 <br />
@@ -533,7 +543,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 <br />
 
 <p align="center">
-  <img width="900" height="500" src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
 </p>
 
 <br />
