@@ -7,7 +7,7 @@
   Graphic visualization of trait values for each plot using the fieldShape file and original image.
 }
 \usage{
-  fieldPlot(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right")
+  fieldPlot(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3)
 }
 \arguments{
   \item{fieldShape}{
@@ -27,6 +27,15 @@
   }
   \item{legend.position}{
     legend position.
+  }
+    \item{na.color}{
+    color of missing values "NA".
+  }
+  \item{classes}{
+    number of classes at the legend.
+  }
+  \item{round}{
+    number of decimal digits at the legend.
   }
 }
 \details{
