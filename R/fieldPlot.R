@@ -5,10 +5,10 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
   if(!fieldAttribute%in%attribute){stop(paste("Attribute ",fieldAttribute," is not valid. Choose one among: ", unique(attribute), sep = ""))}
   val<-as.numeric(fieldShape@data[,which(attribute%in%fieldAttribute)[1]])
   na.pos<-is.na(val)
-  val[na.pos] <- 0
-  rr <- range(val)
+  rr <- range(val,na.rm=T)
   svals <- (val-rr[1])/diff(rr)
   f <- colorRamp(color)
+  svals[na.pos] <- 0
   valcol <- rgb(f(svals)/255, alpha = alpha)
   valcol[na.pos] <- na.color
   if(!is.null(mosaic)){
@@ -21,7 +21,6 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
   }
   if(is.null(mosaic)){
     sp::plot(fieldShape, col= valcol)}
-  val[na.pos] <- NA
   pos <- round(seq(min(val,na.rm = T), max(val,na.rm = T), length.out = classes),round)
   if(any(na.pos)){pos=c(pos,"NA")}
   col<-rgb(f(seq(0, 1, length.out = classes))/255, alpha = alpha)
