@@ -6,6 +6,6 @@ importFrom("raster", "stack", "projection","plotRGB","res","projectRaster","crs"
            "atan2","crop","rasterToPolygons","mask","extract","clump")
 importFrom("graphics", "abline", "axis", "lines", "par", "plot","points","locator","legend")
 importFrom("utils", "read.csv")
-importFrom("grDevices", "rgb")
+importFrom("grDevices", "rgb", "col2rgb")
 importFrom("plyr", "join")
 importFrom("EBImage","watershed","distmap")
