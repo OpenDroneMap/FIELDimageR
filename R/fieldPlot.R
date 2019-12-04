@@ -10,7 +10,7 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
   f <- colorRamp(color)
   svals[na.pos] <- 0
   valcol <- rgb(f(svals)/255, alpha = alpha)
-  valcol[na.pos] <- na.color
+  valcol[na.pos] <- rgb(t(col2rgb(col = na.color, alpha = FALSE))/255,alpha = alpha)
   if(!is.null(mosaic)){
     if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
     mosaic <- stack(mosaic)
@@ -24,7 +24,7 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
   pos <- round(seq(min(val,na.rm = T), max(val,na.rm = T), length.out = classes),round)
   if(any(na.pos)){pos=c(pos,"NA")}
   col<-rgb(f(seq(0, 1, length.out = classes))/255, alpha = alpha)
-  if(any(na.pos)){col=c(col,na.color)}
+  if(any(na.pos)){col=c(col,rgb(t(col2rgb(col = na.color, alpha = FALSE))/255,alpha = alpha))}
   legend(legend.position,
          title= fieldAttribute,
          legend = pos,
