@@ -548,6 +548,25 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 <br />
 
+#### 15. Saving output files
+
+```r
+### Images (single and multi layers)
+writeRaster(EX1.Indices, filename="EX1.Indices.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
+# EX1.Indices.2 <- stack("EX1.Indices.tif") # Reading the saved image.
+
+### FieldShape file
+library(rgdal)
+writeOGR(EX1.Info$fieldShape, ".", "EX1.fieldShape", driver="ESRI Shapefile")
+# EX1.fieldShape.2 <- readOGR("EX1.fieldShape.shp") # Reading the saved shapefile.
+
+### CSV file (table)
+write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names = F)
+# Data.EX1.Info<-read.csv("EX1.Info.csv",header = T,check.names = F) # Reading the saved data table.
+
+```
+<br />
+
 ### Licenses
 
 > The R/FIELDimageR package as a whole is distributed under [GPL-2 (GNU General Public License version 2)](https://www.gnu.org/licenses/gpl-2.0.en.html).
