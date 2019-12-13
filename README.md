@@ -574,7 +574,7 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 <br />
 
 <p align="center">
-<a href="https://youtu.be/ZXyaePAv9r8"><img src="https://i9.ytimg.com/vi/ZXyaePAv9r8/mq2.jpg?sqp=COHFy-8F&rs=AOn4CLCzJFP6gZEG0cqpMP8Y3oRDAm9bIA" width=400 height=300 title="Watch the video"></a>
+<a href="https://youtu.be/ZXyaePAv9r8"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTube.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 <br />
