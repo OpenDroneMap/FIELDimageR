@@ -122,7 +122,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 <br />
 
-> **Attention:** The plots are identified from left to rigth and top to bottom. 
+> **Attention:** The plots are identified in ascending order from left to right and top to bottom being evenly spaced and distributed inside the selected area independent of alleys. 
 
 <br />
 
