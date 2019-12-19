@@ -294,10 +294,14 @@ EX1.Canopy$canopyPorcent
 
 #### 9. Extracting data from field images 
 
-> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`** .
+> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallelizing).
 
 ```r
 EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
+EX1.Info$fieldShape@data
+
+### Parallelizing (n.core = 3)
+EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape, n.core = 3)
 EX1.Info$fieldShape@data
 
 ```
