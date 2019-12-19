@@ -1,11 +1,21 @@
-getInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,...){ # buffer is in the mosaic unit, usually in meters.
+getInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,...){ # buffer is in the mosaic unit, usually in meters.
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," bands available", sep = ""))
   CropPlot <- crop(x = mosaic, y = fieldShape)
-  plotValue <- extract(x = CropPlot, y = fieldShape, fun = eval(parse(text =fun)), buffer=buffer, na.rm = T, df = T, ...)
+  if(is.null(n.core)){
+    plotValue <- extract(x = CropPlot, y = fieldShape, fun = eval(parse(text = fun)),
+                         buffer = buffer, na.rm = T, df = T, ...)}
+  if(!is.null(n.core)){
+  cl <- makeCluster(n.core, output="")
+  registerDoParallel(cl)
+  plotValue <- foreach(i=1:length(fieldShape), .packages= c("raster"), .combine = rbind) %dopar% {
+    single <- fieldShape[i,]
+    CropPlot <- crop(x = mosaic, y = single)
+    extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T, ...)}
+  plotValue$ID<-1:length(fieldShape)}
   fieldShape@data<-cbind.data.frame(fieldShape@data,plotValue)
   Out<-list(fieldShape=fieldShape,plotValue=plotValue,cropPlot=CropPlot)
   if(plot){
