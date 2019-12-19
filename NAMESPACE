@@ -4,6 +4,9 @@ importFrom("sp", "Polygons","Polygon","SpatialPolygonsDataFrame","SpatialPolygon
            "SpatialPointsDataFrame","over", "proj4string")
 importFrom("raster", "stack", "projection","plotRGB","res","projectRaster","crs",
            "atan2","crop","rasterToPolygons","mask","extract","clump")
+importFrom("parallel", "makeCluster")
+importFrom("foreach", "foreach", "%dopar%")
+importFrom("doParallel", "registerDoParallel")
 importFrom("graphics", "abline", "axis", "lines", "par", "plot","points","locator","legend")
 importFrom("utils", "read.csv")
 importFrom("grDevices", "rgb", "col2rgb")
