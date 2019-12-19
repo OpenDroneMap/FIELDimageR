@@ -7,7 +7,7 @@
   Function that use raster::extract() to extract information from the original image using fieldShape file as reference.
 }
 \usage{
-  getInfo(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,...)
+  getInfo(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,...)
 }
 \arguments{
 \item{mosaic}{
@@ -24,6 +24,9 @@
   }
   \item{buffer}{
     negative values should be used to remove boundaries from neighbor plot (normally the unit is meters, please use values as 0.1 = 10 cm).
+  }
+  \item{n.core}{
+    number of cores to use for multicore processing (only Linux and MacOS).).
   }
   \item{...}{
     please see raster::extract() for more options.
