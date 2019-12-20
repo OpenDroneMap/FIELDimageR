@@ -1,4 +1,4 @@
-canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, plot=T){
+canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," band available", sep = ""))
@@ -14,8 +14,24 @@ canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, plot=T){
   if(plot){raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE)}
   if(!is.null(fieldShape)){
     print("Evaluating the canopy percetage per plot...")
-    extM<-extract(mosaic, fieldShape)
-    porCanopy<-unlist(lapply(extM, pc, p=canopyValue))
+    
+    if (is.null(n.core)) {
+      extM <- extract(x = mosaic, y = fieldShape)
+      names(extM) <- 1:length(fieldShape)
+      porCanopy <- unlist(lapply(extM, pc, p = canopyValue))
+    }
+    if (!is.null(n.core)) {
+      cl <- makeCluster(n.core, output = "")
+      registerDoParallel(cl)
+      extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% 
+        {
+          single <- fieldShape[i, ]
+          CropPlot <- crop(x = mosaic, y = single)
+          extract(x = CropPlot, y = single)
+        }
+      names(extM) <- 1:length(fieldShape)
+      porCanopy <- unlist(lapply(extM, function(x){pc(as.numeric(x[[1]]),p = canopyValue)}))
+    }
     fieldShape@data$canopyPorcent=porCanopy
     Out<-list(canopyPorcent=porCanopy, fieldShape=fieldShape)
     if(plot){sp::plot(fieldShape, add = T)}
