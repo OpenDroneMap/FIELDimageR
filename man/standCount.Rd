@@ -7,7 +7,7 @@
   The mask from function fieldMask() is used to identify the number of plants per plot.
 }
 \usage{
-  standCount(mosaic, fieldShape, value=0, minSize=0.01, n.core = NULL, pch=16, cex=0.7, col="red")
+  standCount(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red")
 }
 \arguments{
   \item{mosaic}{
