@@ -213,12 +213,15 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3,
 
 #### 7. Counting the number of plants
 
-> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`standCount`**. 
+> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`standCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
 
 ```r
 EX1.SC<-standCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, cex=0.4, col="blue")
 EX1.SC$standCount
 
+### Parallel (n.core = 3)
+EX1.SC<-standCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3, cex=0.4, col="blue")
+EX1.SC$standCount
 ```
 <br />
 
@@ -282,25 +285,28 @@ EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pre
 
 #### 8. Evaluating the canopy percentage
 
-> *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`canopy`**. 
+> *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`canopy`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
 
 ```r
 EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape)
 EX1.Canopy$canopyPorcent
 
+### Parallel (n.core = 3)
+EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3)
+EX1.Canopy$canopyPorcent
 ```
 <br />
 <br />
 
 #### 9. Extracting data from field images 
 
-> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallelizing).
+> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallel).
 
 ```r
 EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
 EX1.Info$fieldShape@data
 
-### Parallelizing (n.core = 3)
+### Parallel (n.core = 3)
 EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape, n.core = 3)
 EX1.Info$fieldShape@data
 
