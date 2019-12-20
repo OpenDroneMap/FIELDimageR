@@ -28,6 +28,7 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pc
   plants<-lapply(extM, function(x){table(x)})
   cent <- lapply(plants, function(x){as.numeric(names(x))[-1]})
   plantsPosition<- lapply(cent, function(x){
+    if(length(x)==0){return(NULL)}
     pos<-NULL
     for(i in 1:length(x)){pos<-rbind(pos,colMeans(xyFromCell(mosaic$watershed, which(mosaic$watershed[]==x[i]))))}
     if(abs(max(pos[,1])-min(pos[,1]))>=abs(max(pos[,2])-min(pos[,2]))){ord<-order(pos[,1])}
@@ -40,6 +41,9 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pc
     x1<-plants[[j]]
     y<-plantsPosition[[j]]
     x<-NULL
+    PS<-NULL
+    PR<-NULL
+    if(!is.null(y)){
     for (i in 2:length(x1)) {x<-c(x,round(100*(x1[i]/sum(x1)),3))}
     x<-x[y$seqName]
     
@@ -54,7 +58,7 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pc
   PR <- data.frame(plantCanopy = x[x < minSize], 
                    x = y$Position[x < minSize, 1], 
                    y = y$Position[x < minSize, 2])
-  }
+  }}
     rownames(PS)<-NULL
     rownames(PR)<-NULL
     plantSel[[j]]<-PS
