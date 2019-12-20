@@ -1,4 +1,4 @@
-standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, pch=16, cex=0.7, col="red"){
+standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core = NULL, pch=16, cex=0.7, col="red"){
   if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -14,7 +14,17 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, pch=16, cex=0.7
   mask <- raster::as.matrix(mosaic$mask) == value
   dd <- distmap(mask)
   mosaic$watershed <- watershed(dd)
-  extM <- extract(x = mosaic$watershed, y = fieldShape)
+  if(is.null(n.core)){extM <- extract(x = mosaic$watershed, y = fieldShape)}
+  if (!is.null(n.core)){
+    cl <- makeCluster(n.core, output = "")
+    registerDoParallel(cl)
+    extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% {
+      single <- fieldShape[i, ]
+      CropPlot <- crop(x = mosaic$watershed, y = single)
+      extract(x = CropPlot, y = single)
+    }
+    names(extM) <- 1:length(fieldShape)
+  }
   plants<-lapply(extM, function(x){table(x)})
   cent <- lapply(plants, function(x){as.numeric(names(x))[-1]})
   plantsPosition<- lapply(cent, function(x){
