@@ -7,7 +7,7 @@
   Calculating the percentage of canopy in the entire mosaic or per plot using the fieldShape file
 }
 \usage{
-  canopy(mosaic, canopyValue=0, fieldShape=NULL, plot=T)
+  canopy(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T)
 }
 \arguments{
   \item{mosaic}{
@@ -18,6 +18,9 @@
   }
   \item{fieldShape}{
     evaluate the canopy percentage per plot using the fieldShape as reference. If fieldShape=NULL, the canopy percentage will be calculated directly for the entire original image.
+  }
+  \item{n.core}{
+    number of cores to use for multicore processing (Parallel).
   }
 \item{plot}{
     if is TRUE the crop image and fieldShape will be plotted.
