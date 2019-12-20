@@ -7,7 +7,7 @@
   The mask from function fieldMask() is used to identify the number of plants per plot.
 }
 \usage{
-  standCount(mosaic, fieldShape, value=0, minSize=0.01, pch=16, cex=0.7, col="red")
+  standCount(mosaic, fieldShape, value=0, minSize=0.01, n.core = NULL, pch=16, cex=0.7, col="red")
 }
 \arguments{
   \item{mosaic}{
@@ -21,6 +21,9 @@
   }
   \item{minSize}{
     used to set the minimum size percentage of plant canopy  (to remove weeds and more).
+  }
+  \item{n.core}{
+    number of cores to use for multicore processing (Parallel).
   }
   \item{pch}{
     point symbol, please check help("points").
