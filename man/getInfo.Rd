@@ -26,7 +26,7 @@
     negative values should be used to remove boundaries from neighbor plot (normally the unit is meters, please use values as 0.1 = 10 cm).
   }
   \item{n.core}{
-    number of cores to use for multicore processing (only Linux and MacOS).).
+    number of cores to use for multicore processing (Parallel).
   }
   \item{...}{
     please see raster::extract() for more options.
