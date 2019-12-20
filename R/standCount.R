@@ -1,4 +1,4 @@
-standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core = NULL, pch=16, cex=0.7, col="red"){
+standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red"){
   if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
