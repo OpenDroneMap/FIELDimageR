@@ -1,5 +1,6 @@
 standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red"){
-  if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}
+  if(!is.na(projection(fieldShape))&is.na(projection(mosaic))){
+  if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   if(num.band>1){stop("Only mask with values of 1 and 0 can be processed, use the mask output from fieldMask()")}
