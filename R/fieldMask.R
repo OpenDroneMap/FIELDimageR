@@ -3,7 +3,7 @@ fieldMask<-function(mosaic,Blue=1,Green=2,Red=3,RedEdge=NULL,NIR=NULL,mask=NULL,
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," bands available", sep = ""))
+  print(paste(num.band," layers available", sep = ""))
   if(is.null(mask)){
     if(num.band<3){stop("At least 3 bands (RGB) are necessary to calculate indices available in FIELDimageR")}
     if(!is.null(RedEdge)|!is.null(RedEdge)){
