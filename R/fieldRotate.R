@@ -2,7 +2,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," bands available", sep = ""))
+  print(paste(num.band," layers available", sep = ""))
   par(mfrow=c(1,2))
   if(!is.null(DSMmosaic)){
     par(mfrow=c(1,3))
