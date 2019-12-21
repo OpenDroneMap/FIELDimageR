@@ -2,7 +2,7 @@ indices<-function(mosaic,Blue=1,Green=2,Red=3,RedEdge=NULL,NIR=NULL,index=c("HUE
   Ind<-read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),header = T,sep = "\t")
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," bands available", sep = ""))
+  print(paste(num.band," layers available", sep = ""))
   if(num.band<3){stop("At least 3 bands (RGB) are necessary to calculate indices")}
   if(!is.null(RedEdge)|!is.null(RedEdge)){
     if(num.band<4){
