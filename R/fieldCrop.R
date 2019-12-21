@@ -2,7 +2,7 @@ fieldCrop<-function(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," bands available", sep = ""))
+  print(paste(num.band," layers available", sep = ""))
   if(nPoint<4|nPoint>50){stop("nPoint must be >= 4 and <= 50")}
   par(mfrow=c(1,2))
   if(is.null(fieldShape)|plot){
