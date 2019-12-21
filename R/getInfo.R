@@ -3,7 +3,9 @@ getInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,
   if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," bands available", sep = ""))
+  print(paste( "Extracting: ", num.band, " layers.", sep = ""))
+  if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
+  print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
   CropPlot <- crop(x = mosaic, y = fieldShape)
   if(is.null(n.core)){
     plotValue <- extract(x = CropPlot, y = fieldShape, fun = eval(parse(text = fun)),
