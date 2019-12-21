@@ -1,7 +1,9 @@
 canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
-  print(paste(num.band," band available", sep = ""))
+  print(paste(num.band," layer available", sep = ""))
+  if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
+  print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
   if(num.band>1){stop("Only mask mosaic with values of 1 and 0 can be evaluated, please use the mask output from fieldMask()")}
   if(!canopyValue%in%c(1,0)){stop("The value must be 1 or 0 to represent the plants in the mask mosaic, please use the mask output from fieldMask()")}
   pc <- function(x, p){return( length(x[x == p]) / length(x[!is.na(x)]) )}
