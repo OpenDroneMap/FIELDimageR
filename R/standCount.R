@@ -8,6 +8,8 @@ standCount <-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pc
   if(!all(c(raster::minValue(mosaic),raster::maxValue(mosaic))%in%c(1,0))){stop("Values in the mask must be 1 or 0 to represent the plants, use the mask output from fieldMask()")}
   mosaic <- crop(x = mosaic, y = fieldShape)
   print("Identifying plants... ")
+  if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
+  print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
   par(mfrow=c(1,1))
   raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)
   sp::plot(fieldShape, add=T)
