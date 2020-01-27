@@ -589,6 +589,14 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 
 <br />
 
+### Google Groups Forum
+
+> This discussion group provides an online source of information about the FIELDimageR package.  
+
+Report a bug and ask a question at https://groups.google.com/forum/#!forum/fieldimager
+
+<br />
+
 ### Licenses
 
 > The R/FIELDimageR package as a whole is distributed under [GPL-2 (GNU General Public License version 2)](https://www.gnu.org/licenses/gpl-2.0.en.html).
