@@ -566,10 +566,11 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 
 > **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
 
----
+<br />
 
 > **Attention:** HYPERSPECTRAL images were not tested in *`FIELDimageR`*
 
+<br />
 
 ```r
 # Uploading multispectral mosaic:
