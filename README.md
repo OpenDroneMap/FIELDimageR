@@ -3,6 +3,32 @@
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
+<div id="menu" />
+
+---------------------------------------------
+## Resources
+  
+   * [Installation](#Instal)
+   * [1. Required packages](#P1)
+   * [2. Selecting the targeted field](#P2)
+   * [3. Rotating the image](#P3)
+   * [4. Removing soil using vegetation indices](#P4)
+   * [5. Building the plot shape file](#P5)
+   * [6. Building vegetation indices](#P6)
+   * [7. Counting the number of plants](#P7)
+   * [8. Evaluating the canopy percentage](#P8)
+   * [9. Extracting data from field images](#P9)
+   * [10. Estimating plant height](#P10)
+   * [11. Resolution and computing time](#P11)
+   * [12. Crop growth cycle](#P12)
+   * [13. Multispectral images](#P13)
+   * [14. Making plots](#P14)
+   * [15. Saving output files](#P15)
+   * [Contact](#P16)
+
+<div id="Instal" />
+
+---------------------------------------------
 ### Installation
 
 > In order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), first you need to install the [devtools](https://github.com/hadley/devtools) package in R.
@@ -20,8 +46,11 @@ library(devtools)
 install_github("filipematias23/FIELDimageR")
 
 ```
-<br />
+[Menu](#menu)
 
+<div id="P1" />
+
+---------------------------------------------
 ### Using R/FIELDimageR
 
 <br />
@@ -42,8 +71,11 @@ library(FIELDimageR)
 library(raster)
 
 ```
-<br />
+[Menu](#menu)
 
+<div id="P2" />
+
+---------------------------------------------
 #### 2. Selecting the targeted field from the original image
 
 > It is necessary to first reduce the image/mosaic size around the field boundaries for faster image analysis. Function to use: **`fieldCrop`**. The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
@@ -71,8 +103,11 @@ EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
   <img src="https://github.com/filipematias23/images/blob/master/readme/F2.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P3" />
+
+---------------------------------------------
 #### 3. Rotating the image
 
 > To build the plot shape file first we need to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). If not, it is necessary to find the right-angle *theta* to rotate the field, **`fieldRotate`** allows you to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
@@ -88,8 +123,11 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
   <img src="https://github.com/filipematias23/images/blob/master/readme/F4.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P4" />
+
+---------------------------------------------
 #### 4. Removing soil using vegetation indices 
 
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
@@ -104,8 +142,11 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, inde
   <img src="https://github.com/filipematias23/images/blob/master/readme/F3.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P5" />
+
+---------------------------------------------
 #### 5. Building the plot shape file
 
 > Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use: **`fieldShape`** 
@@ -163,11 +204,11 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
   <img src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P6" />
 
-
-
+---------------------------------------------
 #### 6. Building vegetation indices 
 
 > A general number of indices are implemented in *FIELDimageR* using the function **`indices`**. Also, yo can build your own index using the parameter `myIndex`. 
@@ -209,8 +250,11 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3,
   <img src="https://github.com/filipematias23/images/blob/master/readme/F23.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P7" />
+
+---------------------------------------------
 #### 7. Counting the number of plants
 
 > *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`standCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
@@ -281,8 +325,11 @@ EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pre
   <img src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P8" />
+
+---------------------------------------------
 #### 8. Evaluating the canopy percentage
 
 > *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`canopy`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
@@ -295,9 +342,12 @@ EX1.Canopy$canopyPorcent
 EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3)
 EX1.Canopy$canopyPorcent
 ```
-<br />
-<br />
 
+[Menu](#menu)
+
+<div id="P9" />
+
+---------------------------------------------
 #### 9. Extracting data from field images 
 
 > The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallel).
@@ -312,9 +362,11 @@ EX1.Info$fieldShape@data
 
 ```
 
-<br />
+[Menu](#menu)
 
+<div id="P10" />
 
+---------------------------------------------
 #### 10. Estimating plant height
 
 > The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
@@ -349,8 +401,11 @@ EPH$plotValue
   <img src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P11" />
+
+---------------------------------------------
 #### 11. Resolution and computing time
 
 > The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
@@ -435,8 +490,11 @@ cor(DataRed)
   <img src="https://github.com/filipematias23/images/blob/master/readme/F14.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P12" />
+
+---------------------------------------------
 #### 12. Crop growth cycle
 
 > The same rotation theta from step 3, mask from step 4, and plot shape file from step 5, can be used to evaluate mosaics from other stages in the crop growth cycle. Here you can download specific images from flowering and senecense stages in potatoes.  ([**Flowering: EX2_RGB.tif**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence: EX3_RGB.tif**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
@@ -499,8 +557,11 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
   <img src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P13" />
+
+---------------------------------------------
 #### 13. Multispectral images
 
 > **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
@@ -536,8 +597,11 @@ EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Blue=1,Green=2,Red=3,RedEdge=
 EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape)
 
 ```
-<br />
+[Menu](#menu)
 
+<div id="P14" />
+
+---------------------------------------------
 #### 14. Making plots
 
 > Graphic visualization of trait values for each plot using the **fieldShape file** and the **Mosaic** of your preference. Function to use: **`fieldPlot`**.
@@ -558,8 +622,11 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
   <img src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
 </p>
 
-<br />
+[Menu](#menu)
 
+<div id="P15" />
+
+---------------------------------------------
 #### 15. Saving output files
 
 ```r
@@ -577,8 +644,11 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 # Data.EX1.Info<-read.csv("EX1.Info.csv",header = T,check.names = F) # Reading the saved data table.
 
 ```
-<br />
+[Menu](#menu)
 
+<div id="P16" />
+
+---------------------------------------------
 ### YouTube Tutorial
 
 <br />
@@ -617,5 +687,8 @@ Report a bug and ask a question at https://groups.google.com/forum/#!forum/field
 Lin Song](https://potatobreeding.cals.wisc.edu/people/)
 
 <br />
+
+[Menu](#menu)
+
 <br />
 
