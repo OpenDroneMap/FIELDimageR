@@ -2,7 +2,6 @@ canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layer available", sep = ""))
-  if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
   print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
   if(num.band>1){stop("Only mask mosaic with values of 1 and 0 can be evaluated, please use the mask output from fieldMask()")}
   if(!canopyValue%in%c(1,0)){stop("The value must be 1 or 0 to represent the plants in the mask mosaic, please use the mask output from fieldMask()")}
@@ -23,6 +22,7 @@ canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
       porCanopy <- unlist(lapply(extM, pc, p = canopyValue))
     }
     if (!is.null(n.core)) {
+      if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
       cl <- makeCluster(n.core, output = "")
       registerDoParallel(cl)
       extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% 
