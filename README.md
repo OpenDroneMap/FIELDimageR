@@ -94,7 +94,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 ```r
-EX1.Crop <- fieldCrop(mosaic = EX1, plot = T)
+EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, etc.), please use: fast.plot=T
 
 ```
 <br />
