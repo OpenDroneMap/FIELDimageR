@@ -7,7 +7,7 @@
    Reduction of the original image size using the experimental field as reference
 }
 \usage{
-  fieldCrop(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l", lty=2, lwd=3)
+  fieldCrop(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l", lty=2, lwd=3, fast.plot=F)
 }
 \arguments{
   \item{mosaic}{
@@ -33,6 +33,9 @@
   }
   \item{lwd}{
     line width, please check help("lines").
+  }
+  \item{fast.plot}{
+    if TRUE only the grey scale image will be plotted as reference (faster approach).
   }
 }
 \details{
