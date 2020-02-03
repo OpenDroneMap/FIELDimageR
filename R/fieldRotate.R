@@ -38,7 +38,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
   Out<-r
   if(plot){
     if(fast.plot){
-      raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
+      raster::plot(r[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
     if(!fast.plot){
     if(num.band>2){plotRGB(RGB.rescale(r,num.band=3), r = 1, g = 2, b = 3)}
     if(num.band<3){raster::plot(r, axes=FALSE, box=FALSE)}}}
