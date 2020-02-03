@@ -1,4 +1,4 @@
-fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3){
+fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -8,8 +8,11 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
     par(mfrow=c(1,3))
     if(projection(DSMmosaic)!=projection(mosaic)){stop("DSMmosaic and RGBmosaic must have the same projection CRS")}}
   if(plot|is.null(theta)){
+    if(fast.plot){
+      raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
+    if(!fast.plot){
   if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
-  if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}}
+  if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}}}
   rotate <- function(x, angle=0, resolution=res(x)) {
     y <- x
     crs(y) <- "+proj=aeqd +ellps=sphere +lat_0=90 +lon_0=0"
@@ -34,8 +37,11 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
   r <- stack(r)
   Out<-r
   if(plot){
+    if(fast.plot){
+      raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
+    if(!fast.plot){
     if(num.band>2){plotRGB(RGB.rescale(r,num.band=3), r = 1, g = 2, b = 3)}
-    if(num.band<3){raster::plot(r, axes=FALSE, box=FALSE)}}
+    if(num.band<3){raster::plot(r, axes=FALSE, box=FALSE)}}}
   if(!is.null(DSMmosaic)){
     DSMmosaic <- stack(DSMmosaic)
     DSMmosaic<-rotate(DSMmosaic,angle = theta)
