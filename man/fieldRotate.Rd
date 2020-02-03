@@ -7,7 +7,7 @@
   The image should be rotated to use the function fieldShape(). The base of experimental field should be parallel to axis X.
 }
 \usage{
-  fieldRotate(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3)
+  fieldRotate(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F)
 }
 \arguments{
   \item{mosaic}{
@@ -36,6 +36,9 @@
   }
   \item{lwd}{
     line width, please check help("lines").
+  }
+  \item{fast.plot}{
+    if TRUE only the grey scale image will be plotted as reference (faster approach).
   }
 }
 \details{
