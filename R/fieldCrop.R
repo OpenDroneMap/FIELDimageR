@@ -36,8 +36,11 @@ fieldCrop<-function(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l
   }
   r <- stack(r)
   if(plot){
+    if(fast.plot){
+      raster::plot(r[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
+    if(!fast.plot){
     if(num.band>2){plotRGB(RGB.rescale(r,num.band=3), r = 1, g = 2, b = 3)}
-    if(num.band<3){raster::plot(r, axes=FALSE, box=FALSE)}}
+    if(num.band<3){raster::plot(r, axes=FALSE, box=FALSE)}}}
   par(mfrow=c(1,1))
   return(r)
 }
