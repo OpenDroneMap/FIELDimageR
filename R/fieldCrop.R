@@ -1,4 +1,4 @@
-fieldCrop<-function(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l", lty=2, lwd=3){
+fieldCrop<-function(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l", lty=2, lwd=3, fast.plot=F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -6,8 +6,11 @@ fieldCrop<-function(mosaic, fieldShape=NULL, nPoint=4, plot=T, remove=F, type="l
   if(nPoint<4|nPoint>50){stop("nPoint must be >= 4 and <= 50")}
   par(mfrow=c(1,2))
   if(is.null(fieldShape)|plot){
+    if(fast.plot){
+      raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
+    if(!fast.plot){
   if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
-  if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}
+  if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}}
   }
   if(!is.null(fieldShape)){
     if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
