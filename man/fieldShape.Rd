@@ -7,7 +7,7 @@
   The user should select the four experimental field corners and the shape file with plots will be automatcly built using a grid with the number of ranges and rows. Attention: The base of image should be parallel to axis X, please use first the function fieldRotate().
 }
 \usage{
-  fieldShape(mosaic,ncols=10,nrows=10,nPoint=4,fieldMap=NULL,fieldData=NULL,ID=NULL,plot=T)
+  fieldShape(mosaic,ncols=10,nrows=10,nPoint=4,fieldMap=NULL,fieldData=NULL,ID=NULL,plot=T,fast.plot=F)
 }
 \arguments{
   \item{mosaic}{
@@ -33,6 +33,9 @@
   }
   \item{plot}{
     if is TRUE the crop image and fieldShape will be plotted.
+  }
+  \item{fast.plot}{
+    if TRUE only the grey scale image will be plotted as reference (faster approach).
   }
 }
 \details{
