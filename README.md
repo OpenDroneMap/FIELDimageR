@@ -3,6 +3,10 @@
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/FIELDimageR.jpg" width="70%" height="70%">
+</p>
+
 <div id="menu" />
 
 ---------------------------------------------
