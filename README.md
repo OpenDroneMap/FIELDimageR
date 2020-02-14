@@ -137,7 +137,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
-EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, index = "HUE")
+EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 ```
 <br />
@@ -220,14 +220,14 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F6.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F6ind.jpeg">
 </p>
 <br />
 
 ```r
 # Calculating myIndex = "(Red-Blue)/Green" (not avaliable at 'FIELDimageR')
 
-EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red = 3, 
+EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
                           index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
                           
 ```
@@ -239,14 +239,14 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Blue = 1, Green = 2, Red =
 
 <br />
 
-> *Sugestion:* This function could also be used to build an index to remove soil or weeds. First it is necessary to identify the threshold to differentiate soil from the plant material. At the example below (B), all values above 1 were considered as soil and further removed using **`fieldMask`** (C & D).
+> *Sugestion:* This function could also be used to build an index to remove soil or weeds. First it is necessary to identify the threshold to differentiate soil from the plant material. At the example below (B), all values above 0.7 were considered as soil and further removed using **`fieldMask`** (C & D).
 
 ```r
 plot(EX1.Indices$BGI)
 
-EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Blue = 1, Green = 2, Red = 3, 
-                   index = "BGI", cropValue = 1, cropAbove = T)
-                          
+EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, 
+                   index = "BGI", cropValue = 0.7, cropAbove = T) #Check if: cropValue=0.8 or cropValue=0.6, works better.
+                                            
 ```
 <br />
 
@@ -284,7 +284,7 @@ EX1.SC$standCount
 ```r
 EX.SC<-stack("EX_StandCount.tif")
 plotRGB(EX.SC, r = 1, g = 2, b = 3)
-EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Blue = 1, Green = 2, Red = 3, index = "HUE")
+EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Red = 1, Green = 2, Blue = 3, index = "HUE")
 EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 ```
 <br />
@@ -444,15 +444,15 @@ system.time({RES_4_R <- fieldRotate(RES_4_C,theta = 2.3, plot = T)})
   
 ### Removing Soil 
 
-system.time({RES_1_S <- fieldMask(RES_1_R,Blue=1,Green=2,Red=3,index="HUE")})
-system.time({RES_2_S <- fieldMask(RES_2_R,Blue=1,Green=2,Red=3,index="HUE")})
-system.time({RES_4_S <- fieldMask(RES_4_R,Blue=1,Green=2,Red=3,index="HUE")})
+system.time({RES_1_S <- fieldMask(RES_1_R,index="HUE")})
+system.time({RES_2_S <- fieldMask(RES_2_R,index="HUE")})
+system.time({RES_4_S <- fieldMask(RES_4_R,index="HUE")})
 
 ### Indices
   
-system.time({RES_1_I <- indices(RES_1_S$newMosaic,Blue=1,Green=2,Red=3,index=c("BGI"))})
-system.time({RES_2_I <- indices(RES_2_S$newMosaic,Blue=1,Green=2,Red=3,index=c("BGI"))})
-system.time({RES_4_I <- indices(RES_4_S$newMosaic,Blue=1,Green=2,Red=3,index=c("BGI"))})
+system.time({RES_1_I <- indices(RES_1_S$newMosaic,index=c("BGI"))})
+system.time({RES_2_I <- indices(RES_2_S$newMosaic,index=c("BGI"))})
+system.time({RES_4_I <- indices(RES_4_S$newMosaic,index=c("BGI"))})
   
 ### Get Information (1 Band)
   
@@ -520,15 +520,15 @@ EX3.Rotated<-fieldRotate(EX3.Crop,theta = 2.3, plot = T)
 
 # Removing the soil using index and mask from step 4:
 
-EX2.RemSoil<-fieldMask(EX2.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
-EX3.RS<-fieldMask(EX3.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T) # Removing soil at senescence stage
+EX2.RemSoil<-fieldMask(EX2.Rotated,index="HUE",cropValue=0,cropAbove=T,plot=T)
+EX3.RS<-fieldMask(EX3.Rotated,index="HUE",cropValue=0,cropAbove=T,plot=T) # Removing soil at senescence stage
 EX3.RemSoil<-fieldMask(EX3.RS$newMosaic,mask = EX2.RemSoil$mask ,cropValue=0,cropAbove=T,plot=T) # Removing weeds from senescence stage with flowering mask 
 
 # Building indices
 
-EX2.Indices <- indices(EX2.RemSoil$newMosaic,Blue=1,Green=2,Red=3,
+EX2.Indices <- indices(EX2.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
-EX3.Indices <- indices(EX3.RemSoil$newMosaic,Blue=1,Green=2,Red=3,
+EX3.Indices <- indices(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
 
 # Extracting data using the same fieldShape file from step 5:
@@ -590,11 +590,11 @@ EX1.5b.Rotated<-fieldRotate(EX1.5b.Crop,theta = 2.3, plot = T)
 
 # Removing the soil using index and mask from step 4:
 
-EX1.5b.RemSoil<-fieldMask(EX1.5b.Rotated,Blue=1,Green=2,Red=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
+EX1.5b.RemSoil<-fieldMask(EX1.5b.Rotated,Red=1,Green=2,Blue=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
 
 # Building indices (NDVI and NDRE)
 
-EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Blue=1,Green=2,Red=3,RedEdge=4,NIR=5,
+EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEdge=4,NIR=5,
                  index = c("NDVI","NDRE"))
 
 # Extracting data using the same fieldShape file from step 5:
