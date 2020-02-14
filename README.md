@@ -416,14 +416,27 @@ EPH$plotValue
 > The function **`fieldCrop`** can be used to remove objects from the field image. For instance, the parameter *remove=TRUE* and *nPoint* should be used to select the object boundaries to be removed. [Download EX_RemObj.tif](https://drive.google.com/open?id=1wfxSQANRrPOvJWwNZ6UU0UjXwzKfkKH0)).
 
 ```r
-EX.RemObj <- stack("EX.RemObj.tif")
-EX.RemObj.Crop <- fieldCrop(mosaic = EX.RemObj, remove = T, nPoint = 10) # Selecting plot 13
+# Uploading file (EX_RemObj.tif)
+EX.RemObj <- stack("EX_RemObj.tif")
+
+# Selecting the object boundaries to be removed (nPoint = 10)
+EX.RemObj.Crop <- fieldCrop(mosaic = EX.RemObj, remove = T, nPoint = 10) # Selecting the plant in plot 13
+
+# Removing the soil
 EX.RemObj.RemSoil<- fieldMask(mosaic = EX.RemObj.Crop,index = "HUE")
+
+# Building the plot shapefile (ncols = 8 and nrows = 4)
 EX.RemObj.Shape<-fieldShape(mosaic = EX.RemObj.RemSoil,ncols = 8, nrows = 4)
+
+# Building indice (NGRDI)
 EX.RemObj.Indices<- indices(mosaic = EX.RemObj.RemSoil$newMosaic,index = c("NGRDI"))
+
+# Extracting data (NGRDI)
 EX.RemObj.Info<- getInfo(mosaic = EX.RemObj.Indices$NGRDI,
                       fieldShape = EX.RemObj.Shape$fieldShape,
                       n.core = 3)
+                      
+# Comparing plots values (the plant in plot 13 was removed and its value must be lower than plot 12 and 14)                      
 EX.RemObj.Info$plotValue[c(12,13,14),]
 
 ```
@@ -484,15 +497,15 @@ system.time({RES_4_I <- indices(RES_4_S$newMosaic,index=c("BGI"))})
   
 ### Get Information (1 Band)
   
-system.time({RES_1_Info <- getInfo(RES_1_I$BGI,fieldShape = EX1.Shape$fieldShape)})
-system.time({RES_2_Info <- getInfo(RES_2_I$BGI,fieldShape = EX1.Shape$fieldShape)})
-system.time({RES_4_Info <- getInfo(RES_4_I$BGI,fieldShape = EX1.Shape$fieldShape)})
+system.time({RES_1_Info <- getInfo(RES_1_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_2_Info <- getInfo(RES_2_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_4_Info <- getInfo(RES_4_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
   
 ### Get Information (3 Bands)
   
-system.time({RES_1_Info2 <- getInfo(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape)})
-system.time({RES_2_Info2 <- getInfo(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape)})
-system.time({RES_4_Info2 <- getInfo(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape)})
+system.time({RES_1_Info2 <- getInfo(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_2_Info2 <- getInfo(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_4_Info2 <- getInfo(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
 
 ### Correlation
 
@@ -561,8 +574,8 @@ EX3.Indices <- indices(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
 
 # Extracting data using the same fieldShape file from step 5:
 
-EX2.Info<- getInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape)
-EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape)
+EX2.Info<- getInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
 <br />
@@ -627,7 +640,7 @@ EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEdge=
 
 # Extracting data using the same fieldShape file from step 5:
 
-EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape)
+EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
 [Menu](#menu)
