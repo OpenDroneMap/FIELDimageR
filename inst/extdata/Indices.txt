@@ -8,7 +8,7 @@ SI	(R-B)/(R+B)	C
 VARI	(G-R)/(G+R-B)	C
 GLAI	(25*(G-R)/(G+R-B)+1.25)	C
 CI	(R-B)/R	C
-HUE	atan(2*(R-G-B)/30.5*(G-B))	C
+HUE	atan(2*(B-G-R)/30.5*(G-R))	C
 SAT	(max(R,G,B)-min(R,G,B))/max(R,G,B)	C
 SHP	2*(R-G-B)/(G-B)	C
 BGI	B/G	C
