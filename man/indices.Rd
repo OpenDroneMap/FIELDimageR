@@ -7,13 +7,13 @@
   Different vegetation indices can be calculated using at least 3 bands. For the list of indices please visit the FIELDimageR manual at link:
 }
 \usage{
-  indices(mosaic,Blue=1,Green=2,Red=3,RedEdge=NULL,NIR=NULL,index=c("HUE"),myIndex=NULL,plot=T)
+  indices(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("HUE"),myIndex=NULL,plot=T)
 }
 \arguments{
   \item{mosaic}{
     object of class stack with at least 3 bands.
   }
-  \item{Blue,Green,Red,RedEdge,NIR}{
+  \item{Red,Green,Blue,RedEdge,NIR}{
     respective position of the band at the original image file.
   }
   \item{index}{
