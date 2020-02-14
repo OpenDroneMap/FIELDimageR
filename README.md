@@ -23,12 +23,13 @@
    * [8. Evaluating the canopy percentage](#P8)
    * [9. Extracting data from field images](#P9)
    * [10. Estimating plant height](#P10)
-   * [11. Resolution and computing time](#P11)
-   * [12. Crop growth cycle](#P12)
-   * [13. Multispectral images](#P13)
-   * [14. Making plots](#P14)
-   * [15. Saving output files](#P15)
-   * [Contact](#P16)
+   * [11. Removing objects (plot, cloud, weed, etc.)](#P11)
+   * [12. Resolution and computing time](#P12)
+   * [13. Crop growth cycle](#P13)
+   * [14. Multispectral images](#P14)
+   * [15. Making plots](#P15)
+   * [16. Saving output files](#P16)
+   * [Contact](#P17)
 
 <div id="Instal" />
 
@@ -410,7 +411,34 @@ EPH$plotValue
 <div id="P11" />
 
 ---------------------------------------------
-#### 11. Resolution and computing time
+#### 11. Removing objects (plot, cloud, weed, etc.) 
+
+> The function **`fieldCrop`** can be used to remove objects from the field image. For instance, the parameter *remove=TRUE* and *nPoint* should be used to select the object boundaries to be removed. [Download EX_RemObj.tif](https://drive.google.com/open?id=1wfxSQANRrPOvJWwNZ6UU0UjXwzKfkKH0)).
+
+```r
+EX.RemObj <- stack("EX.RemObj.tif")
+EX.RemObj.Crop <- fieldCrop(mosaic = EX.RemObj, remove = T, nPoint = 10) # Selecting plot 13
+EX.RemObj.RemSoil<- fieldMask(mosaic = EX.RemObj.Crop,index = "HUE")
+EX.RemObj.Shape<-fieldShape(mosaic = EX.RemObj.RemSoil,ncols = 8, nrows = 4)
+EX.RemObj.Indices<- indices(mosaic = EX.RemObj.RemSoil$newMosaic,index = c("NGRDI"))
+EX.RemObj.Info<- getInfo(mosaic = EX.RemObj.Indices$NGRDI,
+                      fieldShape = EX.RemObj.Shape$fieldShape,
+                      n.core = 3)
+EX.RemObj.Info$plotValue[c(12,13,14),]
+
+```
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F25.jpg">
+</p>
+
+[Menu](#menu)
+
+<div id="P12" />
+
+---------------------------------------------
+#### 12. Resolution and computing time
 
 > The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
 
@@ -496,10 +524,10 @@ cor(DataRed)
 
 [Menu](#menu)
 
-<div id="P12" />
+<div id="P13" />
 
 ---------------------------------------------
-#### 12. Crop growth cycle
+#### 13. Crop growth cycle
 
 > The same rotation theta from step 3, mask from step 4, and plot shape file from step 5, can be used to evaluate mosaics from other stages in the crop growth cycle. Here you can download specific images from flowering and senecense stages in potatoes.  ([**Flowering: EX2_RGB.tif**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence: EX3_RGB.tif**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
 
@@ -563,10 +591,10 @@ EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShap
 
 [Menu](#menu)
 
-<div id="P13" />
+<div id="P14" />
 
 ---------------------------------------------
-#### 13. Multispectral images
+#### 14. Multispectral images
 
 > **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
 
@@ -604,10 +632,10 @@ EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldS
 ```
 [Menu](#menu)
 
-<div id="P14" />
+<div id="P15" />
 
 ---------------------------------------------
-#### 14. Making plots
+#### 15. Making plots
 
 > Graphic visualization of trait values for each plot using the **fieldShape file** and the **Mosaic** of your preference. Function to use: **`fieldPlot`**.
 
@@ -629,10 +657,10 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 [Menu](#menu)
 
-<div id="P15" />
+<div id="P16" />
 
 ---------------------------------------------
-#### 15. Saving output files
+#### 16. Saving output files
 
 ```r
 ### Images (single and multi layers)
@@ -651,7 +679,7 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 ```
 [Menu](#menu)
 
-<div id="P16" />
+<div id="P17" />
 
 ---------------------------------------------
 ### YouTube Tutorial
