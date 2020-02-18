@@ -211,6 +211,26 @@ EX1.Shape$fieldShape@data
   <img src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
 </p>
 
+<br />
+
+```r
+### Different plot dimensions using "fieldShape":
+
+# ncols = 14 and nrows = 9
+EX1.Shape.1Line<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9)
+
+# ncols = 7 and nrows = 9
+EX1.Shape.2lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 9)
+
+# ncols = 7 and nrows = 3
+EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)                     
+```
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F26.jpeg">
+</p>
+
 [Menu](#menu)
 
 <div id="P6" />
