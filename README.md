@@ -99,7 +99,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 ```r
-EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, etc.), please use: fast.plot=T
+EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, etc.) please use: fast.plot=T
 
 ```
 <br />
@@ -248,7 +248,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue =
 plot(EX1.Indices$BGI)
 
 EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, 
-                   index = "BGI", cropValue = 0.7, cropAbove = T) #Check if: cropValue=0.8 or cropValue=0.6, works better.
+                   index = "BGI", cropValue = 0.7, cropAbove = T) #Check if: cropValue=0.8 or cropValue=0.6 works better.
                                             
 ```
 <br />
@@ -285,9 +285,14 @@ EX1.SC$standCount
 > To refine stand count, we can further eliminate weeds (small plants) or outlying branches from the output using the parameter *min Size*. The following example uses an image available to download here:[EX_StandCount.tif](https://drive.google.com/open?id=1PzWcIsYQMxgEozR5HHUhT0RKcstMOfSk)
 
 ```r
+# Uploading file
 EX.SC<-stack("EX_StandCount.tif")
 plotRGB(EX.SC, r = 1, g = 2, b = 3)
+
+# Removing the soil
 EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Red = 1, Green = 2, Blue = 3, index = "HUE")
+
+# Building the plot shapefile (ncols = 1 and nrows = 7)
 EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 ```
 <br />
@@ -579,6 +584,11 @@ EX3.Indices <- indices(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
 EX2.Info<- getInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
+Data.Cycle<-data.frame(EX1=EX1.Info$plotValue$myIndex,
+      EX2=EX2.Info$plotValue$myIndex,
+      EX3=EX3.Info$plotValue$myIndex)
+
+Data.Cycle
 ```
 <br />
 
