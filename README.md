@@ -731,8 +731,14 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 
 <br />
 
+> FIELDimageR: A tool to analyze orthomosaic images from agricultural field trials in R (Basic Pipeline)
 <p align="center">
 <a href="https://youtu.be/ZXyaePAv9r8"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTube.jpeg" width=400 height=300 title="Watch the video"></a>
+</p>
+
+> FIELDimageR: Counting the number of plants (StandCount)
+<p align="center">
+<a href="https://youtu.be/v0gAq302Ueg"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 <br />
