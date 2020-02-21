@@ -741,6 +741,11 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 <a href="https://youtu.be/v0gAq302Ueg"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
+> FIELDimageR: calculating vegetation indices (NDVI and NDRE)
+<p align="center">
+<a href="https://youtu.be/-XpSWKOXips"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeIndices.jpeg" width=400 height=300 title="Watch the video"></a>
+</p>
+
 <br />
 
 ### Google Groups Forum
