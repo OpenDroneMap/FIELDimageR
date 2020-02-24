@@ -27,9 +27,10 @@
    * [12. Resolution and computing time](#P12)
    * [13. Crop growth cycle](#P13)
    * [14. Multispectral images](#P14)
-   * [15. Making plots](#P15)
-   * [16. Saving output files](#P16)
-   * [Contact](#P17)
+   * [15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
+   * [16. Making plots](#P16)
+   * [17. Saving output files](#P17)
+   * [Contact](#P18)
 
 <div id="Instal" />
 
@@ -680,7 +681,58 @@ EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldS
 <div id="P15" />
 
 ---------------------------------------------
-#### 15. Making plots
+#### 15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
+
+> If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **polygonShape**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. Function to use: **polygonShape**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
+
+```r
+# Uploading file (EX_polygonShape.tif)
+EX.polygon<-stack("EX_polygonShape.tif")
+plotRGB(EX.polygon, r = 1, g = 2, b = 3)
+
+# Removing soil
+EX.polygon.RemSoil<- fieldMask(mosaic = EX.polygon)
+
+# Data frame with polygons information
+polygonData<-data.frame(ID=c("Polygon1","Polygon2","Polygon3"),
+                        FlowerColor=c("white","white","white"),
+                        FlowerPercent=c(20,40,50),
+                        LeafColor=c("dark","light","dark"))
+polygonData
+
+# Building plot shapefile with 3 polygons (select 4 points around the polygon area)
+EX.polygon.Shape<-polygonShape(mosaic = EX.polygon.RemSoil,
+                               nPolygon = 3,nPoint = 4,ID = "ID",
+                               polygonData = polygonData,cropPolygon = T,
+                               polygonID = c("Polygon1","Polygon2","Polygon3"))
+plotRGB(EX.polygon.Shape$cropField)
+
+# Building indice (NGRDI and BGI)
+EX.polygon.Indices<- indices(mosaic = EX.polygon.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
+                             index = c("NGRDI","BGI"))
+
+# Extracting data (NGRDI and BGI)
+EX.polygon.Info<- getInfo(mosaic = EX.polygon.Indices[[c("NGRDI","BGI")]],
+                   fieldShape = EX.polygon.Shape$fieldShape, n.core = 3)
+EX.polygon.Info$fieldShape@data
+
+# Making graphics (BGI)
+fieldPlot(fieldShape=EX.polygon.Info$fieldShape,
+          fieldAttribute="BGI",
+          mosaic=EX.polygon, color=c("red","blue"), alpha = 0.5)
+```
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F27.jpg">
+</p>
+
+[Menu](#menu)
+
+<div id="P16" />
+
+---------------------------------------------
+#### 16. Making plots
 
 > Graphic visualization of trait values for each plot using the **fieldShape file** and the **Mosaic** of your preference. Function to use: **`fieldPlot`**.
 
@@ -702,10 +754,10 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 [Menu](#menu)
 
-<div id="P16" />
+<div id="P17" />
 
 ---------------------------------------------
-#### 16. Saving output files
+#### 17. Saving output files
 
 ```r
 ### Images (single and multi layers)
@@ -724,7 +776,7 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 ```
 [Menu](#menu)
 
-<div id="P17" />
+<div id="P18" />
 
 ---------------------------------------------
 ### YouTube Tutorial
