@@ -1,7 +1,7 @@
 Package: FIELDimageR
 Type: Package
 Title: FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials
-Version: 0.1.1
+Version: 0.1.2
 Author: Filipe Inacio Matias
 Maintainer: Filipe Inacio Matias <fmatias@wisc.edu>
 Description: This package is a compilation of function to analyze pos-mosaicking images from research experimental fields, and allows to: reduce the mosaic dimension by cropping it in small sections; remove the soil effect; build vegetation indices; rotate the field and build the plot shape file; extract information for each plot; and evaluate stand count, plant height and canopy (greenness).
