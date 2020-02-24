@@ -1,4 +1,4 @@
-export(fieldRotate,fieldCrop,fieldShape,
+export(fieldRotate,fieldCrop,fieldShape,polygonShape,
        indices,fieldMask,fieldMap,getInfo,fieldPlot,standCount,canopy)
 importFrom("sp", "Polygons","Polygon","SpatialPolygonsDataFrame","SpatialPolygons","spsample",
            "SpatialPointsDataFrame","over", "proj4string")
