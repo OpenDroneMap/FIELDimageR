@@ -17,7 +17,7 @@
    * [2. Selecting the targeted field](#P2)
    * [3. Rotating the image](#P3)
    * [4. Removing soil using vegetation indices](#P4)
-   * [5. Building the plot shape file](#P5)
+   * [5. Building the plot shapefile](#P5)
    * [6. Building vegetation indices](#P6)
    * [7. Counting the number of plants](#P7)
    * [8. Evaluating the canopy percentage](#P8)
@@ -30,7 +30,8 @@
    * [15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
-   * [Contact](#P18)
+   * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P18)
+   * [Contact](#P19)
 
 <div id="Instal" />
 
@@ -777,6 +778,37 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 [Menu](#menu)
 
 <div id="P18" />
+
+---------------------------------------------
+#### Quick tips (image analyze in R)
+
+1) [Changing memory limits in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Memory-limits.html)
+
+
+2) [Reducing resolution for fast analysis](https://www.rdocumentation.org/packages/raster/versions/3.0-12/topics/aggregate)
+```
+new_mosaic<-aggregate(previous_mosaic, fact=4)
+```
+
+3) Removing previous files after used (more space in R memory): If you do not need one mosaic you should remove it to save memory to the next steps (e.g. the first input mosaic)
+```
+rm(previous_mosaic)
+```
+
+4) Using ShapeFile from other software (e.g. [QGIS](https://www.qgis.org/en/site/))
+```
+library(rgdal)
+ShapeFile <- readOGR("Other_Software_ShapeFile.shp")
+```
+
+5) Combining ShapeFiles: sometimes it is better to split the mosaic into smaller areas to better draw the shapefile. For instance, the user can combine the split shapefiles to one for the next step as extractions
+```
+rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
+```
+
+[Menu](#menu)
+
+<div id="P19" />
 
 ---------------------------------------------
 ### YouTube Tutorial
