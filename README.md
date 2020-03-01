@@ -576,7 +576,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/PotatoGrowthCycle.jpg" width="70%" height="70%">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/PotatoGrowthCycleNew.jpg" width="70%" height="70%">
 </p>
 
 <br />
