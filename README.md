@@ -852,8 +852,10 @@ Report a bug and ask a question at https://groups.google.com/forum/#!forum/field
 > **Help improve FIELDimageR pipeline**. The easiest way to modify the package is by cloning the repository and making changes using [R projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects).
 
 > If you have questions, join the forum group at https://groups.google.com/forum/#!forum/fieldimager
-Try to keep commits clean and simple
-Submit a **_pull request_** with detailed changes and test results.
+
+>Try to keep commits clean and simple
+
+>Submit a **_pull request_** with detailed changes and test results.
 
 **Let's  work together and help more people (students, professors, farmers, etc) to have access to this knowledge. Thus, anyone anywhere can learn how to apply remote sensing in agriculture.** 
 
