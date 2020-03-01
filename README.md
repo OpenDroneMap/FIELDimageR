@@ -573,6 +573,14 @@ cor(DataRed)
 
 > The same rotation theta from step 3, mask from step 4, and plot shape file from step 5, can be used to evaluate mosaics from other stages in the crop growth cycle. Here you can download specific images from flowering and senecense stages in potatoes.  ([**Flowering: EX2_RGB.tif**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence: EX3_RGB.tif**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
 
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/PotatoGrowthCycle.jpg" width="70%" height="70%">
+</p>
+
+<br />
+
 ```r
 # Uploading Flowering (EX2_RGB.tif) and Senescence (EX3_RGB.tif) files:
 EX2 <- stack("EX2_RGB.tif")
