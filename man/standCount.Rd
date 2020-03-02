@@ -14,7 +14,7 @@
     object mask of class stack from the function fieldMask().
   }
   \item{fieldShape}{
-    plot shape file, please use first the function fieldAttributes().
+    plot shape file.
   }
   \item{value}{
     referent value to vegetation pixels in the mask. If "HUE" was used on fieldMask() the value=0.
