@@ -19,8 +19,8 @@
    * [4. Removing soil using vegetation indices](#P4)
    * [5. Building the plot shapefile](#P5)
    * [6. Building vegetation indices](#P6)
-   * [7. Counting the number of plants](#P7)
-   * [8. Evaluating the canopy percentage](#P8)
+   * [7. Counting the number of objects (e.g. plants, seeds, etc)](#P7)
+   * [8. Evaluating the object area percentage (e.g. canopy)](#P8)
    * [9. Extracting data from field images](#P9)
    * [10. Estimating plant height](#P10)
    * [11. Removing objects (plot, cloud, weed, etc.)](#P11)
@@ -284,7 +284,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 <div id="P7" />
 
 ---------------------------------------------
-#### 7. Counting the number of plants
+#### 7. Counting the number of objects (e.g. plants, seeds, etc)
 
 > *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
 
@@ -364,17 +364,17 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
 <div id="P8" />
 
 ---------------------------------------------
-#### 8. Evaluating the canopy percentage
+#### 8. Evaluating the object area percentage (e.g. canopy)
 
-> *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`canopy`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
+> *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldArea`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
 
 ```r
-EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape)
-EX1.Canopy$canopyPorcent
+EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape)
+EX1.Canopy$areaPorcent
 
 ### Parallel (n.core = 3)
-EX1.Canopy<-canopy(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3)
-EX1.Canopy$canopyPorcent
+EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3)
+EX1.Canopy$areaPorcent
 ```
 
 [Menu](#menu)
