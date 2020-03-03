@@ -838,7 +838,7 @@ rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
 <a href="https://youtu.be/ZXyaePAv9r8"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTube.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
-> FIELDimageR: Counting the number of plants (StandCount)
+> FIELDimageR: Counting the number of plants (fieldCount)
 <p align="center">
 <a href="https://youtu.be/v0gAq302Ueg"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
