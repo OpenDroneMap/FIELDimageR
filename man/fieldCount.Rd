@@ -1,13 +1,13 @@
-\name{standCount}
-\alias{standCount}
+\name{fieldCount}
+\alias{fieldCount}
 \title{
-  Calculating stand account for each plot
+  Calculating number of objects per plot
 }
 \description{
-  The mask from function fieldMask() is used to identify the number of plants per plot.
+  The mask from function fieldMask() is used to identify the number of objects per plot.
 }
 \usage{
-  standCount(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red")
+  fieldCount(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red")
 }
 \arguments{
   \item{mosaic}{
@@ -36,10 +36,10 @@
   }
 }
 \details{
-  The function returns a vector with the number of plants per plot, a new shapeFile and a new mosaic with Watershed layer.
+  The function returns a vector with the number of objects per plot, a new shapeFile and a new mosaic with Watershed layer.
 }
 \value{
-  Number of plants per plot represented in DataFrame, new shapeFile with stand count, Watershed layer, plants canopy per plot, and plants position in the image.
+  Number of objects per plot represented in DataFrame, new shapeFile with stand count, Watershed layer, objects area per plot, and objects position in the image.
 }
 \references{
   Matias et al. (2019) FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials. (submitted)
