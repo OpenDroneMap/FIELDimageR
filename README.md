@@ -359,6 +359,16 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
   <img src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
 </p>
 
+<br />
+
+> **`fieldCount`** also can be used to count other objects (e.g. seed, pollen, etc). The example below *FIELDimageR* pipeline was used to count seeds in a corn ear. 
+
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F28.jpg">
+</p>
+
 [Menu](#menu)
 
 <div id="P8" />
