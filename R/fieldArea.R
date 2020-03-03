@@ -1,25 +1,25 @@
-canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
+fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T){
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layer available", sep = ""))
   print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
   if(num.band>1){stop("Only mask mosaic with values of 1 and 0 can be evaluated, please use the mask output from fieldMask()")}
-  if(!canopyValue%in%c(1,0)){stop("The value must be 1 or 0 to represent the plants in the mask mosaic, please use the mask output from fieldMask()")}
+  if(!areaValue%in%c(1,0)){stop("The value must be 1 or 0 to represent the objects in the mask mosaic, please use the mask output from fieldMask()")}
   pc <- function(x, p){return( length(x[x == p]) / length(x[!is.na(x)]) )}
   if(is.null(fieldShape)){
-    print("Evaluating the canopy percentage for the whole image...")
-    porCanopy<-pc(x=mosaic, p=canopyValue)
-    print(paste("The percentage of canopy is ",100*(round(porCanopy,2)),"%",sep = ""))
-    Out<-porCanopy
+    print("Evaluating the object area percentage for the whole image...")
+    porarea<-pc(x=mosaic, p=areaValue)
+    print(paste("The percentage of object area is ",100*(round(porarea,2)),"%",sep = ""))
+    Out<-porarea
   }
   if(plot){raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE)}
   if(!is.null(fieldShape)){
-    print("Evaluating the canopy percetage per plot...")
+    print("Evaluating the object area percetage per plot...")
     
     if (is.null(n.core)) {
       extM <- extract(x = mosaic, y = fieldShape)
       names(extM) <- 1:length(fieldShape)
-      porCanopy <- unlist(lapply(extM, pc, p = canopyValue))
+      porarea <- unlist(lapply(extM, pc, p = areaValue))
     }
     if (!is.null(n.core)) {
       if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
@@ -32,10 +32,10 @@ canopy<-function(mosaic, canopyValue=0, fieldShape=NULL, n.core=NULL, plot=T){
           extract(x = CropPlot, y = single)
         }
       names(extM) <- 1:length(fieldShape)
-      porCanopy <- unlist(lapply(extM, function(x){pc(as.numeric(x[[1]]),p = canopyValue)}))
+      porarea <- unlist(lapply(extM, function(x){pc(as.numeric(x[[1]]),p = areaValue)}))
     }
-    fieldShape@data$canopyPorcent=porCanopy
-    Out<-list(canopyPorcent=porCanopy, fieldShape=fieldShape)
+    fieldShape@data$areaPorcent=porarea
+    Out<-list(areaPorcent=porarea, fieldShape=fieldShape)
     if(plot){sp::plot(fieldShape, add = T)}
   }
   return(Out)
