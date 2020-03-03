@@ -286,15 +286,15 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 ---------------------------------------------
 #### 7. Counting the number of plants
 
-> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`standCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
+> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
 
 ```r
-EX1.SC<-standCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, cex=0.4, col="blue")
-EX1.SC$standCount
+EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, cex=0.4, col="blue")
+EX1.SC$fieldCount
 
 ### Parallel (n.core = 3)
-EX1.SC<-standCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3, cex=0.4, col="blue")
-EX1.SC$standCount
+EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3, cex=0.4, col="blue")
+EX1.SC$fieldCount
 ```
 <br />
 
@@ -328,12 +328,12 @@ EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 ```r
 ### When all shapes are counted: minSize = 0.00
 
-EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
+EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
                    fieldShape = EX.SC.Shape$fieldShape,
                    minSize = 0.00)
                    
-EX1.SC$plantSel[[4]] # Identifies 14 points, but point 6 and 9 are small artifacts
-EX1.SC$plantReject[[4]] # No shape rejected because minSize = 0.00
+EX1.SC$objectSel[[4]] # Identifies 14 points, but point 6 and 9 are small artifacts
+EX1.SC$objectReject[[4]] # No shape rejected because minSize = 0.00
 ```
 <br />
 
@@ -346,12 +346,12 @@ EX1.SC$plantReject[[4]] # No shape rejected because minSize = 0.00
 ```r
 ### When all shapes with size greater than 0.04% of plot area are counted: minSize = 0.04
 
-EX1.SC<-standCount(mosaic = EX.SC.RemSoil$mask, 
+EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
                    fieldShape = EX.SC.Shape$fieldShape,
                    minSize = 0.04)
 
-EX1.SC$plantSel[[4]] # Identifies 12 points
-EX1.SC$plantReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from previous example)
+EX1.SC$objectSel[[4]] # Identifies 12 points
+EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from previous example)
 ```
 <br />
 
