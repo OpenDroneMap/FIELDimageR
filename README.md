@@ -872,6 +872,12 @@ ShapeFile <- readOGR("Other_Software_ShapeFile.shp")
 ShapeFile <- rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
 ```
 
+6) External window to amplify the RStudio plotting area (It helps to visualize and click when using functions: **fieldCrop**, **fieldRotate**, **fieldShape**, and **polygonShape**). The default graphics device is normally "RStudioGD". To change use "windows" on Windows, "quartz" on MacOS, and "X11" on Linux.
+```
+# Example in macOS (type the following code before running FIELDimageR functions):
+options(device = "quartz")
+```
+
 [Menu](#menu)
 
 <div id="P20" />
