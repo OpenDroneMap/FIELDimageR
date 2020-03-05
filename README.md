@@ -30,8 +30,9 @@
    * [15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
-   * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P18)
-   * [Contact](#P19)
+   * [Orthomosaic using the open source software OpenDroneMap](#P18)
+   * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P19)
+   * [Contact](#P20)
 
 <div id="Instal" />
 
@@ -674,24 +675,19 @@ Data.Cycle
 EX1.5b <- stack("EX1_5Band.tif")
 
 # Cropping the image using the previous shape from step 2:
-
 EX1.5b.Crop <- fieldCrop(mosaic = EX1.5b,fieldShape = EX1.Crop, plot = T)
 
 # Rotating the image using the same theta from step 3:
-
 EX1.5b.Rotated<-fieldRotate(EX1.5b.Crop,theta = 2.3, plot = T)
 
 # Removing the soil using index and mask from step 4:
-
 EX1.5b.RemSoil<-fieldMask(EX1.5b.Rotated,Red=1,Green=2,Blue=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
 
 # Building indices (NDVI and NDRE)
-
 EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEdge=4,NIR=5,
                  index = c("NDVI","NDRE"))
 
 # Extracting data using the same fieldShape file from step 5:
-
 EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
@@ -757,11 +753,9 @@ fieldPlot(fieldShape=EX.polygon.Info$fieldShape,
 
 ```r
 ### Interpolating colors: c("white","black")
-
 fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="Yield", mosaic=EX1.Indices, color=c("white","black"), alpha = 0.5)
 
 ### Interpolating colors: c("red","blue")
-
 fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.Indices, color=c("red","blue"), alpha = 0.5)
 
 ```
@@ -798,6 +792,56 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 <div id="P18" />
 
 ---------------------------------------------
+#### Orthomosaic using the open source software **[OpenDroneMap](https://www.opendronemap.org)**
+
+> Image stitching from remote sensing phenotyping platforms (sensors attached to aerial or ground vehicles) in one orthophoto.
+
+1) Install [docker](https://www.docker.com) for running ODM (Windows, macOS or Linux).
+
+2) Follow the ODM documentation according to your operating system ([OpenDroneMap’s documentation](https://docs.opendronemap.org/index.html)).
+
+3) Start [WebODM](https://www.opendronemap.org/webodm/) and **+Add Project** to upload your pictures (.tif or .jpg). Attached is one example of RGB images from experimental trials of [UW-Madison Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu) during the flowering time at [Hancock Agricultural Research Station](https://hancock.ars.wisc.edu). Flight altitude was 60 m above ground, flight speed was 24 km/h, and image overlap was 75%. Donwload pictures [here](https://drive.google.com/open?id=1t0kjcBy6QzmIz_fVs6vsgZXi9Afqe09b).
+
+4) After the running process '*completed*', download the **odm_orthophoto.tif** and **dsm.tif** to upload in R. Then follow the pipeline of *FIELDimageR*. [Donwload the final *odm_orthophoto.tif](https://drive.google.com/open?id=1XCDvbFdzHDmRA1dJSMp_veX_xC_ThiqC)*.
+
+<br />
+
+```r
+# Uploading file (odm_orthophoto.tif):
+EX.ODM<-stack("odm_orthophoto.tif")
+plotRGB(EX.ODM, r = 1, g = 2, b = 3)
+
+# Cropping the image to select only one trial (Selecting the same trial as EX.2 from step.13):
+EX.ODM.Crop <- fieldCrop(mosaic = EX.ODM)
+
+# Rotating the image using the same theta from step 3:
+EX.ODM.Rotated<-fieldRotate(EX.ODM.Crop,theta = 2.3)
+
+# Removing soil
+EX.ODM.RemSoil<- fieldMask(mosaic = EX.ODM.Rotated)
+
+# Building indices
+EX.ODM.Indices <- indices(EX.ODM.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
+                 index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
+
+# Extracting data using the same fieldShape file from step 5:
+EX.ODM.Info<- getInfo(mosaic = EX.ODM.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+
+EX.ODM.Info$plotValue$myIndex
+
+```
+<br />
+
+<p align="center">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/ODM_FIELDimageR_New.jpg">
+</p>
+
+
+[Menu](#menu)
+
+<div id="P19" />
+
+---------------------------------------------
 #### Quick tips (image analyze in R)
 
 1) [Changing memory limits in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Memory-limits.html)
@@ -821,12 +865,12 @@ ShapeFile <- readOGR("Other_Software_ShapeFile.shp")
 
 5) Combining ShapeFiles: sometimes it is better to split the mosaic into smaller areas to better draw the shapefile. For instance, the user can combine the split shapefiles to one for the next step as extractions
 ```
-rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
+ShapeFile <- rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
 ```
 
 [Menu](#menu)
 
-<div id="P19" />
+<div id="P20" />
 
 ---------------------------------------------
 ### YouTube Tutorial
