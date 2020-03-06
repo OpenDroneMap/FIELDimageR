@@ -800,13 +800,11 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 
 > Image stitching from remote sensing phenotyping platforms (sensors attached to aerial or ground vehicles) in one orthophoto.
 
-1) Install [docker](https://www.docker.com) for running ODM (Windows, macOS or Linux).
+1) ) Follow the [OpenDroneMap’s documentation](https://docs.opendronemap.org/index.html) according to your operating system (Windows, macOS or Linux) to install [**WebODM**](https://www.opendronemap.org/webodm/).
 
-2) Follow the ODM documentation according to your operating system ([OpenDroneMap’s documentation](https://docs.opendronemap.org/index.html)).
+2) Start [WebODM](https://www.opendronemap.org/webodm/) and **+Add Project** to upload your pictures (.tif or .jpg). Attached is one example of RGB images from experimental trials of [UW-Madison Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu) during the flowering time at [Hancock Agricultural Research Station](https://hancock.ars.wisc.edu). Flight altitude was 60 m above ground, flight speed was 24 km/h, and image overlap was 75%. Donwload pictures [here](https://drive.google.com/open?id=1t0kjcBy6QzmIz_fVs6vsgZXi9Afqe09b).
 
-3) Start [WebODM](https://www.opendronemap.org/webodm/) and **+Add Project** to upload your pictures (.tif or .jpg). Attached is one example of RGB images from experimental trials of [UW-Madison Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu) during the flowering time at [Hancock Agricultural Research Station](https://hancock.ars.wisc.edu). Flight altitude was 60 m above ground, flight speed was 24 km/h, and image overlap was 75%. Donwload pictures [here](https://drive.google.com/open?id=1t0kjcBy6QzmIz_fVs6vsgZXi9Afqe09b).
-
-4) After the running process '*completed*', download the **odm_orthophoto.tif** and **dsm.tif** to upload in R. Then follow the pipeline of *FIELDimageR*. [Donwload the final *odm_orthophoto.tif](https://drive.google.com/open?id=1XCDvbFdzHDmRA1dJSMp_veX_xC_ThiqC)*.
+3) After the running process '*completed*', download the **odm_orthophoto.tif** and **dsm.tif** to upload in R. Then follow the pipeline of *FIELDimageR*. [Donwload the final *odm_orthophoto.tif](https://drive.google.com/open?id=1XCDvbFdzHDmRA1dJSMp_veX_xC_ThiqC)*.
 
 <br />
 
