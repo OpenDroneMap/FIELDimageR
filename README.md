@@ -947,7 +947,7 @@ Lin Song](https://potatobreeding.cals.wisc.edu/people/)
 [Menu](#menu)
 
 <p align="center">
-<a href="https://info.flagcounter.com/HapM"><img src="https://s11.flagcounter.com/countxl/HapM/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_12/viewers_0/labels_1/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+<a href="https://info.flagcounter.com/4NiK"><img src="https://s01.flagcounter.com/countxl/4NiK/bg_FFFFFF/txt_000000/border_000000/columns_3/maxflags_12/viewers_0/labels_1/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
 </p>
 
 <br />
