@@ -1,8 +1,9 @@
-fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F){
+fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
+  print(paste("You can speed up this step using n.core=", detectCores()," or less.", sep = ""))
   par(mfrow=c(1,2))
   if(!is.null(DSMmosaic)){
     par(mfrow=c(1,3))
@@ -33,7 +34,17 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, DSMmosaic=NULL, plot
     theta=round(theta,3)
   print(paste("Theta rotation: ",theta,sep = ""))
   }
-  r<-rotate(mosaic,angle = theta)
+    if (is.null(n.core)) {
+    r<-rotate(mosaic,angle = theta)
+  }
+  if (!is.null(n.core)) {
+    if (n.core > detectCores()) {
+      stop(paste(" 'n.core' must be less than ", detectCores(),sep = ""))
+    }
+    cl <- makeCluster(n.core, output = "")
+    registerDoParallel(cl)
+    r <- foreach(i = 1:length(mosaic@layers), .packages = c("raster")) %dopar% {rotate(mosaic[[i]], angle = theta)}
+  }
   r <- stack(r)
   Out<-r
   if(plot){
