@@ -850,6 +850,7 @@ EX.ODM.Info$plotValue$myIndex
 ```
 # The rasterOptions() allows you to customize your R session (raster package): 
 rasterOptions()
+rasterOptions(chunksize = 1e+09)
 rasterOptions(maxmemory = 1e+09)
 ```
 
