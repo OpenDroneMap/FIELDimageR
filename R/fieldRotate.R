@@ -3,7 +3,6 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, DSMmosa
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
-  print(paste("You can speed up this step using n.core=", detectCores()," or less.", sep = ""))
   par(mfrow=c(1,2))
   if(!is.null(DSMmosaic)){
     par(mfrow=c(1,3))
