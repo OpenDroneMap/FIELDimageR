@@ -847,7 +847,11 @@ EX.ODM.Info$plotValue$myIndex
 #### Quick tips (image analyze in R)
 
 1) [Changing memory limits in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Memory-limits.html)
-
+```
+# The rasterOptions() allows you to customize your R session (raster package): 
+rasterOptions()
+rasterOptions(maxmemory = 1e+09)
+```
 
 2) [Reducing resolution for fast analysis](https://www.rdocumentation.org/packages/raster/versions/3.0-12/topics/aggregate)
 ```
