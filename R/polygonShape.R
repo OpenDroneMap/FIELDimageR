@@ -1,9 +1,10 @@
-polygonShape<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F){
+polygonShape<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F){
   source(file = system.file("extdata", "RGB.rescale.R", package = "FIELDimageR", 
                             mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band <- length(mosaic@layers)
   print(paste(num.band, " layers available", sep = ""))
+  if(!extent){
   if (nPoint < 4 | nPoint > 50) {
     stop("nPoint must be >= 4 and <= 50")
   }
@@ -47,24 +48,6 @@ polygonShape<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NUL
     r <- crop(x = mosaic, y = fieldShape) 
   }
   r <- stack(r)
-  if (plot) {
-    if (fast.plot) {
-      raster::plot(r[[1]], col = grey(1:100/100), axes = FALSE, 
-                   box = FALSE, legend = FALSE)
-      sp::plot(fieldShape, add = T)
-    }
-    if (!fast.plot) {
-      if (num.band > 2) {
-        plotRGB(RGB.rescale(r, num.band = 3), r = 1, 
-                g = 2, b = 3)
-        sp::plot(fieldShape, add = T)
-      }
-      if (num.band < 3) {
-        raster::plot(r, axes = FALSE, box = FALSE)
-        sp::plot(fieldShape, add = T)
-      }
-    }
-  }
   fieldShape@data <- data.frame(polygonID = as.character(seq(1,nPolygon)))
   if (!is.null(polygonID)) {
     if (length(polygonID)!=nPolygon) {
@@ -92,7 +75,32 @@ polygonShape<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NUL
                                   by = "polygonID")
   }
   projection(fieldShape) <- projection(r)
-  Out <- list(fieldShape = fieldShape, cropField = r)
+  Out <- list(fieldShape = fieldShape, cropField = r)}
+  if(extent){
+    r <- stack(mosaic)
+    fieldShape <- as(extent(r), 'SpatialPolygons') 
+    fieldShape <- SpatialPolygonsDataFrame(fieldShape,data.frame(z = 1))
+    projection(fieldShape) <- projection(r)
+    Out <- list(fieldShape = fieldShape)
+  }
+  if (plot) {
+    if (fast.plot) {
+      raster::plot(r[[1]], col = grey(1:100/100), axes = FALSE, 
+                   box = FALSE, legend = FALSE)
+      sp::plot(fieldShape, add = T)
+    }
+    if (!fast.plot) {
+      if (num.band > 2) {
+        plotRGB(RGB.rescale(r, num.band = 3), r = 1, 
+                g = 2, b = 3)
+        sp::plot(fieldShape, add = T)
+      }
+      if (num.band < 3) {
+        raster::plot(r, axes = FALSE, box = FALSE)
+        sp::plot(fieldShape, add = T)
+      }
+    }
+  }
   par(mfrow = c(1, 1))
   return(Out)
 }
