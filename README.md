@@ -31,9 +31,9 @@
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
    * [Orthomosaic using the open source software OpenDroneMap](#P18)
-   * [Making loop with many images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P21)
-   * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P19)
-   * [Contact](#P20)
+   * [Making loop with many images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P19)
+   * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P20)
+   * [Contact](#P21)
 
 <div id="Instal" />
 
@@ -841,7 +841,7 @@ EX.ODM.Info$plotValue$myIndex
 
 [Menu](#menu)
 
-<div id="P21" />
+<div id="P19" />
 
 ---------------------------------------------
 #### Making loop with many images
@@ -884,7 +884,7 @@ EX.Table
 
 [Menu](#menu)
 
-<div id="P19" />
+<div id="P20" />
 
 ---------------------------------------------
 #### Quick tips (image analyze in R)
@@ -926,7 +926,7 @@ options(device = "quartz")
 
 [Menu](#menu)
 
-<div id="P20" />
+<div id="P21" />
 
 ---------------------------------------------
 ### YouTube Tutorial
