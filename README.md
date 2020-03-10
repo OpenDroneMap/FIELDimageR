@@ -31,7 +31,7 @@
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
    * [Orthomosaic using the open source software OpenDroneMap](#P18)
-   * [Making loop with many images (e.g. images from roots, leaves, ears, seeds, damaged area, etc.)](#P21)
+   * [Making loop with many images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P21)
    * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P19)
    * [Contact](#P20)
 
@@ -846,7 +846,7 @@ EX.ODM.Info$plotValue$myIndex
 ---------------------------------------------
 #### Making loop with many images
 
-> The following code can be used to evaluate multiple images (e.g. root area, leave indices, damaged area, ears, seed, structures, etc.). The example below is evaluating disease damage in leaves images (affected area and indices). Download the example [here](https://drive.google.com/open?id=1zgOZFd7KuTu4sERcG1wFoAWLCahIJIlu).
+> The following code can be used to evaluate multiple images (e.g. root area, leave indices, damaged area, ears, seed, structures, etc.). The example below is evaluating disease damage in images of leaves (affected area and indices). Download the example [here](https://drive.google.com/open?id=1zgOZFd7KuTu4sERcG1wFoAWLCahIJIlu).
 
 <br />
 
@@ -860,7 +860,7 @@ index<- c("BGI","VARI","CI")
 # Loop
 EX.Table<-NULL
 for(i in 1:length(pics)){
-  EX.L1<-stack(paste("./imagens/",pics[i],sep = ""))
+  EX.L1<-stack(paste("./images/",pics[i],sep = ""))
   plotRGB(EX.L1)
   EX.L.Shape<-polygonShape(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
   EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
