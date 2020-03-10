@@ -1,6 +1,6 @@
-getInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,...){ # buffer is in the mosaic unit, usually in meters.
+getInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,projection=TRUE,...){ # buffer is in the mosaic unit, usually in meters.
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
-  if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
+  if(projection){if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste( "Extracting: ", num.band, " layers.", sep = ""))
