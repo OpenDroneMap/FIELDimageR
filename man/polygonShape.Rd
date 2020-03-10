@@ -7,7 +7,7 @@
   The user should select points to make polygons in the image. Shapefile with polygons will be automatically built. Attention: fieldRotate() is not necessary.
 }
 \usage{
-  polygonShape(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F)
+  polygonShape(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F)
 }
 \arguments{
   \item{mosaic}{
@@ -39,6 +39,9 @@
   }
   \item{fast.plot}{
     if TRUE only the grey scale image will be plotted as reference (faster approach).
+  }
+  \item{extent}{
+    if is TRUE the entire image area will be the fieldShape (one unique plot).
   }
 }
 \details{
