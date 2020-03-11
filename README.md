@@ -31,7 +31,7 @@
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
    * [Orthomosaic using the open source software OpenDroneMap](#P18)
-   * [Making loop with many images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P19)
+   * [Parallel and loop to evaluate multiple images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P19)
    * [Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P20)
    * [Contact](#P21)
 
@@ -844,7 +844,7 @@ EX.ODM.Info$plotValue$myIndex
 <div id="P19" />
 
 ---------------------------------------------
-#### Making loop with many images
+#### Parallel and loop to evaluate multiple images
 
 > The following code can be used to evaluate multiple images (e.g. root area, leave indices, damaged area, ears, seed, structures, etc.). The example below is evaluating disease damage in images of leaves (affected area and indices). Download the example [here](https://drive.google.com/open?id=1zgOZFd7KuTu4sERcG1wFoAWLCahIJIlu).
 
@@ -857,8 +857,12 @@ pics<-list.files("./images/")
 # Vegetation indices
 index<- c("BGI","VARI","CI")
 
-# Loop
-EX.Table<-NULL
+############
+### Loop ###
+############
+
+system.time({ # system.time: used to compare the processing time using loop and parallel
+EX.Table.Loop<-NULL
 for(i in 1:length(pics)){
   EX.L1<-stack(paste("./images/",pics[i],sep = ""))
   plotRGB(EX.L1)
@@ -869,12 +873,41 @@ for(i in 1:length(pics)){
   EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
   EX.L.Info<- getInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
   plot(EX.L5,col = grey(1:100/100))
-  EX.Table<-rbind(EX.Table, EX.L.Info$plotValue) # Combine information from all images in one table
-}
+  EX.Table.Loop<-rbind(EX.Table.Loop, EX.L.Info$plotValue) # Combine information from all images in one table
+}})
+rownames(EX.Table.Loop)<-pics
+EX.Table.Loop
 
-rownames(EX.Table)<-pics
+################
+### Parallel ###
+################
 
-EX.Table
+# Required packages
+library(parallel)
+library(foreach)
+library(doParallel)
+
+# Number of cores
+n.core<-detectCores()-1
+
+# Starting parallel
+cl <- makeCluster(n.core, output = "")
+registerDoParallel(cl)
+system.time({
+EX.Table.Parallel <- foreach(i = 1:length(pics), .packages = c("raster","FIELDimageR"), 
+                     .combine = rbind) %dopar% {
+                       EX.L1<-stack(paste("./images/",pics[i],sep = ""))
+                       EX.L.Shape<-polygonShape(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
+                       EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
+                       EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
+                       EX.L4<-indices(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
+                       EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
+                       EX.L.Info<- getInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
+                       EX.L.Info$plotValue # Combine information from all images in one table
+                     }})
+rownames(EX.Table.Parallel)<-pics
+EX.Table.Parallel 
+
 ```
 <br />
 
