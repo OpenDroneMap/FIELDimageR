@@ -703,7 +703,7 @@ EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldS
 ---------------------------------------------
 #### 15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
 
-> If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **polygonShape**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. Function to use: **polygonShape**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
+> If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **polygonShape**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. If *extent=TRUE* the whole image area will be the shapefile (used to analyze multiple images for example to evaluate seeds, ears, leaves, diseases, etc.). Function to use: **polygonShape**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
 
 ```r
 # Uploading file (EX_polygonShape.tif)
