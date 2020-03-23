@@ -377,7 +377,7 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
 
 <br />
 
-> **`fieldMask`** with index BI (Brightness Index) was used to identify pollen and **`fieldCount`** was used to count total and germinated pollens per sample.  [Download EX_Pollen.jpeg](https://drive.google.com/open?id=1Tyr4cEvEBoaWqaHw8UWPW-X1unzEMAfk)
+> **`fieldMask`** with index BIM (Brightness Index Modified) was used to identify pollen and **`fieldCount`** was used to count total and germinated pollens per sample.  [Download EX_Pollen.jpeg](https://drive.google.com/open?id=1Tyr4cEvEBoaWqaHw8UWPW-X1unzEMAfk)
 
 <br />
 
@@ -392,15 +392,15 @@ plotRGB(EX.P, r = 1, g = 2, b = 3)
 # Shapefile using the entire image (extent = T)
 EX.P.shapeFile<-polygonShape(EX.P,extent = T)
 
-# Using index "BI" to remove background (above 19)
-EX.P.R1<- fieldMask(mosaic = EX.P,index = "BI", cropValue = 19, cropAbove = T)
+# Using index "BIM" to remove background (above 19)
+EX.P.R1<- fieldMask(mosaic = EX.P,index = "BIM", cropValue = 19, cropAbove = T)
 plotRGB(EX.P.R1$newMosaic)
 
 # Counting all pollens above 0.01 size (all sample)
 EX.P.Total<-fieldCount(mosaic = EX.P.R1$mask, fieldShape = EX.P.shapeFile$fieldShape, minSize = 0.01) 
 
-# Using index "BI" to identify germinated pollen grain (removing values above 16)
-EX.P.R2<- fieldMask(mosaic = EX.P, index = "BI", cropValue = 16, cropAbove = T)
+# Using index "BIM" to identify germinated pollen grain (removing values above 16)
+EX.P.R2<- fieldMask(mosaic = EX.P, index = "BIM", cropValue = 16, cropAbove = T)
 plotRGB(EX.P.R2$newMosaic)
 
 # Counting all germinated pollen above 0.005 
