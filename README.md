@@ -247,7 +247,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F6ind.jpeg">
+  <img src="https://github.com/filipematias23/images/blob/master/readme/F6ind2.jpeg">
 </p>
 <br />
 
@@ -893,7 +893,7 @@ EX.ODM.Info$plotValue$myIndex
 pics<-list.files("./images/")
 
 # Vegetation indices
-index<- c("BGI","VARI","CI")
+index<- c("BGI","VARI","SCI")
 
 ############
 ### Loop ###
