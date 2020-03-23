@@ -1,5 +1,6 @@
 index	eq	band
 BI	sqrt((R^2+G^2+B^2)/3)	C
+BIM	sqrt((R*2+G*2+B*2)/3)	C
 SCI	(R-G)/(R+G)	C
 GLI	(2*G-R-B)/(2*G+R+B)	C
 HI	(2*R-G-B)/(G-B)	C
