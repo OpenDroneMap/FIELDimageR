@@ -7,7 +7,7 @@
   Graphic visualization of trait values for each plot using the fieldShape file and original image.
 }
 \usage{
-  fieldPlot(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3)
+  fieldPlot(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3, horiz = F)
 }
 \arguments{
   \item{fieldShape}{
@@ -36,6 +36,9 @@
   }
   \item{round}{
     number of decimal digits at the legend.
+  }
+  \item{horiz}{
+    if TRUE will plot a horizontal legend.
   }
 }
 \details{
