@@ -1,4 +1,4 @@
-fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3){
+fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3, horiz = F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   if(length(fieldAttribute)>1){stop("Choose ONE attribute")}
   attribute<-colnames(fieldShape@data)
@@ -29,6 +29,7 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
          title= fieldAttribute,
          legend = pos,
          fill =  col,
-         bty = "n")
+         bty = "n",
+        horiz = horiz)
 }
 
