@@ -75,6 +75,7 @@ install_github("filipematias23/FIELDimageR")
 install.packages("sp")
 install.packages("raster")
 install.packages("rgdal")
+install.packages("scales")
 
 library(FIELDimageR)
 library(raster)
