@@ -1028,7 +1028,9 @@ options(device = "quartz")
 
 > This discussion group provides an online source of information about the FIELDimageR package.  
 
-Report a bug and ask a question at https://groups.google.com/forum/#!forum/fieldimager
+Report a bug and ask a question at: 
+* https://groups.google.com/forum/#!forum/fieldimager 
+* https://community.opendronemap.org/t/about-the-fieldimager-category/4130
 
 <br />
 
