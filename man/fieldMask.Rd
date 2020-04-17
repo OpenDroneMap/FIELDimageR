@@ -7,7 +7,7 @@
   Different vegetation indices can be used to remove the soil. For the list of indices please visit the FIELDimageR manual at link:
 }
 \usage{
-  fieldMask(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T)
+  fieldMask(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T)
 }
 \arguments{
   \item{mosaic}{
@@ -18,6 +18,9 @@
   }
   \item{index}{
     vector with the vegetation indices to be calculated. For the list of indices please visit the FIELDimageR manual at link:
+  }
+  \item{myIndex}{
+    user can calculate a diferent index using the bands names, e.g. "(Green+Blue)/Red-NIR/RedEdge"
   }
   \item{mask}{
     if avaliable the soil will be removed following this mask and not the vegetation index, cropValue and cropAbove must be used.
