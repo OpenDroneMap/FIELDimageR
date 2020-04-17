@@ -70,7 +70,7 @@ install_github("filipematias23/FIELDimageR")
 > * **[sp](https://CRAN.R-project.org/package=sp)** 
 > * **[raster](https://CRAN.R-project.org/package=raster)** 
 > * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
-> * **[scales](https://CRAN.R-project.org/package=scales)
+> * **[scales](https://CRAN.R-project.org/package=scales)**
 
 ```r
 install.packages("sp")
