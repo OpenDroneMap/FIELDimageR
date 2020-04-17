@@ -40,7 +40,7 @@
 ---------------------------------------------
 ### Installation
 
-> In order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), first you need to install the [devtools](https://github.com/hadley/devtools) package in R.
+>  First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/). Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the [devtools](https://github.com/hadley/devtools) package in R.
 
 ```r
 install.packages("devtools")
