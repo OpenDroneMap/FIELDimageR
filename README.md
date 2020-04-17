@@ -1026,9 +1026,7 @@ options(device = "quartz")
 
 ### Google Groups Forum
 
-> This discussion group provides an online source of information about the FIELDimageR package.  
-
-Report a bug and ask a question at: 
+> This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
 * https://groups.google.com/forum/#!forum/fieldimager 
 * https://community.opendronemap.org/t/about-the-fieldimager-category/4130
 
@@ -1065,6 +1063,7 @@ Report a bug and ask a question at:
 > * [UW Potato Breeding and Genetics Laboratory](https://potatobreeding.cals.wisc.edu)
 > * [Dr Jeffrey Endelman, PhD Student Maria Caraza-Harter, and MS Student 
 Lin Song](https://potatobreeding.cals.wisc.edu/people/)
+> * [OpenDroneMap](https://www.opendronemap.org/)
 
 <br />
 
