@@ -1,4 +1,4 @@
-fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T){
+fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T){
   Ind<-read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),header = T,sep = "\t")
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
@@ -27,8 +27,17 @@ fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,
       NIR1<-mosaic@layers[[NIR]]
       names(mosaic)[NIR]<-c("NIR")
     }
-    mr<-eval(parse(text = as.character(Ind$eq[as.character(Ind$index)==index])))}
-
+    mr<-eval(parse(text = as.character(Ind$eq[as.character(Ind$index)==index])))
+  if(!is.null(myIndex)){
+      print(paste("Mask equation myIndex=",myIndex, sep = ""))
+      Blue<-B
+      Green<-G
+      Red<-R
+      if(!is.null(NIR)){NIR<-NIR1}
+      if(!is.null(RedEdge)){RedEdge<-RE}
+      mr<-eval(parse(text = as.character(myIndex)))
+    }
+  }
   if(!is.null(mask)){
     mask <- stack(mask)
     if(length(mask@layers)>1){stop("Mask must have only one band.")}
