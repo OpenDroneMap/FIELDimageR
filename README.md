@@ -70,11 +70,13 @@ install_github("filipematias23/FIELDimageR")
 > * **[sp](https://CRAN.R-project.org/package=sp)** 
 > * **[raster](https://CRAN.R-project.org/package=raster)** 
 > * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
+> * **[scales](https://CRAN.R-project.org/package=scales)
 
 ```r
 install.packages("sp")
 install.packages("raster")
 install.packages("rgdal")
+install.packages("scales")
 
 library(FIELDimageR)
 library(raster)
@@ -271,6 +273,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue =
 ```r
 EX1.Indices.BGI<- indices(mosaic = EX1.Rotated, index = c("BGI"))
 
+dev.off()
 hist(EX1.Indices.BGI$BGI) # Image segmentation start from 0.7 (soil and plants)
 
 EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, 
