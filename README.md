@@ -4,7 +4,7 @@
 > This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/FIELDimageR.jpg" width="70%" height="70%">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FIELDimageR.jpg" width="70%" height="70%">
 </p>
 
 <div id="menu" />
@@ -99,7 +99,7 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F1.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F1.jpeg">
 </p>
 
 <br />
@@ -111,7 +111,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F2.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F2.jpeg">
 </p>
 
 [Menu](#menu)
@@ -131,7 +131,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F4.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F4.jpeg">
 </p>
 
 [Menu](#menu)
@@ -150,7 +150,7 @@ EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, inde
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F3.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F3.jpeg">
 </p>
 
 [Menu](#menu)
@@ -169,7 +169,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F5.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F5.jpeg">
 </p>
 
 <br />
@@ -179,7 +179,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F24.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F24.jpeg">
 </p>
 
 <br />
@@ -198,7 +198,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F10.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F10.jpeg">
 </p>
 
 <br />
@@ -214,7 +214,7 @@ EX1.Shape$fieldShape@data
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F11.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F11.jpeg">
 </p>
 
 <br />
@@ -234,7 +234,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F26.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F26.jpeg">
 </p>
 
 [Menu](#menu)
@@ -249,7 +249,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F6ind2.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F6ind2.jpeg">
 </p>
 <br />
 
@@ -263,7 +263,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue =
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F7.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F7.jpeg">
 </p>
 
 <br />
@@ -285,7 +285,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F23.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F23.jpeg">
 </p>
 
 [Menu](#menu)
@@ -308,7 +308,7 @@ EX1.SC$fieldCount
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F9.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F9.jpeg">
 </p>
 
 <br />
@@ -329,7 +329,7 @@ EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F20.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F20.jpeg">
 </p>
 
 <br />
@@ -347,7 +347,7 @@ EX1.SC$objectReject[[4]] # No shape rejected because minSize = 0.00
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F21.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F21.jpeg">
 </p>
 
 <br />
@@ -365,7 +365,7 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F22.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F22.jpeg">
 </p>
 
 <br />
@@ -375,7 +375,7 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F28.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F28.jpg">
 </p>
 
 <br />
@@ -413,7 +413,7 @@ EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape,
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F30.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F30.jpg">
 </p>
 
 [Menu](#menu)
@@ -489,7 +489,7 @@ EPH$plotValue
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F13.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F13.jpeg">
 </p>
 
 [Menu](#menu)
@@ -529,7 +529,7 @@ EX.RemObj.Info$plotValue[c(12,13,14),]
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F25.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F25.jpg">
 </p>
 
 [Menu](#menu)
@@ -618,7 +618,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F14.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F14.jpeg">
 </p>
 
 [Menu](#menu)
@@ -633,7 +633,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/PotatoGrowthCycleNew.jpg" width="70%" height="70%">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/PotatoGrowthCycleNew.jpg" width="70%" height="70%">
 </p>
 
 <br />
@@ -680,25 +680,25 @@ Data.Cycle
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F15.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F15.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F16.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F16.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F17.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F17.jpeg">
 </p>
 
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F18.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F18.jpeg">
 </p>
 
 [Menu](#menu)
@@ -785,7 +785,7 @@ fieldPlot(fieldShape=EX.polygon.Info$fieldShape,
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F27.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F27.jpg">
 </p>
 
 [Menu](#menu)
@@ -808,7 +808,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F12.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F12.jpeg">
 </p>
 
 [Menu](#menu)
@@ -877,7 +877,7 @@ EX.ODM.Info$plotValue$myIndex
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/ODM_FIELDimageR_New.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/ODM_FIELDimageR_New.jpg">
 </p>
 
 [Menu](#menu)
@@ -953,7 +953,7 @@ EX.Table.Parallel
 <br />
 
 <p align="center">
-  <img src="https://github.com/filipematias23/images/blob/master/readme/F29.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F29.jpg">
 </p>
 
 [Menu](#menu)
@@ -1009,17 +1009,17 @@ options(device = "quartz")
 
 > FIELDimageR: A tool to analyze orthomosaic images from agricultural field trials in R (Basic Pipeline)
 <p align="center">
-<a href="https://youtu.be/ZXyaePAv9r8"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTube.jpeg" width=400 height=300 title="Watch the video"></a>
+<a href="https://youtu.be/ZXyaePAv9r8"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTube.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 > FIELDimageR: Counting the number of plants (fieldCount)
 <p align="center">
-<a href="https://youtu.be/v0gAq302Ueg"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
+<a href="https://youtu.be/v0gAq302Ueg"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 > FIELDimageR: calculating vegetation indices (NDVI and NDRE)
 <p align="center">
-<a href="https://youtu.be/-XpSWKOXips"><img src="https://github.com/filipematias23/images/blob/master/readme/YouTubeIndices.jpeg" width=400 height=300 title="Watch the video"></a>
+<a href="https://youtu.be/-XpSWKOXips"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeIndices.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 <br />
