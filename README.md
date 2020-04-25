@@ -52,7 +52,7 @@ install.packages("devtools")
 
 ```r
 library(devtools)
-install_github("filipematias23/FIELDimageR")
+install_github("OpenDroneMap/FIELDimageR")
 
 ```
 [Menu](#menu)
