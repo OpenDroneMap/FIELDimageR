@@ -51,7 +51,6 @@ install.packages("devtools")
 > Now install R/FIELDimageR using the `install_github` function from [devtools](https://github.com/hadley/devtools) package.
 
 ```r
-library(devtools)
 devtools::install_github("filipematias23/FIELDimageR", type = "source")
 ```
 [Menu](#menu)
