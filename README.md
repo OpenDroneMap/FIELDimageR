@@ -53,6 +53,22 @@ install.packages("devtools")
 ```r
 devtools::install_github("filipematias23/FIELDimageR")
 ```
+> If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
+
+```r
+setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.zip
+unzip("FIELDimageR-master.zip") 
+file.rename("FIELDimageR-master", "FIELDimageR") 
+shell("R CMD build FIELDimageR")
+install.packages("FIELDimageR_0.1.6.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.1.6)
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/Install.jpg" width="50%" height="50%">
+</p>
+
+<br />
 [Menu](#menu)
 
 <div id="P1" />
