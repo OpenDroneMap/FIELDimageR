@@ -1,5 +1,5 @@
-\name{indices}
-\alias{indices}
+\name{fieldIndex}
+\alias{fieldIndex}
 \title{
   Building vegetation indices using Red, Green, Blue, Red Edge, and NIR band
 }
@@ -7,7 +7,7 @@
   Different vegetation indices can be calculated using at least 3 bands. For the list of indices please visit the FIELDimageR manual at link:
 }
 \usage{
-  indices(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("HUE"),myIndex=NULL,plot=T)
+  fieldIndex(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("HUE"),myIndex=NULL,plot=T)
 }
 \arguments{
   \item{mosaic}{
