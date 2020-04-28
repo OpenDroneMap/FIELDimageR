@@ -264,7 +264,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F6ind2.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F6ind3.jpeg">
 </p>
 <br />
 
