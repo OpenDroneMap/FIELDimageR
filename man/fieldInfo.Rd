@@ -1,5 +1,5 @@
-\name{getInfo}
-\alias{getInfo}
+\name{fieldInfo}
+\alias{fieldInfo}
 \title{
   Extract information from image using the fieldShape file as reference
 }
@@ -7,7 +7,7 @@
   Function that use raster::extract() to extract information from the original image using fieldShape file as reference.
 }
 \usage{
-  getInfo(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,projection=TRUE,...)
+  fieldInfo(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NULL,projection=TRUE,...)
 }
 \arguments{
 \item{mosaic}{
