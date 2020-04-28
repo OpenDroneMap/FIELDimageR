@@ -1,5 +1,5 @@
-\name{polygonShape}
-\alias{polygonShape}
+\name{fieldPolygon}
+\alias{fieldPolygon}
 \title{
   Building shapefile with polygons
 }
@@ -7,7 +7,7 @@
   The user should select points to make polygons in the image. Shapefile with polygons will be automatically built. Attention: fieldRotate() is not necessary.
 }
 \usage{
-  polygonShape(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F)
+  fieldPolygon(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F)
 }
 \arguments{
   \item{mosaic}{
