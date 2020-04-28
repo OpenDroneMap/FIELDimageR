@@ -633,7 +633,7 @@ cor(DataRed)
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F14.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F14new.jpeg" width="80%" height="80%">
 </p>
 
 [Menu](#menu)
