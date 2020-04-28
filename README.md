@@ -259,7 +259,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 ---------------------------------------------
 #### 6. Building vegetation indices 
 
-> A general number of indices are implemented in *FIELDimageR* using the function **`indices`**. Also, yo can build your own index using the parameter `myIndex`. 
+> A general number of indices are implemented in *FIELDimageR* using the function **`fieldIndex`**. Also, yo can build your own index using the parameter `myIndex`. 
 
 <br />
 
@@ -271,7 +271,7 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 ```r
 # Calculating myIndex = "(Red-Blue)/Green" (not avaliable at 'FIELDimageR')
 
-EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
+EX1.Indices<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
                           index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
                           
 ```
@@ -286,7 +286,7 @@ EX1.Indices<- indices(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue =
 > *Sugestion:* This function could also be used to build an index to remove soil or weeds. First it is necessary to identify the threshold to differentiate soil from the plant material. At the example below (B), all values above 0.7 were considered as soil and further removed using **`fieldMask`** (C & D).
 
 ```r
-EX1.Indices.BGI<- indices(mosaic = EX1.Rotated, index = c("BGI"))
+EX1.Indices.BGI<- fieldIndex(mosaic = EX1.Rotated, index = c("BGI"))
 
 dev.off()
 hist(EX1.Indices.BGI$BGI) # Image segmentation start from 0.7 (soil and plants)
@@ -408,7 +408,7 @@ EX.P<-aggregate(EX.P,fact=4)
 plotRGB(EX.P, r = 1, g = 2, b = 3)
 
 # Shapefile using the entire image (extent = T)
-EX.P.shapeFile<-polygonShape(EX.P,extent = T)
+EX.P.shapeFile<-fieldPolygon(EX.P,extent = T)
 
 # Using index "BIM" to remove background (above 19)
 EX.P.R1<- fieldMask(mosaic = EX.P,index = "BIM", cropValue = 19, cropAbove = T)
@@ -456,14 +456,14 @@ EX1.Canopy$areaPorcent
 ---------------------------------------------
 #### 9. Extracting data from field images 
 
-> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`getInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallel).
+> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`fieldInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallel).
 
 ```r
-EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
+EX1.Info<- fieldInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
 EX1.Info$fieldShape@data
 
 ### Parallel (n.core = 3)
-EX1.Info<- getInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape, n.core = 3)
+EX1.Info<- fieldInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape, n.core = 3)
 EX1.Info$fieldShape@data
 
 ```
@@ -475,7 +475,7 @@ EX1.Info$fieldShape@data
 ---------------------------------------------
 #### 10. Estimating plant height
 
-> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`getInfo`**. 
+> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`fieldInfo`**. 
 
 ```r
 # Uploading files from soil base (EX_DSM0.tif) and vegetative growth (EX_DSM1.tif):
@@ -497,7 +497,7 @@ CHM.R<-fieldRotate(CHM, theta = 2.3)
 CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
 
 # Extracting the estimate plant height average (EPH):
-EPH <- getInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
+EPH <- fieldInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
 EPH$plotValue
 
 ```
@@ -530,10 +530,10 @@ EX.RemObj.RemSoil<- fieldMask(mosaic = EX.RemObj.Crop,index = "HUE")
 EX.RemObj.Shape<-fieldShape(mosaic = EX.RemObj.RemSoil,ncols = 8, nrows = 4)
 
 # Building indice (NGRDI)
-EX.RemObj.Indices<- indices(mosaic = EX.RemObj.RemSoil$newMosaic,index = c("NGRDI"))
+EX.RemObj.Indices<- fieldIndex(mosaic = EX.RemObj.RemSoil$newMosaic,index = c("NGRDI"))
 
 # Extracting data (NGRDI)
-EX.RemObj.Info<- getInfo(mosaic = EX.RemObj.Indices$NGRDI,
+EX.RemObj.Info<- fieldInfo(mosaic = EX.RemObj.Indices$NGRDI,
                       fieldShape = EX.RemObj.Shape$fieldShape,
                       n.core = 3)
                       
@@ -592,21 +592,21 @@ system.time({RES_4_S <- fieldMask(RES_4_R,index="HUE")})
 
 ### Indices
   
-system.time({RES_1_I <- indices(RES_1_S$newMosaic,index=c("BGI"))})
-system.time({RES_2_I <- indices(RES_2_S$newMosaic,index=c("BGI"))})
-system.time({RES_4_I <- indices(RES_4_S$newMosaic,index=c("BGI"))})
+system.time({RES_1_I <- fieldIndex(RES_1_S$newMosaic,index=c("BGI"))})
+system.time({RES_2_I <- fieldIndex(RES_2_S$newMosaic,index=c("BGI"))})
+system.time({RES_4_I <- fieldIndex(RES_4_S$newMosaic,index=c("BGI"))})
   
 ### Get Information (1 Band)
   
-system.time({RES_1_Info <- getInfo(RES_1_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_2_Info <- getInfo(RES_2_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_4_Info <- getInfo(RES_4_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_1_Info <- fieldInfo(RES_1_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_2_Info <- fieldInfo(RES_2_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_4_Info <- fieldInfo(RES_4_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
   
 ### Get Information (3 Bands)
   
-system.time({RES_1_Info2 <- getInfo(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_2_Info2 <- getInfo(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_4_Info2 <- getInfo(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_1_Info2 <- fieldInfo(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_2_Info2 <- fieldInfo(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_4_Info2 <- fieldInfo(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
 
 ### Correlation
 
@@ -628,7 +628,7 @@ cor(DataGreen)
 cor(DataRed)
 
 ```
-> The time to run one function using the image with pixel size of 0.4x0.4 cm can be 10 (**`getInfo`**) to 70 times (**`indices`**) slower than the image with pixel size of 1.6x1.6 cm (Table 1). The computing time to extract BGI index (one layer) with 0.4x0.4 cm was ~23 min whereas  only ~7 min with the 0.8x0.8 cm image, and ~2 min using the 1.6x1.6 cm image. the time to extract the RGB information (three layers) was ~2.3 min for the 1.6x1.6 cm image and ~66 min for the 0.4x0.4 cm image. It is important to highlight that the resolution did not affect the plots mean, it has a correlation >99% between 0.4x0.4 cm and 1.6x1.6 (Table 2). High resolution images showed to require higher computational performance, memory, and storage space. We experienced that during the image collection in the field a low altitudes flight needs more batteries and a much greater number of pictures, and consequently longer preprocessing images steps to build ortho-mosaics.
+> The time to run one function using the image with pixel size of 0.4x0.4 cm can be 10 (**`fieldInfo`**) to 70 times (**`fieldIndex`**) slower than the image with pixel size of 1.6x1.6 cm (Table 1). The computing time to extract BGI index (one layer) with 0.4x0.4 cm was ~23 min whereas  only ~7 min with the 0.8x0.8 cm image, and ~2 min using the 1.6x1.6 cm image. the time to extract the RGB information (three layers) was ~2.3 min for the 1.6x1.6 cm image and ~66 min for the 0.4x0.4 cm image. It is important to highlight that the resolution did not affect the plots mean, it has a correlation >99% between 0.4x0.4 cm and 1.6x1.6 (Table 2). High resolution images showed to require higher computational performance, memory, and storage space. We experienced that during the image collection in the field a low altitudes flight needs more batteries and a much greater number of pictures, and consequently longer preprocessing images steps to build ortho-mosaics.
 
 <br />
 
@@ -676,15 +676,15 @@ EX3.RemSoil<-fieldMask(EX3.RS$newMosaic,mask = EX2.RemSoil$mask ,cropValue=0,cro
 
 # Building indices
 
-EX2.Indices <- indices(EX2.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
+EX2.Indices <- fieldIndex(EX2.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
-EX3.Indices <- indices(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
+EX3.Indices <- fieldIndex(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
 
 # Extracting data using the same fieldShape file from step 5:
 
-EX2.Info<- getInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
-EX3.Info<- getInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX2.Info<- fieldInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX3.Info<- fieldInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 Data.Cycle<-data.frame(EX1=EX1.Info$plotValue$myIndex,
       EX2=EX2.Info$plotValue$myIndex,
@@ -745,11 +745,11 @@ EX1.5b.Rotated<-fieldRotate(EX1.5b.Crop,theta = 2.3, plot = T)
 EX1.5b.RemSoil<-fieldMask(EX1.5b.Rotated,Red=1,Green=2,Blue=3,index="HUE",cropValue=0,cropAbove=T,plot=T)
 
 # Building indices (NDVI and NDRE)
-EX1.5b.Indices <- indices(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEdge=4,NIR=5,
+EX1.5b.Indices <- fieldIndex(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEdge=4,NIR=5,
                  index = c("NDVI","NDRE"))
 
 # Extracting data using the same fieldShape file from step 5:
-EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX1.5b.Info<- fieldInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
 [Menu](#menu)
@@ -759,7 +759,7 @@ EX1.5b.Info<- getInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldS
 ---------------------------------------------
 #### 15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
 
-> If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **polygonShape**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. If *extent=TRUE* the whole image area will be the shapefile (used to analyze multiple images for example to evaluate seeds, ears, leaves, diseases, etc.). Function to use: **polygonShape**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
+> If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **fieldPolygon**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. If *extent=TRUE* the whole image area will be the shapefile (used to analyze multiple images for example to evaluate seeds, ears, leaves, diseases, etc.). Function to use: **fieldPolygon**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
 
 ```r
 # Uploading file (EX_polygonShape.tif)
@@ -777,18 +777,18 @@ polygonData<-data.frame(ID=c("Polygon1","Polygon2","Polygon3"),
 polygonData
 
 # Building plot shapefile with 3 polygons (select 4 points around the polygon area)
-EX.polygon.Shape<-polygonShape(mosaic = EX.polygon.RemSoil,
+EX.polygon.Shape<-fieldPolygon(mosaic = EX.polygon.RemSoil,
                                nPolygon = 3,nPoint = 4,ID = "ID",
                                polygonData = polygonData,cropPolygon = T,
                                polygonID = c("Polygon1","Polygon2","Polygon3"))
 plotRGB(EX.polygon.Shape$cropField)
 
 # Building indice (NGRDI and BGI)
-EX.polygon.Indices<- indices(mosaic = EX.polygon.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
+EX.polygon.Indices<- fieldIndex(mosaic = EX.polygon.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
                              index = c("NGRDI","BGI"))
 
 # Extracting data (NGRDI and BGI)
-EX.polygon.Info<- getInfo(mosaic = EX.polygon.Indices[[c("NGRDI","BGI")]],
+EX.polygon.Info<- fieldInfo(mosaic = EX.polygon.Indices[[c("NGRDI","BGI")]],
                    fieldShape = EX.polygon.Shape$fieldShape, n.core = 3)
 EX.polygon.Info$fieldShape@data
 
@@ -880,11 +880,11 @@ EX.ODM.Rotated<-fieldRotate(EX.ODM.Crop,theta = 2.3)
 EX.ODM.RemSoil<- fieldMask(mosaic = EX.ODM.Rotated)
 
 # Building indices
-EX.ODM.Indices <- indices(EX.ODM.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
+EX.ODM.Indices <- fieldIndex(EX.ODM.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
 
 # Extracting data using the same fieldShape file from step 5:
-EX.ODM.Info<- getInfo(mosaic = EX.ODM.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX.ODM.Info<- fieldInfo(mosaic = EX.ODM.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 EX.ODM.Info$plotValue$myIndex
 
@@ -922,12 +922,12 @@ EX.Table.Loop<-NULL
 for(i in 1:length(pics)){
   EX.L1<-stack(paste("./images/",pics[i],sep = ""))
   plotRGB(EX.L1)
-  EX.L.Shape<-polygonShape(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
+  EX.L.Shape<-fieldPolygon(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
   EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
   EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
-  EX.L4<-indices(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
+  EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
   EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
-  EX.L.Info<- getInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
+  EX.L.Info<- fieldInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
   plot(EX.L5,col = grey(1:100/100))
   EX.Table.Loop<-rbind(EX.Table.Loop, EX.L.Info$plotValue) # Combine information from all images in one table
 }})
@@ -953,12 +953,12 @@ system.time({
 EX.Table.Parallel <- foreach(i = 1:length(pics), .packages = c("raster","FIELDimageR"), 
                      .combine = rbind) %dopar% {
                        EX.L1<-stack(paste("./images/",pics[i],sep = ""))
-                       EX.L.Shape<-polygonShape(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
+                       EX.L.Shape<-fieldPolygon(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
                        EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
                        EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
-                       EX.L4<-indices(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
+                       EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
                        EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
-                       EX.L.Info<- getInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
+                       EX.L.Info<- fieldInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
                        EX.L.Info$plotValue # Combine information from all images in one table
                      }})
 rownames(EX.Table.Parallel)<-pics
@@ -1007,7 +1007,7 @@ ShapeFile <- readOGR("Other_Software_ShapeFile.shp")
 ShapeFile <- rbind(ShapeFile1, ShapeFile2, ShapeFile3, ...)
 ```
 
-6) External window to amplify the RStudio plotting area (It helps to visualize and click when using functions: **fieldCrop**, **fieldRotate**, **fieldShape**, and **polygonShape**). The default graphics device is normally "RStudioGD". To change use "windows" on Windows, "quartz" on MacOS, and "X11" on Linux.
+6) External window to amplify the RStudio plotting area (It helps to visualize and click when using functions: **fieldCrop**, **fieldRotate**, **fieldShape**, and **fieldPolygon**). The default graphics device is normally "RStudioGD". To change use "windows" on Windows, "quartz" on MacOS, and "X11" on Linux.
 ```
 # Example in macOS (type the following code before running FIELDimageR functions):
 options(device = "quartz")
