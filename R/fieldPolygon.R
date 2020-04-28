@@ -1,4 +1,4 @@
-polygonShape<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F){
+fieldPolygon<-function(mosaic,nPolygon=1,nPoint=4,polygonID=NULL,polygonData=NULL,ID=NULL,cropPolygon=F,remove=F,plot=T,fast.plot=F,extent=F){
   source(file = system.file("extdata", "RGB.rescale.R", package = "FIELDimageR", 
                             mustWork = TRUE))
   mosaic <- stack(mosaic)
