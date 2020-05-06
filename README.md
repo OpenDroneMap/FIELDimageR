@@ -1066,6 +1066,12 @@ options(device = "quartz")
 
 <br />
 
+### Citation
+
+> *Matias FI, Caraza-Harter MV, Endelman JB.* FIELDimageR: An R package to analyze orthomosaic images from agricultural field trials. **The Plant Phenome J.** 2020; [https://doi.org/10.1002/ppj2.20005](https://doi.org/10.1002/ppj2.20005)
+
+<br />
+
 ### Author
 
 > * [Filipe Inacio Matias](https://github.com/filipematias23)
