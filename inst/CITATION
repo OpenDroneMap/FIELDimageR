@@ -1,10 +1,20 @@
-citHeader("To cite the FIELDimageR package in publications, please use")
+citHeader("The following are references to the package FIELDimageR.  You should also reference the individual methods used, as detailed in the reference section of the help files for each function.")
 
-citEntry(entry="Manual",
-	title="FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials",
-	author=personList(as.person("F. I. Matias")),
-	year = {2019},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/filipematias23/FIELDimageR}}
+bibentry(bibtype="article",
+  title        = "{FIELDimageR}: An {R} package to analyze orthomosaic images from agricultural field trials",
+  author       = c(person(c("Filipe", "I."), "Matias"),person(c("Maria", "V."), "Caraza-Harter"),person(c("Jeffrey", "B."), "Endelman")),
+  journal      = "The Plant Phenome J.",
+  year         = "2020",
+  pages        = "1--6",
+  url          = "https://doi.org/10.1002/ppj2.20005",
 )
+
+bibentry(bibtype="Manual",
+         title = "{FIELDimageR}: An {R} package to analyze orthomosaic images from agricultural field trials",
+         author = c(person(c("Filipe", "I."), "Matias"),person(c("Maria", "V."), "Caraza-Harter"),person(c("Jeffrey", "B."), "Endelman")),
+         year         = "2020",
+         url          = "https://doi.org/10.1002/ppj2.20005",
+         note = note,
+)
+
+citFooter('To get Bibtex entries use: x<-citation("FIELDimageR"); toBibtex(x)')
