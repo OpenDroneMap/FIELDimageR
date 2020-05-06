@@ -6,6 +6,6 @@
 }
 \format{RGB.rescale(mosaic, num.band)}
 \references{
-  Matias et al. (2019) FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials. (submitted)
+ Matias FI, Caraza-Harter MV, Endelman JB. FIELDimageR: An R package to analyze orthomosaic images from agricultural field trials. The Plant Phenome J. 2020;e20005. https://doi.org/10.1002/ppj2.20005
 }
 \keyword{datasets}
