@@ -1,4 +1,4 @@
-fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red"){
+fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red", na.rm=FALSE){
   if(!is.na(projection(fieldShape))&is.na(projection(mosaic))){
     if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}}
   mosaic <- stack(mosaic)
@@ -47,7 +47,7 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
     PS<-NULL
     PR<-NULL
     if(!is.null(y)){
-      for (i in 2:length(x1)) {x<-c(x,round(100*(x1[i]/sum(x1)),3))}
+      for (i in 2:length(x1)) {x<-c(x,round(100*(x1[i]/sum(x1,na.rm = na.rm)),3))}
       x<-x[y$seqName]
       
       if(dim(as.matrix(y$Position))[2]==1){
