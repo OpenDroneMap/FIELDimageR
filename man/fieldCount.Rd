@@ -7,7 +7,7 @@
   The mask from function fieldMask() is used to identify the number of objects per plot.
 }
 \usage{
-  fieldCount(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red")
+  fieldCount(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red", na.rm=FALSE)
 }
 \arguments{
   \item{mosaic}{
@@ -33,6 +33,9 @@
   }
   \item{col}{
     color code or name, please check help("points").
+  }
+  \item{na.rm}{
+    logical. Should missing values (including NaN) be removed?.
   }
 }
 \details{
