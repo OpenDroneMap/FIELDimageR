@@ -199,7 +199,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 <br />
 
->  the function **`fieldMap`** can be used to include an specific plot *ID* name from an external table file. For instance, the new column **PlotName** in the output will be the new identification. You can dowload an example of external table here: [DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
+>  One matrix can be used to identify the plots position according to the image above. The function **`fieldMap`** can be used to specify the plot *ID* automatic or any other matrix (manually built) also can be used. For instance, the new column **PlotName** will be the new identification. You can download an external table example here: [DataTable.csv](https://drive.google.com/open?id=18YE4dlSY1Czk2nKeHgwd9xBX8Yu6RCl7).
 
 ```r
 ### Field map identification (name for each Plot). 'fieldPlot' argument can be a number or name.
@@ -226,7 +226,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
                       fieldData = DataTable, ID = "Plot")
                       
-The new column PlotName is identifying the plots:                      
+# The new column PlotName is identifying the plots:                      
 EX1.Shape$fieldShape@data                      
 ```
 <br />
