@@ -92,10 +92,11 @@ install.packages("sp")
 install.packages("raster")
 install.packages("rgdal")
 install.packages("scales")
-
+```
+> **Taking the first step:**
+```r
 library(FIELDimageR)
 library(raster)
-
 ```
 [Menu](#menu)
 
