@@ -23,7 +23,7 @@
    * [8. Evaluating the object area percentage (e.g. canopy)](#P8)
    * [9. Extracting data from field images](#P9)
    * [10. Estimating plant height](#P10)
-   * [11. Removing objects (plot, cloud, weed, etc.)](#P11)
+   * [11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#P11)
    * [12. Resolution and computing time](#P12)
    * [13. Crop growth cycle](#P13)
    * [14. Multispectral images](#P14)
@@ -516,7 +516,7 @@ EPH$plotValue
 <div id="P11" />
 
 ---------------------------------------------
-#### 11. Removing objects (plot, cloud, weed, etc.) 
+#### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
 
 > The function **`fieldCrop`** can be used to remove objects from the field image. For instance, the parameter *remove=TRUE* and *nPoint* should be used to select the object boundaries to be removed. [Download EX_RemObj.tif](https://drive.google.com/open?id=1wfxSQANRrPOvJWwNZ6UU0UjXwzKfkKH0)).
 
@@ -549,6 +549,57 @@ EX.RemObj.Info$plotValue[c(12,13,14),]
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F25.jpg">
+</p>
+
+<br />
+
+> The function **`fieldDraw`** can be used to draw lines or polygons in the field image. This function allows to extract information of specific positions in the field (x, y, value). Also, this function can be used to evaluate distances between objects (for example: distance between plants in a line) or either objects length (for example: seed length, threes diameter, etc.). Let's use the image above to evaluate the distance between potato plots and later to extract NGRDI values from a line with soil and vegetation to observe the profile in a distance plot. 
+
+```r
+# Uploading file (EX_RemObj.tif)
+EX.Dist <- stack("EX_RemObj.tif")
+
+# vegetation indices
+EX.Dist.Ind <- fieldIndex(mosaic = EX.Dist,index = c("NGRDI"))
+
+# Removing the soil
+EX.Dist.RemSoil <- fieldMask(mosaic = EX.Dist.Ind)
+
+# Evaluating distance between plants. Remember to press ESC when finished to draw the line.
+EX.Dist.Draw <- fieldDraw(mosaic = EX.Dist.RemSoil$mask, 
+                          dist = T,
+                          value = 1, # Use the number to identify the object to be measured (1 for space and 0 for plants)
+                          distSel = 0.4) 
+EX.Dist.Draw$drawDist # Distance between plants
+                          
+# Making plots                         
+plotRGB(EX.Dist.RemSoil$newMosaic)
+points(EX.Dist.Draw$drawData$x,EX.Dist.Draw$drawData$y, col="red",pch=16,cex=0.7)
+points(EX.Dist.Draw$drawSegments$x,EX.Dist.Draw$drawSegments$y, col="blue",pch=16,cex=0.7)
+lines(EX.Dist.Draw$drawDist[1,c("x1","x2")],EX.Dist.Draw$drawDist[1,c("y1","y2")], col="green",lwd=5)
+
+# Evaluating an specific layer profile (e.g. NGRDI)
+EX.Dist.Draw.2 <- fieldDraw(mosaic = EX.Dist.Ind,
+                            ndraw = 4, # Making 4 lines (press ESC to conclude each line)
+                            lwd = 5)
+EX.Data<-EX.Dist.Draw.2$Draw1$drawData
+dev.off()
+plot(x = EX.Data$x, y = EX.Data$NGRDI, type="l", col="red",lwd=2,xlab="Distance (m)", ylab="NGRDI")
+abline(h=0.0,col="blue", lty=2, lwd=3)
+
+# Making polygons and extracting data per cell
+EX.Dist.Draw.3 <- fieldDraw(mosaic = EX.Dist.Ind,
+                            line = F, # Making 2 polygons (press ESC to conclude each polygon)
+                            ndraw = 2,
+                            lwd = 5)
+plotRGB(EX.Dist.RemSoil$newMosaic)
+plot(EX.Dist.Draw.3$Draw1$drawObject, col="red",add=T)
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F31.jpg">
 </p>
 
 [Menu](#menu)
