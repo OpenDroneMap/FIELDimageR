@@ -1,9 +1,9 @@
 export(fieldRotate,fieldCrop,fieldShape,fieldPolygon,
-       fieldIndex,fieldMask,fieldMap,fieldInfo,fieldPlot,fieldCount,fieldArea)
+       fieldIndex,fieldMask,fieldMap,fieldInfo,fieldPlot,fieldCount,fieldArea,fieldDraw)
 importFrom("sp", "Polygons","Polygon","SpatialPolygonsDataFrame","SpatialPolygons","spsample",
            "SpatialPointsDataFrame","over", "proj4string")
 importFrom("raster", "stack", "projection","plotRGB","res","projectRaster","crs",
-           "atan2","crop","rasterToPolygons","mask","extract","clump")
+           "atan2","crop","rasterToPolygons","mask","extract","clump","drawLine","drawPoly","xyFromCell")
 importFrom("parallel", "makeCluster", "detectCores")
 importFrom("foreach", "foreach", "%dopar%")
 importFrom("doParallel", "registerDoParallel")
