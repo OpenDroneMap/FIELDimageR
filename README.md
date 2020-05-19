@@ -573,7 +573,7 @@ EX.Dist.Draw <- fieldDraw(mosaic = EX.Dist.RemSoil$mask,
 EX.Dist.Draw$drawDist # Distance between plants
                           
 # Making plots                         
-plotRGB(EX.Dist.RemSoil$newMosaic)
+plot(EX.Dist.Ind$NGRDI)
 points(EX.Dist.Draw$drawData$x,EX.Dist.Draw$drawData$y, col="red",pch=16,cex=0.7)
 points(EX.Dist.Draw$drawSegments$x,EX.Dist.Draw$drawSegments$y, col="blue",pch=16,cex=0.7)
 lines(EX.Dist.Draw$drawDist[1,c("x1","x2")],EX.Dist.Draw$drawDist[1,c("y1","y2")], col="green",lwd=5)
@@ -599,7 +599,7 @@ plot(EX.Dist.Draw.3$Draw1$drawObject, col="red",add=T)
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F31.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F31a.jpg">
 </p>
 
 [Menu](#menu)
