@@ -1094,6 +1094,15 @@ options(device = "quartz")
 
 <br />
 
+### FIELDimageR courses 
+
+* **Embrapa Beef-Cattle**: https://fieldimager.cnpgc.embrapa.br/course.html
+<p align="center">
+<a href="https://drive.google.com/file/d/1k4-YlBFU5HGGiMovj2sIo8e2qPcbLYIm/view?usp=sharing"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/course1.jpeg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
 ### Google Groups Forum
 
 > This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
