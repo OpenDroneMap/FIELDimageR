@@ -13,10 +13,10 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
   raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)
   sp::plot(fieldShape, add=T)
   names(mosaic)<-"mask"
-  mask <- raster::as.matrix(mosaic$mask) == value
   if(na.rm){
-    mask[is.na(mask[])] <- c(0,1)[c(0,1)!=value] 
+    mosaic$mask[is.na(mosaic$mask)] <- c(0,1)[c(0,1)!=value] 
   }
+  mask <- raster::as.matrix(mosaic$mask) == value
   dd <- distmap(mask)
   mosaic$watershed <- watershed(dd)
   if(is.null(n.core)){extM <- extract(x = mosaic$watershed, y = fieldShape)}
