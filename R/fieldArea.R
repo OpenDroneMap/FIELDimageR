@@ -1,4 +1,4 @@
-fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T){
+fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T, na.rm=FALSE){
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layer available", sep = ""))
@@ -6,6 +6,7 @@ fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T){
   if(num.band>1){stop("Only mask mosaic with values of 1 and 0 can be evaluated, please use the mask output from fieldMask()")}
   if(!areaValue%in%c(1,0)){stop("The value must be 1 or 0 to represent the objects in the mask mosaic, please use the mask output from fieldMask()")}
   pc <- function(x, p){return( data.frame(objArea=(length(x[x == p])/length(x[!is.na(x)])),objNumCell=length(x[x == p]),naNumCell=length(x[!is.na(x)])) )}
+  if (na.rm){mosaic[is.na(mosaic)] <- c(0, 1)[c(0, 1) != areaValue]}
   if(is.null(fieldShape)){
     print("Evaluating the object area percentage for the whole image...")
     porarea<-pc(x=mosaic, p=areaValue)
