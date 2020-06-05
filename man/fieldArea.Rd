@@ -7,7 +7,7 @@
   Calculating the percentage of object area in the entire mosaic or per plot using the fieldShape file
 }
 \usage{
-  fieldArea(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T)
+  fieldArea(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T, na.rm=FALSE)
 }
 \arguments{
   \item{mosaic}{
@@ -24,6 +24,9 @@
   }
 \item{plot}{
     if is TRUE the crop image and fieldShape will be plotted.
+  }
+  \item{na.rm}{
+    logical. Should missing values (including NaN) be used?.
   }
 }
 \details{
