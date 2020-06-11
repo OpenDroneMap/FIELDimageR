@@ -7,14 +7,14 @@
   Field map ID identification to align with plots shapefile built with fieldShape(). The plots are numbered from left to right and top to bottom.
 }
 \usage{
-  fieldMap(fieldPlot, fieldRange, fieldRow, decreasing=F)
+  fieldMap(fieldPlot, fieldColumn, fieldRow, decreasing=F)
 }
 \arguments{
   \item{fieldPlot}{
     vector with plot ID
   }
-  \item{fieldRange}{
-    vector with range ID
+  \item{fieldColumn}{
+    vector with column ID
   }
   \item{fieldRow}{
     vector with row ID
@@ -24,7 +24,7 @@
   }
 }
 \details{
-  The function returns a matrix with plots ID identified by rows and ranges
+  The function returns a matrix with plots ID identified by rows and column
 }
 \value{
   Matrix with plots ID.
