@@ -1,10 +1,10 @@
-fieldMap<-function(fieldPlot, fieldRange, fieldRow, decreasing=F){
-  if(length(fieldPlot)!=length(fieldRange)|length(fieldPlot)!=length(fieldRow)|length(fieldRow)!=length(fieldRange)){
-    stop("Plot, Range and Row vectors must have the same length.")
+fieldMap<-function(fieldPlot, fieldColumn, fieldRow, decreasing=F){
+  if(length(fieldPlot)!=length(fieldRow)|length(fieldPlot)!=length(fieldColumn)|length(fieldColumn)!=length(fieldRow)){
+    stop("Plot, Column and Row vectors must have the same length.")
   }
   map<-NULL
-  for(i in 1:length(fieldRange)){
-    r1<-as.character(fieldPlot[fieldRange==i][order(as.numeric(fieldRow[fieldRange==i]),decreasing = decreasing)])
+  for(i in 1:length(fieldRow)){
+    r1<-as.character(fieldPlot[fieldRow==i][order(as.numeric(fieldColumn[fieldRow==i]),decreasing = decreasing)])
     map<-rbind(map,r1)
   }
   colnames(map)<-NULL
