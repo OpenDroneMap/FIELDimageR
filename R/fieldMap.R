@@ -9,4 +9,4 @@ fieldMap<-function(fieldPlot, fieldColumn, fieldRow, decreasing=F){
   }
   colnames(map)<-NULL
   rownames(map)<-NULL
-  return(map)}
+  return(as.matrix(map))}
