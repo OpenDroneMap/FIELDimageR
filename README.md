@@ -1095,9 +1095,14 @@ options(device = "quartz")
 <a href="https://youtu.be/v0gAq302Ueg"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeSC.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
-> FIELDimageR: calculating vegetation indices (NDVI and NDRE)
+> FIELDimageR: Calculating vegetation indices (NDVI and NDRE)
 <p align="center">
 <a href="https://youtu.be/-XpSWKOXips"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeIndices.jpeg" width=400 height=300 title="Watch the video"></a>
+</p>
+
+> FIELDimageR: Estimate plant height using the canopy height model (CHM) 
+<p align="center">
+<a href="https://www.youtube.com/watch?v=h7Qcl_xefw0"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubePH.jpeg" width=400 height=300 title="Watch the video"></a>
 </p>
 
 <br />
