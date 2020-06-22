@@ -1116,6 +1116,13 @@ options(device = "quartz")
 
 <br />
 
+* **Embrapa Maize & Sorghum**: http://fieldimager.cnpms.embrapa.br/course.html
+<p align="center">
+<a href="https://www.youtube.com/watch?v=_3moFzzMzo8&feature=youtu.be"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/course2.jpeg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
 ### Google Groups Forum
 
 > This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
