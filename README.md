@@ -206,7 +206,7 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 ### Field map identification (name for each Plot). 'fieldPlot' argument can be a number or name.
 
 DataTable<-read.csv("DataTable.csv",header = T)  
-fieldMap<-fieldMap(fieldPlot=DataTable$Plot, fieldRange=DataTable$Range, fieldRow=DataTable$Row, decreasing=T)
+fieldMap<-fieldMap(fieldPlot=DataTable$Plot, fieldColumn=DataTable$Range, fieldRow=DataTable$Row, decreasing=T)
 fieldMap
 
 # The new column PlotName is identifying the plots:
