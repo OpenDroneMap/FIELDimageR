@@ -1,14 +1,23 @@
-FROM rocker/rstudio:latest
+FROM rocker/rstudio:3.6.3
 LABEL maintainer="Chris Schnaufer <schnaufer@email.arizona.edu>"
 
-RUN apt install -y libxml2-dev zlib1g-dev libfftw3-dev gdal-bin libgdal-dev libxt-dev
-RUN echo "install.packages(\"sp\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"raster\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"rgdal\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"scales\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"xml2\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"git2r\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"usethis\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"fftwtools\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "install.packages(\"devtools\", repos=\"https://cran.rstudio.com\")" | R --no-save
-RUN echo "devtools::install_github(\"filipematias23/FIELDimageR\")" | R --no-save
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libxml2-dev \
+    zlib1g-dev \
+    libfftw3-dev \
+    gdal-bin \
+    libgdal-dev \
+    libxt-dev
+
+RUN install2.r --error \
+    sp \
+    raster \
+    rgdal \
+    scales \
+    xml2 \
+    git2r \
+    usethis \
+    fftwtools \
+    devtools
+
+RUN installGithub.r filipematias23/FIELDimageR
