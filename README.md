@@ -102,7 +102,7 @@ install.packages("FIELDimageR_0.2.0.tar.gz", repos = NULL, type="source") # Make
 > Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
 
 ```bash
-docker build -t fieldimager -f Dockerfile ./
+docker build -t fieldimager -f ./Dockerfile ./
 ```
 > The different command line parameters are as follows:
 >* `docker` is the Docker command itself
@@ -110,13 +110,13 @@ docker build -t fieldimager -f Dockerfile ./
 >* `-t` indicates that we will be specifying then tag (name) of the created image
 >* `fieldimager` is the tag (name) of the image and can be any acceptable name; this needs to immediately follow the `-t` parameter
 >* `-f` indicates that we will be providing the name of the Dockerfile containing the instructions for building the image
->* `Dockerfile` is the full path to the Dockerfile containing the instructions (in this case, it's in the current folder)
+>* `./Dockerfile` is the full path to the Dockerfile containing the instructions (in this case, it's in the current folder); this needs to immediately follow the `-f` parameter
 >* `./` specifies that Docker build should use the current folder as needed (required by Docker build)
 
 > Once the docker image is built, you use the [Docker run](https://docs.docker.com/engine/reference/run/) command to access the image using the suggested [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio/) command:
 
 ```bash
-docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere rocker/rstudio
+docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
 ```
 
 > Open a web browser window and enter `http://localhost:8787` to access the running container.
