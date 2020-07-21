@@ -10,6 +10,6 @@ Imports: sp, raster, plyr, EBImage, doParallel, foreach, parallel
 Sugested:rgdal, rgeos, igraph
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/filipematias23/FIELDimageR
+URL: https://github.com/OpenDroneMap/FIELDimageR
 RoxygenNote: 6.1.1
 biocViews: EBImage
