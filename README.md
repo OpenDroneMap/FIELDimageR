@@ -786,11 +786,20 @@ Data.Cycle
 ---------------------------------------------
 #### 14. Multispectral and Hyperspectral images
 
-> **`FIELDimageR`** can be used to analyze multispectral and hyperspectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral or hyperspectral mosaic from the same field. You can dowload an multispectral example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
+> **`FIELDimageR`** can be used to analyze multispectral and hyperspectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral or hyperspectral mosaic from the same field. 
+
+<br />
+
+**Multispectral:** You can dowload a multispectral example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y)
 
 <br />
 
 ```r
+
+#####################
+### Multispectral ###
+#####################
+
 # Uploading multispectral mosaic:
 EX1.5b <- stack("EX1_5Band.tif")
 
@@ -811,6 +820,78 @@ EX1.5b.Indices <- fieldIndex(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEd
 EX1.5b.Info<- fieldInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
+
+<br />
+
+**Hyperspectral:** in the following example you should download the hyperspectral tif file ([**EX_HYP.tif**](https://drive.google.com/file/d/1oOKUJ4sA1skyU7NU7ozTQZrT7_s24luW/view?usp=sharing)), the 474 wavelength names ([**namesHYP.csv**](https://drive.google.com/file/d/1n-3JX0ho1rMSOiGrrYmBKHkeF4hyHQw1/view?usp=sharing)), and the field map data ([**DataHYP.csv**](https://drive.google.com/file/d/1u78jb9BlA45kVaXUu2RKM6_KJjXIpJXq/view?usp=sharing)). 
+
+<br />
+
+```r
+
+#####################
+### Hyperspectral ###
+#####################
+
+# Uploading hyperspectral file with 474 bands (EX_HYP.tif)
+EX.HYP<-stack("EX_HYP.tif")
+
+# Wavelengths (namesHYP.csv)
+NamesHYP<-as.character(read.csv("namesHYP.csv")$NameHYP)
+
+# Building RGB image 
+R<-EX.HYP[[78]] # 651nm (Red)
+G<-EX.HYP[[46]] # 549nm (Green)
+B<-EX.HYP[[15]] # 450nm (Blue)
+RGB<-stack(c(R,G,B))
+
+# Removing soil using RGB (index NGRDI)
+RGB.S<-fieldMask(RGB,index="NGRDI",cropValue = 0.0, cropAbove = F)
+
+# Data frame with field information to make the Map
+Data<-read.csv("DataHYP.csv")
+Map<-fieldMap(fieldPlot = as.character(Data$Plot),fieldRow = as.character(Data$Range),fieldColumn = as.character(Data$Row),decreasing = T)
+
+# Building plot shapefile using RGB as base
+plotFile<-fieldShape(RGB.S,ncols = 14, nrows = 14, fieldMap = Map,fieldData = Data, ID = "Plot")
+
+# Removing soil using the RGB mask
+EX.HYP.S<-fieldMask(EX.HYP,mask = RGB.S$mask, plot = F)
+
+# Extracting data (474 bands)
+EX.HYP.I<-fieldInfo(EX.HYP.S$newMosaic,fieldShape = plotFile$fieldShape,n.core = 3)
+
+# Saving the new csv with hyperspectral information per plot
+DataHYP<-EX.HYP.I$fieldShape@data
+colnames(DataHYP)<-c(colnames(DataHYP)[1:9],NamesHYP)
+write.csv(DataHYP,"DataHypNew.csv",col.names = T,row.names = F)
+
+###############
+### Graphic ###
+###############
+
+dev.off()
+DataHYP1<-EX.HYP.I$plotValue[,-1]
+
+plot(x=as.numeric(NamesHYP),y=as.numeric(DataHYP1[1,]),type = "l",xlab = "Wavelength (nm)",ylab = "Reflectance", col="black",lwd=2,cex.lab=1.2)
+for(i in 2:dim(DataHYP1)[2]){
+  lines(x=as.numeric(NamesHYP),y=as.numeric(DataHYP1[i,]),type = "l",col=i,lwd=2)
+}
+abline(v=445,col="blue",lwd=2,lty=2)
+abline(v=545,col="green",lwd=2,lty=2)
+abline(v=650,col="red",lwd=2,lty=2)
+abline(v=720,col="red",lwd=2,lty=3)
+abline(v=840,col="red",lwd=2,lty=4)
+legend(list(x = 2000,y = 0.5),c("Blue (445nm)","Green (545nm)","Red (650nm)","RedEdge (720nm)","NIR (840nm)"),
+       col =c("blue","green","red","red","red"),lty=c(2,2,2,3,4),box.lty=0)
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/HYP.jpeg">
+</p>
+
 [Menu](#menu)
 
 <div id="P15" />
