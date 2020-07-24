@@ -26,7 +26,7 @@
    * [11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#P11)
    * [12. Resolution and computing time](#P12)
    * [13. Crop growth cycle](#P13)
-   * [14. Multispectral images](#P14)
+   * [14. Multispectral and Hyperspectral images](#P14)
    * [15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
@@ -784,13 +784,9 @@ Data.Cycle
 <div id="P14" />
 
 ---------------------------------------------
-#### 14. Multispectral images
+#### 14. Multispectral and Hyperspectral images
 
-> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
-
-<br />
-
-> **Attention:** HYPERSPECTRAL images were not tested in *`FIELDimageR`*
+> **`FIELDimageR`** can be used to analyze multispectral and hyperspectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral or hyperspectral mosaic from the same field. You can dowload an multispectral example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
 
 <br />
 
