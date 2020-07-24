@@ -844,6 +844,7 @@ R<-EX.HYP[[78]] # 651nm (Red)
 G<-EX.HYP[[46]] # 549nm (Green)
 B<-EX.HYP[[15]] # 450nm (Blue)
 RGB<-stack(c(R,G,B))
+plotRGB(RGB, stretch="lin")
 
 # Removing soil using RGB (index NGRDI)
 RGB.S<-fieldMask(RGB,index="NGRDI",cropValue = 0.0, cropAbove = F)
