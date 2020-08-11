@@ -70,6 +70,12 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
     objectSel[[j]]<-PS
     objectReject[[j]]<-PR
   }
+  if(length(objectSel)!=length(cent)){
+    objectSel[[length(cent)+1]] <- NA
+    objectReject[[length(cent)+1]] <- NA
+    objectSel[[length(cent)+1]] <- NULL
+    objectReject[[length(cent)+1]] <- NULL
+  }
   field <- unlist(lapply(objectSel, function(x){length(x$objectArea)}))
   fieldShape@data$fieldCount <- field
   print(paste("Number of objects: ", sum(field), sep = ""))
