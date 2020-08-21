@@ -1201,6 +1201,13 @@ options(device = "quartz")
 
 <br />
 
+* **Universidade Federal de Viçosa (GenMelhor)**: https://genmelhor-fieldimager.000webhostapp.com/FIELDimageR_Course%20(2).html
+<p align="center">
+<a href="https://genmelhor-fieldimager.000webhostapp.com/FIELDimageR_Course%20(2).html"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/course3new.jpeg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
 ### Google Groups Forum
 
 > This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
