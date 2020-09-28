@@ -1208,6 +1208,13 @@ options(device = "quartz")
 
 <br />
 
+* **PhenomeForce (Fridays Hands-On: A Workshop Series in Data+Plant Sciences)**: https://phenome-force.github.io/FIELDimageR-workshop/
+<p align="center">
+<a href="https://www.youtube.com/watch?v=2khnveYFov8&t=3345s"><img src="https://raw.githubusercontent.com/phenome-force/Images/master/redme/WS_1.jpg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
 ### Google Groups Forum
 
 > This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
