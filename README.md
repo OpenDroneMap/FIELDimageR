@@ -1215,6 +1215,13 @@ options(device = "quartz")
 
 <br />
 
+* **The Plant Phenome Journal**: https://www.youtube.com/watch?v=DOD0ZX_J8tk
+<p align="center">
+<a href="https://www.youtube.com/watch?v=DOD0ZX_J8tk"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeTPPJ.jpg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
 ### Google Groups Forum
 
 > This discussion group provides an online source of information about the FIELDimageR package. Report a bug and ask a question at: 
