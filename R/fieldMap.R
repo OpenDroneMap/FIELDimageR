@@ -4,7 +4,8 @@ fieldMap<-function(fieldPlot, fieldColumn, fieldRow, decreasing=F){
   }
   map<-NULL
   for(i in 1:length(fieldRow)){
-    r1<-as.character(fieldPlot[fieldRow==i][order(as.numeric(fieldColumn[fieldRow==i]),decreasing = decreasing)])
+    i1<-fieldRow[i]
+    r1<-as.character(fieldPlot[fieldRow==i1][order(as.numeric(fieldColumn[fieldRow==i1]),decreasing = decreasing)])
     map<-rbind(map,r1)
   }
   colnames(map)<-NULL
