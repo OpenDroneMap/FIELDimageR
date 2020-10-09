@@ -4,7 +4,7 @@ fieldIndex<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
   if(num.band<3){stop("At least 3 bands (RGB) are necessary to calculate indices")}
-  if(!is.null(RedEdge)|!is.null(RedEdge)){
+  if(!is.null(RedEdge)|!is.null(NIR)){
     if(num.band<4){
       stop("RedEdge and/or NIR is/are not available in your mosaic")
     }}
