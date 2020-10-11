@@ -13,7 +13,7 @@
 ## Resources
   
    * [Installation](#Instal)
-   * [1. Required packages](#P1)
+   * [1. First steps](#P1)
    * [2. Selecting the targeted field](#P2)
    * [3. Rotating the image](#P3)
    * [4. Removing soil using vegetation indices](#P4)
@@ -39,12 +39,34 @@
 
 ---------------------------------------------
 ### Installation
+> If desired, one can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all the requirements already installed by using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
 
->  First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/). Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the [devtools](https://github.com/hadley/devtools) package in R.
+<div id="Instal_no_docker" />
+
+**Without Docker**
+
+> First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
+> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R.
+> * **[devtools](https://CRAN.R-project.org/package=devtools)** 
+> * **[sp](https://CRAN.R-project.org/package=sp)** 
+> * **[raster](https://CRAN.R-project.org/package=raster)** 
+> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
+> * **[scales](https://CRAN.R-project.org/package=scales)**
+> * **[xml2](https://CRAN.R-project.org/package=xml2)**
+> * **[git2r](https://CRAN.R-project.org/package=git2r)**
+> * **[usethis](https://CRAN.R-project.org/package=usethis)**
+> * **[fftwtools](https://CRAN.R-project.org/package=fftwtools)**
 
 ```r
 install.packages("devtools")
-
+install.packages("sp")
+install.packages("raster")
+install.packages("rgdal")
+install.packages("scales")
+install.packages("xml2")
+install.packages("git2r")
+install.packages("usethis")
+install.packages("fftwtools")
 ```
 <br />
 
@@ -70,6 +92,36 @@ install.packages("FIELDimageR_0.2.2.tar.gz", repos = NULL, type="source") # Make
 
 <br />
 
+<div id="Instal_with_docker" />
+
+**With Docker**
+
+> When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
+> Another requirement is that Docker is [installed](https://docs.docker.com/get-docker/) on the machine as well.
+
+> Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
+
+```bash
+docker build -t fieldimager -f ./Dockerfile ./
+```
+> The different command line parameters are as follows:
+>* `docker` is the Docker command itself
+>* `build` tells Docker that we want to build an image
+>* `-t` indicates that we will be specifying then tag (name) of the created image
+>* `fieldimager` is the tag (name) of the image and can be any acceptable name; this needs to immediately follow the `-t` parameter
+>* `-f` indicates that we will be providing the name of the Dockerfile containing the instructions for building the image
+>* `./Dockerfile` is the full path to the Dockerfile containing the instructions (in this case, it's in the current folder); this needs to immediately follow the `-f` parameter
+>* `./` specifies that Docker build should use the current folder as needed (required by Docker build)
+
+> Once the docker image is built, you use the [Docker run](https://docs.docker.com/engine/reference/run/) command to access the image using the suggested [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio/) command:
+
+```bash
+docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
+```
+
+> Open a web browser window and enter `http://localhost:8787` to access the running container.
+> To log into the instance use the username and password of `rstudio` and `yourpasswordhere`.
+
 [Menu](#menu)
 
 <div id="P1" />
@@ -79,20 +131,8 @@ install.packages("FIELDimageR_0.2.2.tar.gz", repos = NULL, type="source") # Make
 
 <br />
 
-#### 1. Required packages
+#### 1. First steps
 
-> * **[FIELDimageR](https://github.com/filipematias23/FIELDimageR)** 
-> * **[sp](https://CRAN.R-project.org/package=sp)** 
-> * **[raster](https://CRAN.R-project.org/package=raster)** 
-> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
-> * **[scales](https://CRAN.R-project.org/package=scales)**
-
-```r
-install.packages("sp")
-install.packages("raster")
-install.packages("rgdal")
-install.packages("scales")
-```
 > **Taking the first step:**
 ```r
 library(FIELDimageR)
