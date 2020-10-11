@@ -94,6 +94,8 @@ install.packages("FIELDimageR_0.2.2.tar.gz", repos = NULL, type="source") # Make
 
 <div id="Instal_with_docker" />
 
+<br />
+
 **With Docker**
 
 > When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
@@ -122,11 +124,7 @@ docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
 > Open a web browser window and enter `http://localhost:8787` to access the running container.
 > To log into the instance use the username and password of `rstudio` and `yourpasswordhere`.
 
-[Menu](#menu)
-
-<div id="P1" />
-
----------------------------------------------
+<br />
 
 #### If you are using anaconda and Linux
 
@@ -170,6 +168,13 @@ system("R CMD build FIELDimageR") #only system works on linux
 install.packages("FIELDimageR_0.2.1.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.1)
 
 ```
+<br />
+
+[Menu](#menu)
+
+<div id="P1" />
+
+---------------------------------------------
 
 
 ### Using R/FIELDimageR
