@@ -127,6 +127,51 @@ docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
 <div id="P1" />
 
 ---------------------------------------------
+
+#### If you are using anaconda and Linux
+
+> To install this package on Linux and anaconda it is necessary to use a series of commands before the recommendations
+
+* Install Xorg dependencies for the plot system (on conda shell)
+
+```
+conda install -c conda-forge xorg-libx11
+```
+* Install the BiocManager package manager
+
+```r
+install.packages("BiocManager")
+```
+
+* Use the BiocManager to install the EBIMAGE package
+
+```r
+BiocManager::install("EBImage")
+```
+* If there is an error in the fftw3 library header (fftw3.h) install the dependency (on conda shell)
+
+```
+conda install -c eumetsat fftw3
+```
+
+* If there is an error in the dependency doParallel
+
+```r
+install.packages ("doParallel")
+```
+
+* Continue installation
+
+```r
+setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.zip
+unzip("FIELDimageR-master.zip") 
+file.rename("FIELDimageR-master", "FIELDimageR") 
+system("R CMD build FIELDimageR") #only system works on linux
+install.packages("FIELDimageR_0.2.1.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.1)
+
+```
+
+
 ### Using R/FIELDimageR
 
 <br />
