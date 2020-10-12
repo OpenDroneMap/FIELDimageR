@@ -43,7 +43,7 @@
 
 <div id="Instal_no_docker" />
 
-**Without Docker**
+**With RStudio**
 
 > First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
 > Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R.
