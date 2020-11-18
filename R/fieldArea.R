@@ -24,7 +24,7 @@ fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T, n
     }
     if (!is.null(n.core)) {
       if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
-      cl <- makeCluster(n.core, output = "")
+      cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
       registerDoParallel(cl)
       extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% 
         {
