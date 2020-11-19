@@ -40,7 +40,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, DSMmosa
     if (n.core > detectCores()) {
       stop(paste(" 'n.core' must be less than ", detectCores(),sep = ""))
     }
-    cl <- makeCluster(n.core, output = "")
+    cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
     registerDoParallel(cl)
     r <- foreach(i = 1:length(mosaic@layers), .packages = c("raster")) %dopar% {rotate(mosaic[[i]], angle = theta)}
   }
