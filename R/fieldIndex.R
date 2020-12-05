@@ -37,7 +37,8 @@ fieldIndex<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("
     if(!is.null(RedEdge)){RedEdge<-RE}
     for(m1 in 1:length(myIndex)){
       mosaic@layers[[(length(mosaic@layers) + 1)]] <- eval(parse(text = as.character(myIndex[m1])))
-      names(mosaic)[(length(mosaic@layers))] <- paste("myIndex", m1)
+      if(length(myIndex)==1){names(mosaic)[(length(mosaic@layers))] <- "myIndex"}
+      if(length(myIndex)>1){names(mosaic)[(length(mosaic@layers))] <- paste("myIndex", m1)}
     }
   }
   if(plot){raster::plot(mosaic, axes=FALSE, box=FALSE)}
