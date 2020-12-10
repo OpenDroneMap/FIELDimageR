@@ -616,7 +616,7 @@ EPH$plotValue
 ---------------------------------------------
 #### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
 
-> The function fieldObject can be used to calculate object dimensions (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file. Download example here: [EX_Obj.jpg](https://drive.google.com/file/d/1F189a1LKA9_l0Xn8hdBOshL5eC_fQLPs/view?usp=sharing).
+> The function **`fieldObject`** can be used to take relative measurement from objects (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file. Download example here: [EX_Obj.jpg](https://drive.google.com/file/d/1F189a1LKA9_l0Xn8hdBOshL5eC_fQLPs/view?usp=sharing).
 
 ```r
 # Uploading file (EX_Obj.tif)
@@ -631,7 +631,7 @@ dev.off()
 # Taking measurements
 EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 1000)
 
-# Output:
+# Measurement Output:
 EX.Obj.D$numObjects
 EX.Obj.D$Dimension
 plotRGB(EX.Obj)
@@ -644,6 +644,11 @@ lines(EX.Obj.D$y.position[[1]], col="red", lty=2)
 EX.Obj.I<- fieldIndex(mosaic = EX.Obj,index = c("SI","BGI","BI"))
 EX.Obj.Data<-fieldInfo(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
 EX.Obj.Data$fieldShape@data
+
+# Perimeter:
+install.packages("spatialEco")
+library(spatialEco)
+polyPerimeter(EX.Obj.D$Objects)
 
 ```
 <br />
