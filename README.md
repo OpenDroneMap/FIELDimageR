@@ -82,7 +82,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 shell("R CMD build FIELDimageR") # or system("R CMD build FIELDimageR")
-install.packages("FIELDimageR_0.2.4.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.4)
+install.packages("FIELDimageR_0.2.5.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.5)
 ```
 <br />
 
@@ -165,7 +165,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 system("R CMD build FIELDimageR") #only system works on linux
-install.packages("FIELDimageR_0.2.4.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.4)
+install.packages("FIELDimageR_0.2.5.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.5)
 
 ```
 <br />
@@ -615,6 +615,44 @@ EPH$plotValue
 
 ---------------------------------------------
 #### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
+
+> The function fieldObject can be used to calculate object dimensions (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file. Download example here: [EX_Obj.jpg](https://drive.google.com/file/d/1F189a1LKA9_l0Xn8hdBOshL5eC_fQLPs/view?usp=sharing).
+
+```r
+# Uploading file (EX_Obj.tif)
+EX.Obj <- stack("EX_Obj.jpg")
+EX.Obj <- aggregate(EX.Obj,4)
+EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
+
+# Removing the background
+EX.Obj.M<- fieldMask(mosaic = EX.Obj, index = "BGI",cropValue = 0.7,cropAbove = T)
+dev.off()
+
+# Taking measurements
+EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 1000)
+
+# Output:
+EX.Obj.D$numObjects
+EX.Obj.D$Dimension
+plotRGB(EX.Obj)
+plot(EX.shapeFile$fieldShape, add=T)
+plot(EX.Obj.D$Objects, add=T, border="red")
+plot(EX.Obj.D$Polygons, add=T, border="blue")
+plot(EX.Obj.D$single.obj[[1]], add=T, col="yellow")
+lines(EX.Obj.D$x.position[[1]], col="red", lty=2)
+lines(EX.Obj.D$y.position[[1]], col="red", lty=2)
+EX.Obj.I<- fieldIndex(mosaic = EX.Obj,index = c("SI","BGI","BI"))
+EX.Obj.Data<-fieldInfo(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
+EX.Obj.Data$fieldShape@data
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F33.jpg">
+</p>
+
+<br />
 
 > The function **`fieldCrop`** can be used to remove objects from the field image. For instance, the parameter *remove=TRUE* and *nPoint* should be used to select the object boundaries to be removed. [Download EX_RemObj.tif](https://drive.google.com/open?id=1wfxSQANRrPOvJWwNZ6UU0UjXwzKfkKH0)).
 
