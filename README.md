@@ -646,7 +646,7 @@ EX.Obj.Data<-fieldInfo(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.
 EX.Obj.Data$fieldShape@data
 
 # Perimeter:
-install.packages("spatialEco")
+# install.packages("spatialEco")
 library(spatialEco)
 polyPerimeter(EX.Obj.D$Objects)
 
