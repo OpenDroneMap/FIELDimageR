@@ -13,7 +13,9 @@ fieldArea<-function(mosaic, areaValue=0, fieldShape=NULL, n.core=NULL, plot=T, n
     print(paste("The percentage of object area is ",100*(round(porarea$objArea,2)),"%",sep = ""))
     Out<-list(areaPorcent=porarea)
   }
-  if(plot){raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE)}
+  if(plot){
+    par(mfrow=c(1,1))
+    raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE)}
   if(!is.null(fieldShape)){
     print("Evaluating the object area percetage per plot...")
     
