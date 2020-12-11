@@ -650,7 +650,8 @@ EX.Obj.Data$fieldShape@data
 # install.packages("spatialEco")
 library(spatialEco)
 perimeter<-polyPerimeter(EX.Obj.D$Objects)
-Data.Obj<-cbind(EX.Obj.Data$fieldShape@data,EX.Obj.D$Dimension,perimeter=perimeter)
+box<-polyPerimeter(EX.Obj.D$Polygons)
+Data.Obj<-cbind(EX.Obj.Data$fieldShape@data,EX.Obj.D$Dimension,perimeter=perimeter,box=box)
 Data.Obj
 
 ```
