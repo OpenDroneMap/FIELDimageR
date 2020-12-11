@@ -621,6 +621,7 @@ EPH$plotValue
 ```r
 # Uploading file (EX_Obj.tif)
 EX.Obj <- stack("EX_Obj.jpg")
+plotRGB(EX.Obj)
 EX.Obj <- aggregate(EX.Obj,4)
 EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
 
