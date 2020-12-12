@@ -7,7 +7,7 @@
   Calculating the object dimensions (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file
 }
 \usage{
-  fieldObject(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, watershed=F, dissolve=T, na.rm=FALSE, plot=T)
+  fieldObject(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, watershed=F, dissolve=T, n.rem=1, na.rm=FALSE, plot=T)
 }
 \arguments{
   \item{mosaic}{
@@ -27,6 +27,9 @@
   }
   \item{dissolve}{
     if TRUE, polygons with the same attribute value will be dissolved into multi-polygon regions. This option requires the rgeos package.
+  }
+   \item{n.rem}{
+    number of objects that should be removed by decreasing size (n.rem=1 is the background).
   }
     \item{na.rm}{
     logical. Should missing values (including NaN) be removed?.
