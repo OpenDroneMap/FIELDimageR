@@ -82,8 +82,8 @@ fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, waters
         y.position[[f1]]<-xy2
         Dimension<-rbind(Dimension,c(area=area,x.dist=dist(xy1),y.dist=dist(xy2)))
         single.obj[[f1]]<-sps3
+        if(!is.null(Polygons)){Polygons<-rbind(Polygons,P);Objects<-rbind(Objects,sps3)}
         if(is.null(Polygons)){Polygons<-P;Objects<-sps3}
-        if(f1!=1){Polygons<-rbind(Polygons,P);Objects<-rbind(Objects,sps3)}
         if (plot) {
           raster::plot(P, add=T, border="blue")
           lines(xy1,col="red",lty=2)
