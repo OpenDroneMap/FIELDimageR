@@ -1027,7 +1027,7 @@ legend(list(x = 2000,y = 0.5),c("Blue (445nm)","Green (545nm)","Red (650nm)","Re
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/HYP.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/HYP2.jpg">
 </p>
 
 [Menu](#menu)
