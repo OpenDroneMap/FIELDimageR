@@ -629,8 +629,8 @@ EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
 EX.Obj.M<- fieldMask(mosaic = EX.Obj, index = "BGI",cropValue = 0.7,cropAbove = T)
 dev.off()
 
-# Taking measurements
-EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 1000)
+# Taking measurements (Remove artifacts by changing the parameter *minArea* and observing the values on EX.Obj.D$Dimension$area)
+EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 0.01)
 
 # Measurement Output:
 EX.Obj.D$numObjects
