@@ -1,4 +1,4 @@
-fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, watershed=F, dissolve=T, na.rm=FALSE, plot=T){
+fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, watershed=F, dissolve=T, n.rem=1, na.rm=FALSE, plot=T){
   mosaic <- stack(mosaic)
   num.band <- length(mosaic@layers)
   print(paste(num.band, " layer available", sep = ""))
@@ -41,7 +41,7 @@ fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, waters
       single <- fieldShape[s1, ]
       CropPlot <- crop(x = mosaic, y = single)
       if(watershed){
-      n.obj<-unique(values(CropPlot$watershed))[-1]
+      n.obj <- as.numeric(names(table(values(CropPlot$watershed))[order(table(values(CropPlot$watershed)),decreasing = T)]))[-c(1:n.rem)]
       SP <-rasterToPolygons(clump(CropPlot$watershed==n.obj[1]), dissolve = dissolve)
       if(length(n.obj)>1){
       for(m1 in 2:length(n.obj)){
