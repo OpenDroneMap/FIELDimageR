@@ -543,6 +543,14 @@ EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldSha
 EX1.Canopy$areaPorcent
 ```
 
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/canopy.jpg">
+</p>
+
+<br />
+
 > **`fieldArea`** also can be associated with the function **`fieldMask`** to evaluate the proportion of seed colors in Glass Gems Maize. An important step is to choose the right contrasting background to differentiate samples. The same approach can be used to evaluate the percentage of disease/pests’ damage, land degradation, deforestation, etc.
 
 <br />
