@@ -366,7 +366,14 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 # Calculating myIndex = "(Red-Blue)/Green" (not avaliable at 'FIELDimageR')
 
 EX1.Indices<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
-                          index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
+                          index = c("NGRDI","BGI"), 
+                          myIndex = c("(Red-Blue)/Green"))
+                          
+# More than one myIndex code: myIndex = c("myIndex1","myIndex2","myIndex3")    
+
+EX1.Indices.myIndex<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
+                          index = c("NGRDI","BGI"), 
+                          myIndex = c("(Red-Blue)/Green","Red/Green","Blue/Green"))
                           
 ```
 <br />
