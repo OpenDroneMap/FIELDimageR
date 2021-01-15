@@ -7,7 +7,7 @@
   Different vegetation indices can be used to remove the soil. For the list of indices please visit the FIELDimageR manual at link:
 }
 \usage{
-  fieldMask(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T)
+  fieldMask(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, projection=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T)
 }
 \arguments{
   \item{mosaic}{
@@ -30,6 +30,9 @@
   }
   \item{cropAbove}{
     if TRUE all values above the cropValue will be accounted to make the mask.
+  }
+  \item{projection}{
+    if TRUE the projection will not be accounted to the mask.
   }
   \item{DSMmosaic, DSMcropAbove, DSMcropValue}{
     DSM should be used if the file of height is provided.
