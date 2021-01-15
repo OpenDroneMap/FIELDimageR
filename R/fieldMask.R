@@ -1,4 +1,4 @@
-fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T){
+fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,index="HUE",myIndex=NULL,cropValue=0,cropAbove=T, projection=T, DSMmosaic=NULL, DSMcropAbove=T, DSMcropValue=0, plot=T){
   Ind<-read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),header = T,sep = "\t")
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
@@ -43,7 +43,9 @@ fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,
     if(length(mask@layers)>1){stop("Mask must have only one band.")}
     mr<-mask
     mosaic<-crop(x = mosaic, y = mr)
-    mosaic<- projectRaster(mosaic,mr,method = 'ngb')
+    if(projection){
+      mosaic <- projectRaster(mosaic, mr, method = "ngb")
+    }
   }
 
   if(cropAbove){
@@ -78,7 +80,9 @@ fieldMask<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,mask=NULL,
     if(!DSMcropAbove){
       mDEM<-m<DSMcropValue
     }
+    if(projection){
     DSMmosaic <- projectRaster(DSMmosaic,mDEM,method = 'ngb')
+      }
     DSMmosaic <- mask(DSMmosaic, mDEM, maskvalue=TRUE)
     if(plot){raster::plot(DSMmosaic, axes=FALSE, box=FALSE)}
     DSMmosaic <- stack(DSMmosaic)
