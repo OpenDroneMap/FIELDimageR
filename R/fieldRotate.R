@@ -46,8 +46,8 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, extent=
   }
   r <- stack(r)
   if(extent){
-    m11<-apply(as.matrix(raster::extent(mosaic)),1,function(x){sum(x)/2})
-    m22<-apply(as.matrix(raster::extent(r)),1,function(x){c(x[2]-x[1])/2})
+    m11<-apply(matrix(as.numeric(as.matrix(raster::extent(mosaic))),2),1,function(x){sum(x)/2})
+    m22<-apply(matrix(as.numeric(as.matrix(raster::extent(r))),2),1,function(x){c(x[2]-x[1])/2})
     raster::extent(r)<-raster::extent(c(m11[1]-m22[1]), c(m11[1]+m22[1]), c(m11[2]-m22[2]), c(m11[2]+m22[2]))
     crs(r)<-crs(mosaic)
   }
