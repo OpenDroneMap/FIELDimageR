@@ -617,6 +617,15 @@ CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
 EPH <- fieldInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
 EPH$plotValue
 
+# Extracting the estimate plant height at 10% and 90% of quantile:
+EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape$fieldShape)
+EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = c(0.1,0.9), na.rm=TRUE))
+EPH.10.90
+
+# Data:
+EPH.DataTotal<-data.frame(EPH$fieldShape@data,EPH.10.90)
+EPH.DataTotal
+
 ```
 <br />
 
