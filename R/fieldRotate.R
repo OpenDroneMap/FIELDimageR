@@ -1,4 +1,4 @@
-fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, extent=FALSE, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=FALSE){
+fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, extentGIS=FALSE, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=FALSE){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -45,7 +45,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, ext
     r <- foreach(i = 1:length(mosaic@layers), .packages = c("raster")) %dopar% {rotate(mosaic[[i]], angle = theta)}
   }
   r <- stack(r)
-  if(extent){
+  if(extentGIS){
     m11<-apply(matrix(as.numeric(as.matrix(raster::extent(mosaic))),2),1,function(x){sum(x)/2})
     m22<-apply(matrix(as.numeric(as.matrix(raster::extent(r))),2),1,function(x){c(x[2]-x[1])/2})
     raster::extent(r)<-raster::extent(c(m11[1]-m22[1]), c(m11[1]+m22[1]), c(m11[2]-m22[2]), c(m11[2]+m22[2]))
@@ -62,7 +62,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, ext
     DSMmosaic <- stack(DSMmosaic)
     DSMmosaic<-rotate(DSMmosaic,angle = theta)
     raster::plot(DSMmosaic, axes=FALSE, box=FALSE)
-    if(extent){
+    if(extentGIS){
     raster::extent(DSMmosaic)<-raster::extent(m11[1]-m22[1], m11[1]+m22[1], m11[2]-m22[2], m11[2]+m22[2])
     crs(DSMmosaic)<-crs(mosaic)
     }
