@@ -2,7 +2,7 @@ export(fieldRotate,fieldCrop,fieldShape,fieldPolygon,fieldObject,
        fieldIndex,fieldMask,fieldMap,fieldInfo,fieldPlot,fieldCount,fieldArea,fieldDraw)
 importFrom("sp", "Polygons","Polygon","SpatialPolygonsDataFrame","SpatialPolygons","spsample",
            "SpatialPointsDataFrame","over", "proj4string")
-importFrom("raster", "stack", "projection","plotRGB","res","projectRaster","crs","extent",
+importFrom("raster", "stack", "projection","plotRGB","res","projectRaster","crs","extent","setExtent",
            "atan2","crop","rasterToPolygons","mask","extract","clump","drawLine","drawPoly","xyFromCell")
 importFrom("maptools", "elide")
 importFrom("parallel", "makeCluster", "detectCores")
