@@ -618,12 +618,14 @@ EPH <- fieldInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean
 EPH$plotValue
 
 # Extracting the estimate plant height at 10% and 90% of quantile:
+probs = c(0.1,0.9)
 EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape$fieldShape)
-EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = c(0.1,0.9), na.rm=TRUE))
+EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = probs, na.rm=TRUE))
 EPH.10.90
 
 # Data:
 EPH.DataTotal<-data.frame(EPH$fieldShape@data,EPH.10.90)
+colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean","EPH_10%","EPH_90%")
 EPH.DataTotal
 
 ```
