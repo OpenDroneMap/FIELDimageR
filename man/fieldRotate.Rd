@@ -7,7 +7,7 @@
   The image should be rotated to use the function fieldShape(). The base of experimental field should be parallel to axis X.
 }
 \usage{
-  fieldRotate(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, extent=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F)
+  fieldRotate(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, extent=FALSE, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=FALSE)
 }
 \arguments{
   \item{mosaic}{
