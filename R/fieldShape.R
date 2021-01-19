@@ -49,10 +49,11 @@ if(!is.null(fieldData)){
   fieldData$PlotName<-as.character(fieldData[,colnames(fieldData)==ID])
   fieldShape@data<-plyr::join(fieldShape@data,fieldData,by="PlotName")
   }
-  if(!is.null(theta)){
-    fieldShape<-elide(fieldShape,rotate=theta,center=apply(bbox(fieldShape), 1, mean))
-  }
   Out<-list(fieldShape=fieldShape,cropField=r)
+  if(!is.null(theta)){
+    fieldShape1<-elide(fieldShape,rotate=theta,center=apply(bbox(fieldShape), 1, mean))
+    Out<-list(fieldShape=fieldShape,fieldShapeGIS=fieldShape1,cropField=r)
+  }
   par(mfrow=c(1,1))
   return(Out)
 }
