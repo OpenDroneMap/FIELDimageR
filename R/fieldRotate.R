@@ -1,4 +1,4 @@
-fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, extent=F, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F){
+fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, extent=FALSE, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=FALSE){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
