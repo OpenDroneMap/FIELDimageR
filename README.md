@@ -625,7 +625,7 @@ EPH.10.90
 
 # Data:
 EPH.DataTotal<-data.frame(EPH$fieldShape@data,EPH.10.90)
-colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean","EPH_10%","EPH_90%")
+colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean",paste("EPH_",probs*100,"%",sep=""))
 EPH.DataTotal
 
 ```
