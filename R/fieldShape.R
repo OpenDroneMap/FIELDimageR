@@ -1,4 +1,4 @@
-fieldShape<-function(mosaic,ncols=10,nrows=10,nPoint=4,fieldMap=NULL,fieldData=NULL,ID=NULL,plot=T,fast.plot=F){
+fieldShape<-function(mosaic,ncols=10,nrows=10,nPoint=4,fieldMap=NULL,fieldData=NULL,ID=NULL,theta=NULL,plot=T,fast.plot=F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -48,6 +48,9 @@ if(!is.null(fieldData)){
   if(!as.character(ID)%in%as.character(colnames(fieldData))){stop(paste("ID: ",ID," is not valid."))}
   fieldData$PlotName<-as.character(fieldData[,colnames(fieldData)==ID])
   fieldShape@data<-plyr::join(fieldShape@data,fieldData,by="PlotName")
+  }
+  if(!is.null(theta)){
+    fieldShape<-elide(fieldShape,rotate=theta,center=apply(bbox(fieldShape), 1, mean))
   }
   Out<-list(fieldShape=fieldShape,cropField=r)
   par(mfrow=c(1,1))
