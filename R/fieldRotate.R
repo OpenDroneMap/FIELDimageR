@@ -48,7 +48,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, ext
   if(extentGIS){
     m11<-apply(matrix(as.numeric(as.matrix(extent(mosaic))),2),1,function(x){mean(x)})
     m22<-apply(matrix(as.numeric(as.matrix(extent(r))),2),1,function(x){abs(diff(c(x[2],x[1]))/2)})
-    extent(r)<-extent(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
+    extent(r)<-c(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
     crs(r)<-crs(mosaic)
   }
   Out<-r
@@ -63,7 +63,7 @@ fieldRotate<-function(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, ext
     DSMmosaic<-rotate(DSMmosaic,angle = theta)
     raster::plot(DSMmosaic, axes=FALSE, box=FALSE)
     if(extentGIS){
-    extent(DSMmosaic)<-extent(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
+    extent(DSMmosaic)<-c(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
     crs(DSMmosaic)<-crs(mosaic)
     }
     Out<-list(rotatedMosaic=r,rotatedDSM=DSMmosaic)
