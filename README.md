@@ -82,7 +82,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 shell("R CMD build FIELDimageR") # or system("R CMD build FIELDimageR")
-install.packages("FIELDimageR_0.2.7.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.7)
+install.packages("FIELDimageR_0.2.8.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.8)
 ```
 <br />
 
@@ -165,7 +165,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 system("R CMD build FIELDimageR") #only system works on linux
-install.packages("FIELDimageR_0.2.7.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.7)
+install.packages("FIELDimageR_0.2.8.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.8)
 
 ```
 <br />
@@ -230,8 +230,15 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 > To build the plot shape file first we need to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). If not, it is necessary to find the right-angle *theta* to rotate the field, **`fieldRotate`** allows you to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
 
 ```r
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F)
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
+# Codeline when you don't know the rotation angle "Theta":
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F, h=F) # h=horizontal
+
+# Codeline when you know the rotation angle "Theta" (theta = 2.3):
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3)
+
+# Codeline with "extentGIS=TRUE" to fit back the shapefile to the original image GIS. More information at section "5. Building the plot shape file":
+source(system.file("extdata", "fieldRotate.R", package = "FIELDimageR")) # Available from FIELDimageR version 0.2.8
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
 
 ```
 <br />
@@ -345,6 +352,31 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <p align="center">
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F26.jpeg">
 </p>
+
+<br />
+
+> **Important:** Using the rotation angle **(theta=2.3)** from step 3 (*fieldRotate*) to fit the *"fieldShape"* file back to the original image GIS (*fieldShapeGIS*): 
+
+```r
+### Rotation angle "theta=2.3" from fieldRotate():
+
+EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
+                      fieldData = DataTable, ID = "Plot", theta = 2.3)
+                      
+plotRGB(EX1.RemSoil$newMosaic)
+plot(EX1.Shape$fieldShape,add=T)
+
+plotRGB(EX1)
+plot(EX1.Shape$fieldShapeGIS,add=T) 
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F5.jpeg">
+</p>
+
+<br />
 
 [Menu](#menu)
 
