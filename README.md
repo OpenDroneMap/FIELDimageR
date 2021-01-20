@@ -355,7 +355,9 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 
 <br />
 
-> **Important:** Using the rotation angle **(theta=2.3)** from step 3 (*fieldRotate*) to fit the *"fieldShape"* file back to the original image GIS (*fieldShapeGIS*): 
+> **Important:** Code showing how to make **ShapeFile** using original *GIS*
+
+> **Example 01:** Using the rotation angle **(theta=2.3)** from step 3 (*fieldRotate*) to fit the *"fieldShape"* file back to the original image GIS (*fieldShapeGIS*): 
 
 ```r
 ### Rotation angle "theta=2.3" from fieldRotate():
@@ -373,7 +375,17 @@ plot(EX1.Shape$fieldShapeGIS,add=T)
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F5.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS.jpg">
+</p>
+
+<br />
+
+> **Example 02:** Comparing the outputs *$fieldShape* **(straight)** with *$fieldShapeGIS* **(theta = -60)**: 
+
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS2.jpg">
 </p>
 
 <br />
