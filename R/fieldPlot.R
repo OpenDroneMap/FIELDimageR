@@ -9,10 +9,10 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
       stop("Limit need to be numeric e.g. min.lim=0 and max.lim=1")
     }
     if (min.lim > min(val, na.rm = T)) {
-      stop(paste("Choose minimum limit equal or lower than ",min(val,na.rm = T), sep=""))
+      stop(paste("Choose minimum limit (min.lim) equal or lower than ",min(val,na.rm = T), sep=""))
     }
     if (max.lim < max(val, na.rm = T)) {
-      stop(paste("Choose maximum limit equal or greater than ",max(val,na.rm = T), sep=""))
+      stop(paste("Choose maximum limit (max.lim) equal or greater than ",max(val,na.rm = T), sep=""))
     }
     val<-c(min.lim,val,max.lim)
   }
