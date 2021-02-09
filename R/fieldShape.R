@@ -52,6 +52,7 @@ if(!is.null(fieldData)){
   Out<-list(fieldShape=fieldShape,cropField=r)
   if(!is.null(theta)){
     fieldShape1<-elide(fieldShape,rotate=theta,center=apply(bbox(fieldShape), 1, mean))
+    crs(fieldShape1)<-crs(mosaic)
     Out<-list(fieldShape=fieldShape,fieldShapeGIS=fieldShape1,cropField=r)
   }
   par(mfrow=c(1,1))
