@@ -40,11 +40,9 @@
 ---------------------------------------------
 ### Installation
 
-**Quick Start with Binder** 
+**Quick Start:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR.git/main?urlpath=rstudio). 
 
-The fastest way to get started exploring FIELDimageR is by clicking this button: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR.git/main?urlpath=rstudio).
-
-This will open an Rstudio environment with FIELDimageR and some sample datasets from a [previous workshop](https://github.com/phenome-force/FIELDimageR-workshop) installed.
+The fastest way to get started exploring FIELDimageR is clicking the "Binder" button above. This is a suitable sandbox for exploring the capabilities of FIELDimageR and for use in workshops; it even includes some sample data from [previous workshop](https://github.com/phenome-force/FIELDimageR-workshop) pre-installed.
 
 **RStudio**
 
@@ -103,12 +101,15 @@ install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make
 
 **Install with Docker**
 
-> If desired, one can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all the requirements already installed by using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
+Docker is platform independent, and allows you to install all dependencies in a few steps. You can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all FIELDimageR and pre-installed using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
 
 <div id="Instal_no_docker" />
 
-> When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
-> Another requirement is that Docker is [installed](https://docs.docker.com/get-docker/) on the machine as well.
+Requirements:
+1. The [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository on your computer.
+2. Docker is [installed](https://docs.docker.com/get-docker/), which runs on macOS, Linux and Windows.
+
+Steps:
 
 > Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
 
