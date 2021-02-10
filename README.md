@@ -40,7 +40,7 @@
 ---------------------------------------------
 ### Installation
 
-**Quick Start:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR.git/main?urlpath=rstudio). 
+**Quick Start:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR.git/master?urlpath=rstudio). 
 
 The fastest way to get started exploring FIELDimageR is clicking the "Binder" button above. This is a suitable sandbox for exploring the capabilities of FIELDimageR and for use in workshops; it even includes some sample data from [previous workshop](https://github.com/phenome-force/FIELDimageR-workshop) pre-installed.
 
