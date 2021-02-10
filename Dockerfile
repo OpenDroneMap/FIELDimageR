@@ -1,4 +1,4 @@
-FROM rocker/rstudio:3.6.3
+FROM rocker/rstudio:4.0.1
 LABEL maintainer="Chris Schnaufer <schnaufer@email.arizona.edu>"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
