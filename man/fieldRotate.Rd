@@ -7,7 +7,7 @@
   The image should be rotated to use the function fieldShape(). The base of experimental field should be parallel to axis X.
 }
 \usage{
-  fieldRotate(mosaic, theta=NULL, clockwise=T, h=F, n.core=NULL, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=F)
+  fieldRotate(mosaic, theta=NULL, clockwise=T, h=FALSE, n.core=NULL, extentGIS=FALSE, DSMmosaic=NULL, plot=T, type="l", lty=2, lwd=3, fast.plot=FALSE)
 }
 \arguments{
   \item{mosaic}{
@@ -24,6 +24,9 @@
   }
   \item{n.core}{
     number of cores to use for multicore processing (Parallel).
+  }
+  \item{extentGIS}{
+    if TRUE the rotated image will have an adjusted extent based on the original image (It is an important step to fit the fieldShape on the original image).
   }
   \item{DSMmosaic}{
     DSM should be used if the file of height is provided.

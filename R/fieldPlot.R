@@ -1,9 +1,21 @@
-fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3, horiz = F){
+fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), min.lim=NULL, max.lim=NULL, alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3, horiz = F){
   source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
   if(length(fieldAttribute)>1){stop("Choose ONE attribute")}
   attribute<-colnames(fieldShape@data)
   if(!fieldAttribute%in%attribute){stop(paste("Attribute ",fieldAttribute," is not valid. Choose one among: ", unique(attribute), sep = ""))}
   val<-as.numeric(fieldShape@data[,which(attribute%in%fieldAttribute)[1]])
+  if(!c(is.null(min.lim)&is.null(max.lim))){
+    if (!c(is.numeric(min.lim)&is.numeric(max.lim))) {
+      stop("Limit need to be numeric e.g. min.lim=0 and max.lim=1")
+    }
+    if (min.lim > min(val, na.rm = T)) {
+      stop(paste("Choose minimum limit (min.lim) equal or lower than ",min(val,na.rm = T), sep=""))
+    }
+    if (max.lim < max(val, na.rm = T)) {
+      stop(paste("Choose maximum limit (max.lim) equal or greater than ",max(val,na.rm = T), sep=""))
+    }
+    val<-c(min.lim,val,max.lim)
+  }
   na.pos<-is.na(val)
   rr <- range(val,na.rm=T)
   svals <- (val-rr[1])/diff(rr)
@@ -11,6 +23,7 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
   svals[na.pos] <- 0
   valcol <- rgb(f(svals)/255, alpha = alpha)
   valcol[na.pos] <- rgb(t(col2rgb(col = na.color, alpha = FALSE))/255,alpha = alpha)
+  if(!c(is.null(min.lim)&is.null(max.lim))){valcol<-valcol[-c(1,length(valcol))]}
   if(!is.null(mosaic)){
     if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}
     mosaic <- stack(mosaic)

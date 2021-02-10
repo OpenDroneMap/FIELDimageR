@@ -22,7 +22,7 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
   if(is.null(n.core)){extM <- extract(x = mosaic$watershed, y = fieldShape)}
   if (!is.null(n.core)){
     if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
-    cl <- makeCluster(n.core, output = "")
+    cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
     registerDoParallel(cl)
     extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% {
       single <- fieldShape[i, ]
@@ -69,6 +69,12 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
     rownames(PR)<-NULL
     objectSel[[j]]<-PS
     objectReject[[j]]<-PR
+  }
+  if(length(objectSel)!=length(cent)){
+    objectSel[[length(cent)+1]] <- NA
+    objectReject[[length(cent)+1]] <- NA
+    objectSel[[length(cent)+1]] <- NULL
+    objectReject[[length(cent)+1]] <- NULL
   }
   field <- unlist(lapply(objectSel, function(x){length(x$objectArea)}))
   fieldShape@data$fieldCount <- field

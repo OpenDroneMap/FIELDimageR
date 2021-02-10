@@ -13,7 +13,7 @@
 ## Resources
   
    * [Installation](#Instal)
-   * [1. Required packages](#P1)
+   * [1. First steps](#P1)
    * [2. Selecting the targeted field](#P2)
    * [3. Rotating the image](#P3)
    * [4. Removing soil using vegetation indices](#P4)
@@ -26,7 +26,7 @@
    * [11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#P11)
    * [12. Resolution and computing time](#P12)
    * [13. Crop growth cycle](#P13)
-   * [14. Multispectral images](#P14)
+   * [14. Multispectral and Hyperspectral images](#P14)
    * [15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
    * [16. Making plots](#P16)
    * [17. Saving output files](#P17)
@@ -39,12 +39,35 @@
 
 ---------------------------------------------
 ### Installation
+> If desired, one can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all the requirements already installed by using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
 
->  First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/). Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the [devtools](https://github.com/hadley/devtools) package in R.
+<div id="Instal_no_docker" />
+
+**With RStudio**
+
+> First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
+> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R.
+> * **[devtools](https://CRAN.R-project.org/package=devtools)** 
+> * **[sp](https://CRAN.R-project.org/package=sp)** 
+> * **[raster](https://CRAN.R-project.org/package=raster)** 
+> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
+> * **[scales](https://CRAN.R-project.org/package=scales)**
+> * **[xml2](https://CRAN.R-project.org/package=xml2)**
+> * **[git2r](https://CRAN.R-project.org/package=git2r)**
+> * **[usethis](https://CRAN.R-project.org/package=usethis)**
+> * **[fftwtools](https://CRAN.R-project.org/package=fftwtools)**
 
 ```r
 install.packages("devtools")
-
+install.packages("sp")
+install.packages("raster")
+install.packages("rgdal")
+install.packages("maptools")
+install.packages("scales")
+install.packages("xml2")
+install.packages("git2r")
+install.packages("usethis")
+install.packages("fftwtools")
 ```
 <br />
 
@@ -60,7 +83,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 shell("R CMD build FIELDimageR") # or system("R CMD build FIELDimageR")
-install.packages("FIELDimageR_0.2.0.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.0)
+install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.9)
 ```
 <br />
 
@@ -70,29 +93,97 @@ install.packages("FIELDimageR_0.2.0.tar.gz", repos = NULL, type="source") # Make
 
 <br />
 
+<div id="Instal_with_docker" />
+
+<br />
+
+**With Docker**
+
+> When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
+> Another requirement is that Docker is [installed](https://docs.docker.com/get-docker/) on the machine as well.
+
+> Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
+
+```bash
+docker build -t fieldimager -f ./Dockerfile ./
+```
+> The different command line parameters are as follows:
+>* `docker` is the Docker command itself
+>* `build` tells Docker that we want to build an image
+>* `-t` indicates that we will be specifying then tag (name) of the created image
+>* `fieldimager` is the tag (name) of the image and can be any acceptable name; this needs to immediately follow the `-t` parameter
+>* `-f` indicates that we will be providing the name of the Dockerfile containing the instructions for building the image
+>* `./Dockerfile` is the full path to the Dockerfile containing the instructions (in this case, it's in the current folder); this needs to immediately follow the `-f` parameter
+>* `./` specifies that Docker build should use the current folder as needed (required by Docker build)
+
+> Once the docker image is built, you use the [Docker run](https://docs.docker.com/engine/reference/run/) command to access the image using the suggested [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio/) command:
+
+```bash
+docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
+```
+
+> Open a web browser window and enter `http://localhost:8787` to access the running container.
+> To log into the instance use the username and password of `rstudio` and `yourpasswordhere`.
+
+<br />
+
+#### If you are using anaconda and Linux
+
+> To install this package on Linux and anaconda it is necessary to use a series of commands before the recommendations
+
+* Install Xorg dependencies for the plot system (on conda shell)
+
+```
+conda install -c conda-forge xorg-libx11
+```
+* Install the BiocManager package manager
+
+```r
+install.packages("BiocManager")
+```
+
+* Use the BiocManager to install the EBIMAGE package
+
+```r
+BiocManager::install("EBImage")
+```
+* If there is an error in the fftw3 library header (fftw3.h) install the dependency (on conda shell)
+
+```
+conda install -c eumetsat fftw3
+```
+
+* If there is an error in the dependency doParallel
+
+```r
+install.packages ("doParallel")
+```
+
+* Continue installation
+
+```r
+setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.zip
+unzip("FIELDimageR-master.zip") 
+file.rename("FIELDimageR-master", "FIELDimageR") 
+system("R CMD build FIELDimageR") #only system works on linux
+install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.2.9)
+
+```
+<br />
+
 [Menu](#menu)
 
 <div id="P1" />
 
 ---------------------------------------------
+
+
 ### Using R/FIELDimageR
 
 <br />
 
-#### 1. Required packages
+#### 1. First steps
 
-> * **[FIELDimageR](https://github.com/filipematias23/FIELDimageR)** 
-> * **[sp](https://CRAN.R-project.org/package=sp)** 
-> * **[raster](https://CRAN.R-project.org/package=raster)** 
-> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
-> * **[scales](https://CRAN.R-project.org/package=scales)**
-
-```r
-install.packages("sp")
-install.packages("raster")
-install.packages("rgdal")
-install.packages("scales")
-```
 > **Taking the first step:**
 ```r
 library(FIELDimageR)
@@ -140,8 +231,15 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 > To build the plot shape file first we need to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). If not, it is necessary to find the right-angle *theta* to rotate the field, **`fieldRotate`** allows you to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
 
 ```r
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F)
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop,theta = 2.3)
+# Codeline when you don't know the rotation angle "Theta":
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F, h=F) # h=horizontal
+
+# Codeline when you know the rotation angle "Theta" (theta = 2.3):
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3)
+
+# Codeline with "extentGIS=TRUE" to fit back the shapefile to the original image GIS. More information at section "5. Building the plot shape file":
+source(system.file("extdata", "fieldRotate.R", package = "FIELDimageR")) # Available from FIELDimageR version 0.2.8
+EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
 
 ```
 <br />
@@ -256,6 +354,43 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F26.jpeg">
 </p>
 
+<br />
+
+> **Important:** Code showing how to make **ShapeFile** using original *GIS*
+
+> **Example 01:** Using the rotation angle **(theta=2.3)** from step 3 (*fieldRotate*) to fit the *"fieldShape"* file back to the original image GIS (*fieldShapeGIS*): 
+
+```r
+### Rotation angle "theta=2.3" from fieldRotate():
+
+EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
+                      fieldData = DataTable, ID = "Plot", theta = 2.3)
+                      
+plotRGB(EX1.RemSoil$newMosaic)
+plot(EX1.Shape$fieldShape,add=T)
+
+plotRGB(EX1)
+plot(EX1.Shape$fieldShapeGIS,add=T) 
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS.jpg">
+</p>
+
+<br />
+
+> **Example 02:** Comparing the outputs *$fieldShape* **(straight)** with *$fieldShapeGIS* **(theta = -60)**: 
+
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS2.jpg">
+</p>
+
+<br />
+
 [Menu](#menu)
 
 <div id="P6" />
@@ -276,7 +411,14 @@ EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 # Calculating myIndex = "(Red-Blue)/Green" (not avaliable at 'FIELDimageR')
 
 EX1.Indices<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
-                          index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
+                          index = c("NGRDI","BGI"), 
+                          myIndex = c("(Red-Blue)/Green"))
+                          
+# More than one myIndex code: myIndex = c("myIndex1","myIndex2","myIndex3")    
+
+EX1.Indices.myIndex<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green = 2, Blue = 3, 
+                          index = c("NGRDI","BGI"), 
+                          myIndex = c("(Red-Blue)/Green","Red/Green","Blue/Green"))
                           
 ```
 <br />
@@ -453,6 +595,14 @@ EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldSha
 EX1.Canopy$areaPorcent
 ```
 
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/canopy.jpg">
+</p>
+
+<br />
+
 > **`fieldArea`** also can be associated with the function **`fieldMask`** to evaluate the proportion of seed colors in Glass Gems Maize. An important step is to choose the right contrasting background to differentiate samples. The same approach can be used to evaluate the percentage of disease/pests’ damage, land degradation, deforestation, etc.
 
 <br />
@@ -512,6 +662,17 @@ CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
 EPH <- fieldInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
 EPH$plotValue
 
+# Extracting the estimate plant height at 10% and 90% of quantile:
+probs = c(0.1,0.9)
+EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape$fieldShape)
+EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = probs, na.rm=TRUE))
+EPH.10.90
+
+# Data:
+EPH.DataTotal<-data.frame(EPH$fieldShape@data,EPH.10.90)
+colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean",paste("EPH_",probs*100,"%",sep=""))
+EPH.DataTotal
+
 ```
 <br />
 
@@ -525,6 +686,53 @@ EPH$plotValue
 
 ---------------------------------------------
 #### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
+
+> The function **`fieldObject`** can be used to take relative measurement from objects (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file. Download example here: [EX_Obj.jpg](https://drive.google.com/file/d/1F189a1LKA9_l0Xn8hdBOshL5eC_fQLPs/view?usp=sharing).
+
+```r
+# Uploading file (EX_Obj.tif)
+EX.Obj <- stack("EX_Obj.jpg")
+plotRGB(EX.Obj)
+EX.Obj <- aggregate(EX.Obj,4)
+EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
+
+# Removing the background
+EX.Obj.M<- fieldMask(mosaic = EX.Obj, index = "BGI",cropValue = 0.7,cropAbove = T)
+dev.off()
+
+# Taking measurements (Remove artifacts by changing the parameter *minArea* and observing the values on EX.Obj.D$Dimension$area)
+EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 0.01)
+
+# Measurement Output:
+EX.Obj.D$numObjects
+EX.Obj.D$Dimension
+plotRGB(EX.Obj)
+plot(EX.shapeFile$fieldShape, add=T)
+plot(EX.Obj.D$Objects, add=T, border="red")
+plot(EX.Obj.D$Polygons, add=T, border="blue")
+plot(EX.Obj.D$single.obj[[1]], add=T, col="yellow")
+lines(EX.Obj.D$x.position[[1]], col="red", lty=2)
+lines(EX.Obj.D$y.position[[1]], col="red", lty=2)
+EX.Obj.I<- fieldIndex(mosaic = EX.Obj,index = c("SI","BGI","BI"))
+EX.Obj.Data<-fieldInfo(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
+EX.Obj.Data$fieldShape@data
+
+# Perimeter:
+# install.packages("spatialEco")
+library(spatialEco)
+perimeter<-polyPerimeter(EX.Obj.D$Objects)
+box<-polyPerimeter(EX.Obj.D$Polygons)
+Data.Obj<-cbind(EX.Obj.Data$fieldShape@data,EX.Obj.D$Dimension,perimeter=perimeter,box=box)
+Data.Obj
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F33A.jpg">
+</p>
+
+<br />
 
 > The function **`fieldCrop`** can be used to remove objects from the field image. For instance, the parameter *remove=TRUE* and *nPoint* should be used to select the object boundaries to be removed. [Download EX_RemObj.tif](https://drive.google.com/open?id=1wfxSQANRrPOvJWwNZ6UU0UjXwzKfkKH0)).
 
@@ -784,17 +992,22 @@ Data.Cycle
 <div id="P14" />
 
 ---------------------------------------------
-#### 14. Multispectral images
+#### 14. Multispectral and Hyperspectral images
 
-> **`FIELDimageR`** can be used to analyze multispectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral mosaic from the same field. You can dowload an example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y) 
+> **`FIELDimageR`** can be used to analyze multispectral and hyperspectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral or hyperspectral mosaic from the same field. 
 
 <br />
 
-> **Attention:** HYPERSPECTRAL images were not tested in *`FIELDimageR`*
+**Multispectral:** You can dowload a multispectral example here: [**EX1_5Band.tif**](https://drive.google.com/open?id=1vYb3l41yHgzBiscXm_va8HInQsJR1d5Y)
 
 <br />
 
 ```r
+
+#####################
+### Multispectral ###
+#####################
+
 # Uploading multispectral mosaic:
 EX1.5b <- stack("EX1_5Band.tif")
 
@@ -815,6 +1028,79 @@ EX1.5b.Indices <- fieldIndex(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEd
 EX1.5b.Info<- fieldInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
 
 ```
+
+<br />
+
+**Hyperspectral:** in the following example you should download the hyperspectral tif file ([**EX_HYP.tif**](https://drive.google.com/file/d/1oOKUJ4sA1skyU7NU7ozTQZrT7_s24luW/view?usp=sharing)), the 474 wavelength names ([**namesHYP.csv**](https://drive.google.com/file/d/1n-3JX0ho1rMSOiGrrYmBKHkeF4hyHQw1/view?usp=sharing)), and the field map data ([**DataHYP.csv**](https://drive.google.com/file/d/1u78jb9BlA45kVaXUu2RKM6_KJjXIpJXq/view?usp=sharing)). 
+
+<br />
+
+```r
+
+#####################
+### Hyperspectral ###
+#####################
+
+# Uploading hyperspectral file with 474 bands (EX_HYP.tif)
+EX.HYP<-stack("EX_HYP.tif")
+
+# Wavelengths (namesHYP.csv)
+NamesHYP<-as.character(read.csv("namesHYP.csv")$NameHYP)
+
+# Building RGB image 
+R<-EX.HYP[[78]] # 651nm (Red)
+G<-EX.HYP[[46]] # 549nm (Green)
+B<-EX.HYP[[15]] # 450nm (Blue)
+RGB<-stack(c(R,G,B))
+plotRGB(RGB, stretch="lin")
+
+# Removing soil using RGB (index NGRDI)
+RGB.S<-fieldMask(RGB,index="NGRDI",cropValue = 0.0, cropAbove = F)
+
+# Data frame with field information to make the Map
+Data<-read.csv("DataHYP.csv")
+Map<-fieldMap(fieldPlot = as.character(Data$Plot),fieldRow = as.character(Data$Range),fieldColumn = as.character(Data$Row),decreasing = T)
+
+# Building plot shapefile using RGB as base
+plotFile<-fieldShape(RGB.S,ncols = 14, nrows = 14, fieldMap = Map,fieldData = Data, ID = "Plot")
+
+# Removing soil using the RGB mask
+EX.HYP.S<-fieldMask(EX.HYP,mask = RGB.S$mask, plot = F)
+
+# Extracting data (474 bands)
+EX.HYP.I<-fieldInfo(EX.HYP.S$newMosaic,fieldShape = plotFile$fieldShape,n.core = 3)
+
+# Saving the new csv with hyperspectral information per plot
+DataHYP<-EX.HYP.I$fieldShape@data
+colnames(DataHYP)<-c(colnames(DataHYP)[1:9],NamesHYP)
+write.csv(DataHYP,"DataHypNew.csv",col.names = T,row.names = F)
+
+###############
+### Graphic ###
+###############
+
+dev.off()
+DataHYP1<-EX.HYP.I$plotValue[,-1]
+
+plot(x=as.numeric(NamesHYP),y=as.numeric(DataHYP1[1,]),type = "l",xlab = "Wavelength (nm)",ylab = "Reflectance", col="black",lwd=2,cex.lab=1.2)
+for(i in 2:dim(DataHYP1)[2]){
+  lines(x=as.numeric(NamesHYP),y=as.numeric(DataHYP1[i,]),type = "l",col=i,lwd=2)
+}
+abline(v=445,col="blue",lwd=2,lty=2)
+abline(v=545,col="green",lwd=2,lty=2)
+abline(v=650,col="red",lwd=2,lty=2)
+abline(v=720,col="red",lwd=2,lty=3)
+abline(v=840,col="red",lwd=2,lty=4)
+legend(list(x = 2000,y = 0.5),c("Blue (445nm)","Green (545nm)","Red (650nm)","RedEdge (720nm)","NIR (840nm)"),
+       col =c("blue","green","red","red","red"),lty=c(2,2,2,3,4),box.lty=0)
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/HYP2.jpg">
+</p>
+
 [Menu](#menu)
 
 <div id="P15" />
@@ -1119,6 +1405,27 @@ options(device = "quartz")
 * **Embrapa Maize & Sorghum**: http://fieldimager.cnpms.embrapa.br/course.html
 <p align="center">
 <a href="https://www.youtube.com/watch?v=_3moFzzMzo8&feature=youtu.be"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/course2.jpeg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
+* **Universidade Federal de Viçosa (GenMelhor)**: https://genmelhor-fieldimager.000webhostapp.com/FIELDimageR_Course%20(2).html
+<p align="center">
+<a href="https://genmelhor-fieldimager.000webhostapp.com/FIELDimageR_Course%20(2).html"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/course3new.jpeg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
+* **PhenomeForce (Fridays Hands-On: A Workshop Series in Data+Plant Sciences)**: https://phenome-force.github.io/FIELDimageR-workshop/
+<p align="center">
+<a href="https://www.youtube.com/watch?v=2khnveYFov8&t=3345s"><img src="https://raw.githubusercontent.com/phenome-force/Images/master/redme/WS_1.jpg" width=60% height=60% title="Watch the video"></a>
+</p>
+
+<br />
+
+* **The Plant Phenome Journal**: https://www.youtube.com/watch?v=DOD0ZX_J8tk
+<p align="center">
+<a href="https://www.youtube.com/watch?v=DOD0ZX_J8tk"><img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/YouTubeTPPJ.jpg" width=60% height=60% title="Watch the video"></a>
 </p>
 
 <br />

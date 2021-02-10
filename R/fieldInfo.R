@@ -11,7 +11,7 @@ fieldInfo<-function(mosaic,fieldShape,fun = "mean",plot=F,buffer=NULL,n.core=NUL
                          buffer = buffer, na.rm = T, df = T, ...)}
   if(!is.null(n.core)){
     if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
-  cl <- makeCluster(n.core, output="")
+  cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
   registerDoParallel(cl)
   plotValue <- foreach(i=1:length(fieldShape), .packages= c("raster"), .combine = rbind) %dopar% {
     single <- fieldShape[i,]
