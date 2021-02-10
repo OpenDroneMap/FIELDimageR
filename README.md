@@ -44,7 +44,7 @@
 
 The fastest way to get started exploring FIELDimageR is by clicking this button: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR.git/main?urlpath=rstudio).
 
-This will open an Rstudio environment with FIELDimageR installed on
+This will open an Rstudio environment with FIELDimageR and some sample datasets from a [previous workshop](https://github.com/phenome-force/FIELDimageR-workshop) installed.
 
 **RStudio**
 
