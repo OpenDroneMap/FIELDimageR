@@ -1,4 +1,6 @@
   
 set -ex
 
+git clone https://github.com/phenome-force/FIELDimageR-workshop.git
+
 Rscript -e 'library(devtools);devtools::install_github("filipematias23/FIELDimageR", dependencies=FALSE)'
