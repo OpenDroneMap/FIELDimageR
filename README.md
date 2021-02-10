@@ -39,6 +39,11 @@
 
 ---------------------------------------------
 ### Installation
+
+Get started quickly by launching this repository on Binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlebauer/FIELDimageR/HEAD)
+
+**Docker**
+
 > If desired, one can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all the requirements already installed by using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
 
 <div id="Instal_no_docker" />
