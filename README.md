@@ -39,11 +39,12 @@
 
 ---------------------------------------------
 ### Installation
-> If desired, one can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all the requirements already installed by using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
 
-<div id="Instal_no_docker" />
+**Quick Start:** [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenDroneMap/FIELDimageR.git/master?urlpath=rstudio). 
 
-**With RStudio**
+The fastest way to get started exploring FIELDimageR is clicking the "Binder" button above. This is a suitable sandbox for exploring the capabilities of FIELDimageR and for use in workshops; it even includes some sample data from [previous workshop](https://github.com/phenome-force/FIELDimageR-workshop) pre-installed.
+
+**RStudio**
 
 > First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
 > Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R.
@@ -76,6 +77,7 @@ install.packages("fftwtools")
 ```r
 devtools::install_github("filipematias23/FIELDimageR")
 ```
+
 > If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
 
 ```r
@@ -97,10 +99,17 @@ install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make
 
 <br />
 
-**With Docker**
+**Install with Docker**
 
-> When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
-> Another requirement is that Docker is [installed](https://docs.docker.com/get-docker/) on the machine as well.
+Docker is platform independent, and allows you to install all dependencies in a few steps. You can [build](#Instal_with_docker) a [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio) based [Docker](https://www.docker.com/) image with all FIELDimageR and pre-installed using the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository.
+
+<div id="Instal_no_docker" />
+
+Requirements:
+1. The [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository on your computer.
+2. Docker is [installed](https://docs.docker.com/get-docker/), which runs on macOS, Linux and Windows.
+
+Steps:
 
 > Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
 
@@ -127,7 +136,7 @@ docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
 
 <br />
 
-#### If you are using anaconda and Linux
+**Install using Anaconda and BiocManager on Linux**
 
 > To install this package on Linux and anaconda it is necessary to use a series of commands before the recommendations
 
@@ -136,6 +145,7 @@ docker run --rm -p 8787:8787 -e PASSWORD=yourpasswordhere fieldimager
 ```
 conda install -c conda-forge xorg-libx11
 ```
+
 * Install the BiocManager package manager
 
 ```r
@@ -176,11 +186,6 @@ install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make
 <div id="P1" />
 
 ---------------------------------------------
-
-
-### Using R/FIELDimageR
-
-<br />
 
 #### 1. First steps
 

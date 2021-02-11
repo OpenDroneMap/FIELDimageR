@@ -1,0 +1,4 @@
+  
+set -ex
+
+git clone https://github.com/phenome-force/FIELDimageR-workshop.git
