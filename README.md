@@ -180,7 +180,11 @@ install.packages("FIELDimageR_0.2.9.tar.gz", repos = NULL, type="source") # Make
 
 ### Using R/FIELDimageR
 
-<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/RStudio.jpg" >
+</p>
+
 
 #### 1. First steps
 
