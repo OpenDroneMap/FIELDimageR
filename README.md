@@ -1,5 +1,5 @@
 
-## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A tool to analyze orthomosaic images from agricultural field trials in [R](https://www.r-project.org).
+## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A Tool to Analyze Orthomosaic Images From Agricultural Field Trials in [R](https://www.r-project.org).
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
@@ -46,34 +46,14 @@
 **With RStudio**
 
 > First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
-> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R.
-> * **[devtools](https://CRAN.R-project.org/package=devtools)** 
-> * **[sp](https://CRAN.R-project.org/package=sp)** 
-> * **[raster](https://CRAN.R-project.org/package=raster)** 
-> * **[rgdal](https://CRAN.R-project.org/package=rgdal)** 
-> * **[scales](https://CRAN.R-project.org/package=scales)**
-> * **[xml2](https://CRAN.R-project.org/package=xml2)**
-> * **[git2r](https://CRAN.R-project.org/package=git2r)**
-> * **[usethis](https://CRAN.R-project.org/package=usethis)**
-> * **[fftwtools](https://CRAN.R-project.org/package=fftwtools)**
+> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R. For Windows users who have an R version higher than 4.0, you need to install RTools, tutorial [RTools For Windows](https://cran.r-project.org/bin/windows/Rtools/).
 
-```r
-install.packages("devtools")
-install.packages("sp")
-install.packages("raster")
-install.packages("rgdal")
-install.packages("maptools")
-install.packages("scales")
-install.packages("xml2")
-install.packages("git2r")
-install.packages("usethis")
-install.packages("fftwtools")
-```
 <br />
 
 > Now install R/FIELDimageR using the `install_github` function from [devtools](https://github.com/hadley/devtools) package. If necessary, use the argument [*type="source"*](https://www.rdocumentation.org/packages/ghit/versions/0.2.18/topics/install_github).
 
 ```r
+install.packages("devtools")
 devtools::install_github("filipematias23/FIELDimageR")
 ```
 > If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
@@ -203,7 +183,7 @@ library(raster)
 > It is necessary to first reduce the image/mosaic size around the field boundaries for faster image analysis. Function to use: **`fieldCrop`**. The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
 
 ```r
-EX1<-stack("EX1_RGB.tif")
+EX1 <- stack("EX1_RGB.tif")
 plotRGB(EX1, r = 1, g = 2, b = 3)
 
 ```
@@ -236,13 +216,12 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 
 ```r
 # Codeline when you don't know the rotation angle "Theta":
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, clockwise = F, h=F) # h=horizontal
+EX1.Rotated <- fieldRotate(mosaic = EX1.Crop, clockwise = F, h=F) # h=horizontal
 
 # Codeline when you know the rotation angle "Theta" (theta = 2.3):
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3)
+EX1.Rotated <- fieldRotate(mosaic = EX1.Crop, theta = 2.3)
 
 # Codeline with "extentGIS=TRUE" to fit back the shapefile to the original image GIS. More information at section "5. Building the plot shape file":
-source(system.file("extdata", "fieldRotate.R", package = "FIELDimageR")) # Available from FIELDimageR version 0.2.8
 EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
 
 ```
@@ -262,7 +241,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
-EX1.RemSoil<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, index = "HUE")
+EX1.RemSoil <- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 ```
 <br />

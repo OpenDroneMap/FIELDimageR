@@ -1,5 +1,30 @@
-fieldIndex<-function(mosaic,Red=1,Green=2,Blue=3,RedEdge=NULL,NIR=NULL,index=c("HUE"),myIndex=NULL,plot=T){
-  Ind<-read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),header = T,sep = "\t")
+#' fieldIndex 
+#' 
+#' @title Building vegetation indices using Red, Green, Blue, Red Edge, and NIR band
+#' 
+#' @description Different vegetation indices can be calculated using at least 3 bands. 
+#' For the list of indices please visit the FIELDimageR manual at link
+#' 
+#' @param mosaic object of class stack with at least 3 bands.
+#' @param Red vector with the vegetation indices to be calculated. 
+#' @param Green user can calculate a diferent index using the bands names, e.g. "(Green+Blue)/Red-NIR/RedEdge"
+#' @param Blue if is TRUE the original and crop image will be plotted.
+#' @param RedEdge vector with the vegetation indices to be calculated. 
+#' @param NIR if is TRUE the original and crop image will be plotted.
+#' @param index vector with the vegetation indices to be calculated. 
+#' @param myIndex user can calculate a diferent index using the bands names, e.g. "(Green+Blue)/Red-NIR/RedEdge"
+#' @param plot if is TRUE the original and crop image will be plotted.
+#' 
+#' @importFrom graphics par
+#' @importFrom utils read.csv
+#' 
+#' @return A Image format stack.
+#'
+#' @export
+fieldIndex <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR = NULL, index = "HUE",
+                       myIndex = NULL, plot = TRUE) {
+  Ind <- read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),
+                  header = TRUE, sep = "\t")
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
