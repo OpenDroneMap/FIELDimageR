@@ -1,15 +1,45 @@
 Package: FIELDimageR
-Type: Package
-Title: FIELDimageR: A R Package to Analyze Orthomosaic Images from Agricultural Field Trials
-Version: 0.2.9
-Author: Filipe Inacio Matias
-Maintainer: Filipe Inacio Matias <fmatias@wisc.edu>
-Description: This package is a compilation of function to analyze pos-mosaicking images from research experimental fields, and allows to: reduce the mosaic dimension by cropping it in small sections; remove the soil effect; build vegetation indices; rotate the field and build the plot shape file; extract information for each plot; and evaluate stand count, plant height and canopy (greenness).
-License: GPL-2
-Imports: sp, raster, plyr, EBImage, doParallel, foreach, parallel, maptools
-Sugested:rgdal, rgeos, igraph
+Title: A Tool to Analyze Orthomosaic Images From Agricultural Field Trials
+Version: 0.1.0
+Authors@R: 
+    c(person(given = "Filipe",
+             family = "Matias",
+             role = c("cre", "aut"),
+             email = "filipematias23@gmail.com"))
+Description: A compilation of functions to analyze orthomosaic images 
+  from research fields. To prepare the image it first allows to crop the image, remove soil 
+  and weeds and rotate the image. The package also builds a plot shapefile in order to extract 
+  information for each plot to evaluate different wavelengths, vegetation indices, stand count, 
+  canopy percentage, and plant height.
+License: GPL-3 + file LICENSE
+biocViews:
+Imports: 
+    EBImage,
+    attempt,
+    config (>= 0.3.1),
+    DT,
+    fftwtools,
+    git2r,
+    glue,
+    maptools,
+    methods,
+    raster,
+    rgdal,
+    scales,
+    sp,
+    xml2,
+    foreach,
+    doParallel,
+    plyr,
+    processx,
+    grDevices
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/OpenDroneMap/FIELDimageR
-RoxygenNote: 6.1.1
-biocViews: EBImage
+RoxygenNote: 7.1.1
+Author: Filipe Matias [cre, aut]
+Maintainer: Filipe Matias <filipematias23@gmail.com>
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US

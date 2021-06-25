@@ -1,5 +1,32 @@
-fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","black"), min.lim=NULL, max.lim=NULL, alpha = 0.5, legend.position="right", na.color="gray", classes=5, round=3, horiz = F){
-  source(file=system.file("extdata","RGB.rescale.R", package = "FIELDimageR", mustWork = TRUE))
+#' fieldPlot 
+#' 
+#' @title Plot of fieldShape file filled with trait value for each plot
+#' 
+#' @description Graphic visualization of trait values for each plot using the \code{\link{fieldShape}} file and original image. 
+#' @param fieldShape plot shape file, please use first the function getInfo().
+#' @param fieldAttribute attribute or trait which the values will fill the plots, please use first the function getInfo().
+#' @param mosaic object of class stack that is not necessary, but if provided will be plotted with the fieldShape file.
+#' @param color colors to interpolate, must be a valid argument.
+#' @param min.lim lowest limit of the color range. If is NULL the lowest value of the data will be used.
+#' @param max.lim upper limit of the color range. If is NULL the highest value of the data will be used.
+#' @param alpha transparency with values between 0 and 1.
+#' @param legend.position legend position.
+#' @param na.color color of missing values "NA".
+#' @param classes number of classes at the legend.
+#' @param round number of decimal digits at the legend.
+#' @param horiz if TRUE will plot a horizontal legend.
+#' 
+#' @importFrom grDevices colorRamp
+#' 
+#' @return A list with two element
+#' \itemize{
+#'   \item The function returns a image with the \code{fieldShape} file filled with trait value for each plot.
+#' }
+#' 
+#'
+#' @export
+fieldPlot <- function(fieldShape, fieldAttribute, mosaic = NULL, color=c("white","black"), min.lim = NULL, max.lim = NULL, 
+                      alpha = 0.5, legend.position = "right", na.color = "gray", classes = 5, round = 3, horiz = FALSE) {
   if(length(fieldAttribute)>1){stop("Choose ONE attribute")}
   attribute<-colnames(fieldShape@data)
   if(!fieldAttribute%in%attribute){stop(paste("Attribute ",fieldAttribute," is not valid. Choose one among: ", unique(attribute), sep = ""))}
@@ -43,6 +70,5 @@ fieldPlot<-function(fieldShape,fieldAttribute, mosaic=NULL, color=c("white","bla
          legend = pos,
          fill =  col,
          bty = "n",
-        horiz = horiz)
+         horiz = horiz)
 }
-

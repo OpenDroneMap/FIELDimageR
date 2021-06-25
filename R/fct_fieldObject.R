@@ -1,4 +1,46 @@
-fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, watershed=F, dissolve=T, n.rem=1, na.rm=FALSE, plot=T){
+#' fieldObject 
+#' 
+#' @title Evaluate object area, "x" distance, "y" distance, number, extent, etc.
+#' 
+#' @description Calculating the object dimensions (e.g., area, "x" distance, "y" distance, number, extent, etc.) 
+#'  in the entire mosaic or per plot using the \code{\link{fieldShape}} file.
+#' @param mosaic object mask of class stack from the function \code{\link{fieldMask}}.
+#' @param fieldShape evaluate the object per plot using the fieldShape as reference. 
+#' If fieldShape=NULL, the object will be evaluated directly for the entire original image.
+#' @param minArea used to set the minimum size percentage of plant canopy (to remove weeds and more).
+#' @param areaValue referent value of object area in the image.
+#' @param watershed if TRUE the "watershed" algorithm will be used to differentiate objects that are touching each other.
+#' @param dissolve if TRUE, polygons with the same attribute value will be dissolved into multi-polygon regions. 
+#'  This option requires the rgeos package.
+#' @param n.rem number of objects that should be removed by decreasing size (n.rem=1 is the background).
+#' @param na.rm logical. Should missing values (including NaN) be removed?.
+#' @param plot if TRUE the crop image and fieldShape will be plotted.
+#' 
+#' @importFrom raster raster projection values
+#' @importFrom methods slot 
+#' @importFrom stats dist
+#' 
+#'@return A list with elements:
+#' \itemize{
+#'   \item \code{mosaic} (cropped by plot)
+#'   \item \code{Dimension} (area, x.dist, y.dist)
+#'   \item \code{numObjects} (number of objects)
+#'   \item \code{Objects} (all objects polygon shape)
+#'   \item \code{Polygons} (all extent polygons shape)
+#'   \item \code{single.obj} (single object polygon shape)
+#'   \item \code{obj.extent} (each object extent)
+#'   \item \code{x.position} (coordinates of "x" length per object)
+#'   \item \code{y.position} (coordinates of "y" length per object).
+#' }
+#' 
+#'
+#' @importFrom methods slot
+#' @importFrom stats dist
+#'
+#'
+#' @export
+fieldObject <- function(mosaic, fieldShape = NULL, minArea = 0.01, areaValue = 0, watershed = FALSE, 
+                        dissolve = TRUE, n.rem = 1, na.rm = FALSE, plot = TRUE) {
   mosaic <- stack(mosaic)
   num.band <- length(mosaic@layers)
   print(paste(num.band, " layer available", sep = ""))
@@ -13,10 +55,10 @@ fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, waters
   }
   print("Identifying objects ... ")
   if (is.null(fieldShape)){
-  r <- stack(mosaic)
-  fieldShape <- as(extent(r), "SpatialPolygons")
-  fieldShape <- SpatialPolygonsDataFrame(fieldShape, data.frame(z = 1))
-  projection(fieldShape) <- projection(r)}
+    r <- stack(mosaic)
+    fieldShape <- as(extent(r), "SpatialPolygons")
+    fieldShape <- SpatialPolygonsDataFrame(fieldShape, data.frame(z = 1))
+    raster::projection(fieldShape) <- raster::projection(r)}
   if (plot) {
     par(mfrow=c(1,1))
     raster::plot(mosaic, col = grey(1:100/100), axes = FALSE,
@@ -38,15 +80,15 @@ fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, waters
   Out<-list()
   numObjects<-NULL
   for(s1 in 1:dim(fieldShape)[1]){
-      single <- fieldShape[s1, ]
-      CropPlot <- crop(x = mosaic, y = single)
-      if(watershed){
+    single <- fieldShape[s1, ]
+    CropPlot <- crop(x = mosaic, y = single)
+    if(watershed){
       n.obj <- as.numeric(names(table(values(CropPlot$watershed))[order(table(values(CropPlot$watershed)),decreasing = T)]))[-c(1:n.rem)]
       SP <-rasterToPolygons(clump(CropPlot$watershed==n.obj[1]), dissolve = dissolve)
       if(length(n.obj)>1){
-      for(m1 in 2:length(n.obj)){
-        SP <- rbind(SP,rasterToPolygons(clump(CropPlot$watershed==n.obj[m1]), dissolve = dissolve))
-      }}
+        for(m1 in 2:length(n.obj)){
+          SP <- rbind(SP,rasterToPolygons(clump(CropPlot$watershed==n.obj[m1]), dissolve = dissolve))
+        }}
       SP_df<- as.data.frame(sapply(slot(SP, "polygons"), function(x) slot(x, "ID")))
       row.names(SP_df) <- sapply(slot(SP, "polygons"), function(x) slot(x, "ID"))
       colnames(SP_df) <- "ID"
@@ -65,7 +107,7 @@ fieldObject<-function(mosaic, fieldShape=NULL, minArea=0.01, areaValue=0, waters
     Polygons<-NULL
     for(f1 in 1:length(sps2)){
       sps3<-sps2[[f1]]
-      projection(sps3)<-projection(mosaic)
+      raster::projection(sps3)<-raster::projection(mosaic)
       P<-rasterToPolygons(raster(extent(sps3)),dissolve=TRUE)
       area<-raster::area(sps3)
       if(area>minArea){

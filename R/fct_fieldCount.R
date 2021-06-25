@@ -1,4 +1,37 @@
-fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch=16, cex=0.7, col="red", na.rm=FALSE){
+#' fieldCount 
+#' 
+#' @title Calculating number of objects per plot
+#' 
+#' @description The mask from function \code{\link{fieldMask}} is used to identify the number of objects per plot..
+#' 
+#' @param mosaic object mask of class stack from the function \code{\link{fieldMask}}.
+#' @param fieldShape plot shape file.
+#' @param value referent value to vegetation pixels in the mask. If "HUE" was used on 
+#'   \code{\link{fieldMask}} the value=0.
+#' @param minSize used to set the minimum size percentage of plant canopy  (to remove weeds and more).
+#' @param n.core number of cores to use for multicore processing (Parallel). 
+#' @param pch point symbol, please check \code{help("points")}.
+#' @param cex character (or symbol) expansion: a numerical vector, please check \code{help("points")}.
+#' @param col color code or name, please check \code{help("points")}.
+#' @param na.rm logical. Should missing values (including NaN) be removed?.
+#' 
+#' @importFrom raster projection extract xyFromCell
+#' @importFrom EBImage distmap watershed
+#'
+#' 
+#' @return A list with five element
+#' \itemize{
+#'   \item \code{fieldCount} is the number of objects per plot represented in DataFrame.
+#'   \item \code{fieldShape} is the new shapeFile with stand count.
+#'   \item \code{mosaic} is the Watershed layer.
+#'   \item \code{objectSel} is the objects area per plot.
+#'   \item \code{objectReject} is the objects position in the image.
+#' }
+#' 
+#'
+#' @export
+fieldCount <- function(mosaic, fieldShape, value = 0, minSize = 0.01, n.core = NULL, pch = 16, 
+                       cex = 0.7, col = "red", na.rm = FALSE) {
   if(!is.na(projection(fieldShape))&is.na(projection(mosaic))){
     if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}}
   mosaic <- stack(mosaic)
@@ -81,6 +114,10 @@ fieldCount<-function(mosaic, fieldShape, value=0, minSize=0.01, n.core=NULL, pch
   print(paste("Number of objects: ", sum(field), sep = ""))
   graphics::points(do.call(rbind,objectSel)[,c(2,3)], pch=pch, cex=cex, col=col)
   sp::plot(fieldShape, add=T)
-  Out <- list(fieldCount=field, fieldShape=fieldShape, mosaic=mosaic$watershed, objectSel=objectSel, objectReject=objectReject)
+  Out <- list(fieldCount=field, 
+              fieldShape=fieldShape, 
+              mosaic=mosaic$watershed, 
+              objectSel=objectSel, 
+              objectReject=objectReject)
   return(Out)
 }
