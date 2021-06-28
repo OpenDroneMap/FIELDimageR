@@ -381,7 +381,7 @@ plot(EX1.Shape$fieldShapeGIS,add=T)
 ---------------------------------------------
 #### 6. Building vegetation indices 
 
-> A general number of indices are implemented in *FIELDimageR* using the function **`fieldIndex`**. Also, yo can build your own index using the parameter `myIndex`. 
+> A general number of indices are implemented in *FIELDimageR* using the function **`fieldIndex`**. Also, you can build your own index using the parameter `myIndex`. 
 
 <br />
 
