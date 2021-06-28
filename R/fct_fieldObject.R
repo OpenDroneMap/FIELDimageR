@@ -12,6 +12,7 @@
 #' @param watershed if TRUE the "watershed" algorithm will be used to differentiate objects that are touching each other.
 #' @param dissolve if TRUE, polygons with the same attribute value will be dissolved into multi-polygon regions. 
 #'  This option requires the rgeos package.
+#' @param perimeter ...
 #' @param n.rem number of objects that should be removed by decreasing size (n.rem=1 is the background).
 #' @param na.rm logical. Should missing values (including NaN) be removed?.
 #' @param plot if TRUE the crop image and fieldShape will be plotted.
@@ -19,6 +20,7 @@
 #' @importFrom raster raster projection values
 #' @importFrom methods slot 
 #' @importFrom stats dist
+#' @importFrom spatialEco polyPerimeter
 #' 
 #'@return A list with elements:
 #' \itemize{
@@ -32,15 +34,11 @@
 #'   \item \code{x.position} (coordinates of "x" length per object)
 #'   \item \code{y.position} (coordinates of "y" length per object).
 #' }
-#' 
-#'
-#' @importFrom methods slot
-#' @importFrom stats dist
 #'
 #'
 #' @export
 fieldObject <- function(mosaic, fieldShape = NULL, minArea = 0.01, areaValue = 0, watershed = FALSE, 
-                        dissolve = TRUE, n.rem = 1, na.rm = FALSE, plot = TRUE) {
+                        dissolve = TRUE, perimeter = FALSE,  n.rem = 1, na.rm = FALSE, plot = TRUE) {
   mosaic <- stack(mosaic)
   num.band <- length(mosaic@layers)
   print(paste(num.band, " layer available", sep = ""))
@@ -146,5 +144,10 @@ fieldObject <- function(mosaic, fieldShape = NULL, minArea = 0.01, areaValue = 0
   }
   if(dim(fieldShape)[1]!=1){names(Out)<-fieldShape$fieldID}
   if(dim(fieldShape)[1]!=1){if("PlotName"%in%as.character(names(fieldShape))){names(Out)<-fieldShape$PlotName}}
+  if(perimeter){
+    perimeter1 <- polyPerimeter(Out$Objects)
+    box <- polyPerimeter(Out$Polygons)
+    Out$Dimension <- cbind.data.frame(Out$Dimension,perimeter=perimeter1,box=box)
+  }
   return(Out)
 }
