@@ -12,7 +12,7 @@
 #' @param watershed if TRUE the "watershed" algorithm will be used to differentiate objects that are touching each other.
 #' @param dissolve if TRUE, polygons with the same attribute value will be dissolved into multi-polygon regions. 
 #'  This option requires the rgeos package.
-#' @param perimeter ...
+#' @param perimeter If it is TRUE the object perimeter and the perimeter of the box around the object will be calculated. 
 #' @param n.rem number of objects that should be removed by decreasing size (n.rem=1 is the background).
 #' @param na.rm logical. Should missing values (including NaN) be removed?.
 #' @param plot if TRUE the crop image and fieldShape will be plotted.
