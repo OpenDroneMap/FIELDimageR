@@ -11,6 +11,7 @@ fieldObject(
   areaValue = 0,
   watershed = FALSE,
   dissolve = TRUE,
+  perimeter = FALSE,
   n.rem = 1,
   na.rm = FALSE,
   plot = TRUE
@@ -30,6 +31,8 @@ If fieldShape=NULL, the object will be evaluated directly for the entire origina
 
 \item{dissolve}{if TRUE, polygons with the same attribute value will be dissolved into multi-polygon regions. 
 This option requires the rgeos package.}
+
+\item{perimeter}{If it is TRUE the object perimeter and the perimeter of the box around the object will be calculated.}
 
 \item{n.rem}{number of objects that should be removed by decreasing size (n.rem=1 is the background).}
 
