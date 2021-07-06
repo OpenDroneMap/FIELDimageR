@@ -8,6 +8,8 @@
 #' @param areaValue referent value of object area in the image.
 #' @param fieldShape evaluate the object area percentage per plot using the fieldShape as reference. If fieldShape=NULL, 
 #'  the object area percentage will be calculated directly for the entire original image.
+#' @param buffer negative values should be used to remove boundaries from neighbor plot 
+#'  (normally the unit is meters, please use values as 0.1 = 10 cm).
 #' @param n.core number of cores to use for multicore processing (Parallel).
 #' @param plot if is TRUE the crop image and fieldShape will be plotted.
 #' @param na.rm logical. Should missing values (including NaN) be used?. 
@@ -29,7 +31,7 @@
 #' 
 #'
 #' @export
-fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, n.core = NULL, plot = TRUE, na.rm = FALSE) {
+fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, buffer = NULL, n.core = NULL, plot = TRUE, na.rm = FALSE) {
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layer available", sep = ""))
@@ -51,7 +53,7 @@ fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, n.core = NULL, p
     print("Evaluating the object area percetage per plot...")
     
     if (is.null(n.core)) {
-      extM <- extract(x = mosaic, y = fieldShape)
+      extM <- extract(x = mosaic, y = fieldShape, buffer = buffer)
       names(extM) <- 1:length(fieldShape)
       porarea <- as.data.frame(do.call(rbind,lapply(extM, pc, p = areaValue)))
     }
@@ -64,7 +66,7 @@ fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, n.core = NULL, p
         {
           single <- fieldShape[i, ]
           CropPlot <- crop(x = mosaic, y = single)
-          extract(x = CropPlot, y = single)
+          extract(x = CropPlot, y = single, buffer = buffer)
         }
       names(extM) <- 1:length(fieldShape)
       porarea <- as.data.frame(do.call(rbind,lapply(extM, function(x){pc(as.numeric(x[[1]]),p = areaValue)})))
