@@ -81,7 +81,7 @@ install.packages("FIELDimageR_0.3.0.tar.gz", repos = NULL, type="source") # Make
 
 > When building the Docker image you will need the [Dockerfile](https://github.com/OpenDroneMap/FIELDimageR/blob/master/Dockerfile) in this repository available on the local machine.
 > Another requirement is that Docker is [installed](https://docs.docker.com/get-docker/) on the machine as well.
-
+>
 > Open a terminal window and at the command prompt enter the following command to [build](https://docs.docker.com/engine/reference/commandline/build/) the Docker image:
 
 ```bash
@@ -95,7 +95,9 @@ docker build -t fieldimager -f ./Dockerfile ./
 >* `-f` indicates that we will be providing the name of the Dockerfile containing the instructions for building the image
 >* `./Dockerfile` is the full path to the Dockerfile containing the instructions (in this case, it's in the current folder); this needs to immediately follow the `-f` parameter
 >* `./` specifies that Docker build should use the current folder as needed (required by Docker build)
-
+>
+> The container includes a copy of RStudio Server and `tidyverse` (see [rocker/tidyverse](https://hub.docker.com/r/rocker/tidyverse/)). Alternatively, you can substitute `rocker/tidyverse` in the first line of `Dockerfile` with `rocker/rstudio` for a RStudio environment without the `tidyverse` package.
+>
 > Once the docker image is built, you use the [Docker run](https://docs.docker.com/engine/reference/run/) command to access the image using the suggested [rocker/rstudio](https://hub.docker.com/r/rocker/rstudio/) command:
 
 ```bash
