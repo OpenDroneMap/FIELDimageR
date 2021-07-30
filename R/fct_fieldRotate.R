@@ -41,10 +41,14 @@ fieldRotate <- function(mosaic, theta = NULL, clockwise = TRUE, h = FALSE, n.cor
   mosaic <- raster::stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
-  par(mfrow=c(1,2))
-  if(!is.null(DSMmosaic)){
-    par(mfrow=c(1,3))
-    if(raster::projection(DSMmosaic)!=raster::projection(mosaic)){stop("DSMmosaic and RGBmosaic must have the same projection CRS")}}
+  if (!is.null(DSMmosaic)) {
+    withr::local_par(mfrow = c(1, 3))
+    if (raster::projection(DSMmosaic) != raster::projection(mosaic)) {
+      stop("DSMmosaic and RGBmosaic must have the same projection CRS")
+    }
+  } else {
+    withr::local_par(mfrow = c(1, 2))
+  }
   if(plot|is.null(theta)){
     if(fast.plot){
       raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
@@ -110,6 +114,5 @@ fieldRotate <- function(mosaic, theta = NULL, clockwise = TRUE, h = FALSE, n.cor
     }
     Out<-list(rotatedMosaic=r,rotatedDSM=DSMmosaic)
   }
-  par(mfrow=c(1,1))
   return(Out)
 }

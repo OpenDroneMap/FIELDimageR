@@ -58,7 +58,7 @@ fieldObject <- function(mosaic, fieldShape = NULL, minArea = 0.01, areaValue = 0
     fieldShape <- SpatialPolygonsDataFrame(fieldShape, data.frame(z = 1))
     raster::projection(fieldShape) <- raster::projection(r)}
   if (plot) {
-    par(mfrow=c(1,1))
+    withr::local_par(mfrow = c(1, 1))
     raster::plot(mosaic, col = grey(1:100/100), axes = FALSE,
                  box = FALSE, legend=FALSE)
     sp::plot(fieldShape, add = T)
@@ -70,7 +70,7 @@ fieldObject <- function(mosaic, fieldShape = NULL, minArea = 0.01, areaValue = 0
     mosaic$watershed <- watershed(dd)
     n.obj<-unique(values(mosaic$watershed))[-1]
     if (plot) {
-      par(mfrow=c(1,1))
+      withr::local_par(mfrow = c(1, 1))
       raster::plot(mosaic$watershed, col = grey((length(n.obj)+10):1/(length(n.obj)+10)), axes = FALSE,
                    box = FALSE, add=T, legend=FALSE)
       sp::plot(fieldShape, add = T)

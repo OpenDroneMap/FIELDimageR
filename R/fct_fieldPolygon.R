@@ -43,7 +43,7 @@ fieldPolygon <- function(mosaic, nPolygon = 1, nPoint = 4, polygonID = NULL, pol
     if (nPoint < 4 | nPoint > 50) {
       stop("nPoint must be >= 4 and <= 50")
     }
-    par(mfrow = c(1, 2))
+    withr::local_par(mfrow = c(1, 2))
     if (fast.plot) {
       raster::plot(mosaic[[1]], col = grey(1:100/100), axes = FALSE, 
                    box = FALSE, legend = FALSE)
@@ -136,6 +136,5 @@ fieldPolygon <- function(mosaic, nPolygon = 1, nPoint = 4, polygonID = NULL, pol
       }
     }
   }
-  par(mfrow = c(1, 1))
   return(Out)
 }

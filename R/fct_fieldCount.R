@@ -42,7 +42,7 @@ fieldCount <- function(mosaic, fieldShape, value = 0, minSize = 0.01, n.core = N
   mosaic <- crop(x = mosaic, y = fieldShape)
   print("Identifying objects... ")
   print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
-  par(mfrow=c(1,1))
+  withr::local_par(mfrow = c(1, 1))
   raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)
   sp::plot(fieldShape, add=T)
   names(mosaic)<-"mask"
