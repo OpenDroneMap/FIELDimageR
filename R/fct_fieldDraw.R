@@ -37,7 +37,7 @@ fieldDraw <- function(mosaic,line = TRUE, ndraw = 1, dist = FALSE, distSel = 0.5
   mosaic <- stack(mosaic)
   num.band <- length(mosaic@layers)
   print(paste(num.band, " layer available", sep = ""))
-
+  par(mfrow=c(1,1))
   if(dist){
     if(!line){
       stop("For dist=T only line=TRUE can be used to evaluate distances")
@@ -55,9 +55,7 @@ fieldDraw <- function(mosaic,line = TRUE, ndraw = 1, dist = FALSE, distSel = 0.5
     if (distSel<=0|distSel>1) {
       stop("distSel must be a vlaue between 1 or 0 ")
     }
-    withr::local_par(mfrow = c(1, 2), mai = c(1, 1, 1, 1))
-  } else {
-    withr::local_par(mfrow = c(1, 1))
+    par(mfrow=c(1,2), mai = c(1, 1, 1, 1))
   }
   if (num.band > 2) {
     plotRGB(RGB.rescale(mosaic, num.band = 3), r = 1,
@@ -118,5 +116,6 @@ fieldDraw <- function(mosaic,line = TRUE, ndraw = 1, dist = FALSE, distSel = 0.5
   }
   names(Out2)<-paste("Draw",c(1:ndraw),sep="")
   if(ndraw==1){Out2<-Out1}
+  par(mfrow=c(1,1))
   return(Out2)
 }
