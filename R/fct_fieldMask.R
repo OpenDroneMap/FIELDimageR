@@ -90,14 +90,10 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
     m<-mr<cropValue
   }
   
-  if (!is.null(DSMmosaic)) {
-    withr::local_par(mfrow = c(1, 4))
-    if (projection(DSMmosaic) != projection(mosaic)) {
-      stop("DSMmosaic and RGBmosaic must have the same projection CRS, use fieldRotate() in both files.")
-    }
-  } else {
-    withr::local_par(mfrow = c(1, 3))
-  }
+  par(mfrow=c(1,3))
+  if(!is.null(DSMmosaic)){
+    par(mfrow=c(1,4))
+    if(projection(DSMmosaic)!=projection(mosaic)){stop("DSMmosaic and RGBmosaic must have the same projection CRS, use fieldRotate() in both files.")}}
   
   if(plot){if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
     if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}
@@ -127,5 +123,6 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
     DSMmosaic <- stack(DSMmosaic)
     Out<-list(newMosaic=mosaic,mask=m,DSM=DSMmosaic)
   }
+  par(mfrow=c(1,1))
   return(Out)
 }

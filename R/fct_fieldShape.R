@@ -40,7 +40,7 @@ fieldShape <- function(mosaic, ncols = 10, nrows = 10, nPoint = 4, fieldMap = NU
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
   if(nPoint<4|nPoint>50){stop("nPoint must be >= 4 and <= 50")}
-  withr::local_par(mfrow = c(1, 2))
+  par(mfrow=c(1,2))
   if(fast.plot){
     raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
   if(!fast.plot){
@@ -91,5 +91,6 @@ fieldShape <- function(mosaic, ncols = 10, nrows = 10, nPoint = 4, fieldMap = NU
     raster::crs(fieldShape1) <- raster::crs(mosaic)
     Out<-list(fieldShape=fieldShape,fieldShapeGIS=fieldShape1,cropField=r)
   }
+  par(mfrow=c(1,1))
   return(Out)
 }
