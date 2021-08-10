@@ -80,8 +80,7 @@ fieldRotate <- function(mosaic, theta = NULL, clockwise = TRUE, h = FALSE, n.cor
     }
     cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
     registerDoParallel(cl)
-    i <- 1:length(mosaic@layers)
-    r <- foreach(i, .packages = c("raster")) %dopar% {rotate(mosaic[[i]], angle = theta)}
+    r <- foreach(i=1:length(mosaic@layers), .packages = c("raster")) %dopar% {rotate(mosaic[[i]], angle = theta)}
   }
   r <- raster::stack(r)
   if(extentGIS){
