@@ -13,7 +13,6 @@
 #'  (normally the unit is meters, please use values as 0.1 = 10 cm). 
 #' @param n.core number of cores to use for multicore processing (Parallel).
 #' @param projection if is FALSE projection will be ignored.
-#' @param ... unused, for extensibility 
 #' 
 #' @importFrom graphics par
 #' @importFrom utils read.csv
@@ -22,7 +21,7 @@
 #'
 #' @export
 fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = NULL,
-                      n.core = NULL, projection = TRUE, ...) { # buffer is in the mosaic unit, usually in meters.
+                      n.core = NULL, projection = TRUE) { # buffer is in the mosaic unit, usually in meters.
   if(projection){if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS. Use fieldRotate() for both files.")}}
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
@@ -31,7 +30,7 @@ fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = N
   CropPlot <- crop(x = mosaic, y = fieldShape)
   if(is.null(n.core)){
     plotValue <- extract(x = CropPlot, y = fieldShape, fun = eval(parse(text = fun)),
-                         buffer = buffer, na.rm = T, df = T, ...)}
+                         buffer = buffer, na.rm = T, df = T)}
   if(!is.null(n.core)){
     if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
     cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
@@ -40,7 +39,7 @@ fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = N
     plotValue <- foreach(i, .packages= c("raster"), .combine = rbind) %dopar% {
       single <- fieldShape[i,]
       CropPlot <- crop(x = mosaic, y = single)
-      extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T, ...)}
+      extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T)}
     plotValue$ID<-1:length(fieldShape)}
   fieldShape@data<-cbind.data.frame(fieldShape@data,plotValue)
   Out<-list(fieldShape=fieldShape,plotValue=plotValue,cropPlot=CropPlot)
