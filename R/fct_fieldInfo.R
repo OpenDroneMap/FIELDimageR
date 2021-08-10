@@ -35,8 +35,7 @@ fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = N
     if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
     cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
     registerDoParallel(cl)
-    i <- 1:length(fieldShape)
-    plotValue <- foreach(i, .packages= c("raster"), .combine = rbind) %dopar% {
+    plotValue <- foreach(i=1:length(fieldShape), .packages= c("raster"), .combine = rbind) %dopar% {
       single <- fieldShape[i,]
       CropPlot <- crop(x = mosaic, y = single)
       extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T)}
