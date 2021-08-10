@@ -11,8 +11,7 @@ fieldInfo(
   plot = FALSE,
   buffer = NULL,
   n.core = NULL,
-  projection = TRUE,
-  ...
+  projection = TRUE
 )
 }
 \arguments{
@@ -30,8 +29,6 @@ fieldInfo(
 \item{n.core}{number of cores to use for multicore processing (Parallel).}
 
 \item{projection}{if is FALSE projection will be ignored.}
-
-\item{...}{unused, for extensibility}
 }
 \value{
 A list with a data frame with values by plot and experimental field image with format stack.
