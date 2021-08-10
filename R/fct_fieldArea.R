@@ -61,8 +61,7 @@ fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, buffer = NULL, n
       if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
       cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
       registerDoParallel(cl)
-      i = 1:length(fieldShape)
-      extM <- foreach(i, .packages = c("raster")) %dopar% 
+      extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% 
         {
           single <- fieldShape[i, ]
           CropPlot <- crop(x = mosaic, y = single)
