@@ -14,6 +14,7 @@
 #' @param n.core number of cores to use for multicore processing (Parallel).
 #' @param projection if is FALSE projection will be ignored.
 #' 
+#' @importFrom parallel stopCluster
 #' @importFrom graphics par
 #' @importFrom utils read.csv
 #' 
@@ -39,7 +40,8 @@ fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = N
       single <- fieldShape[i,]
       CropPlot <- crop(x = mosaic, y = single)
       extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T)}
-    plotValue$ID<-1:length(fieldShape)}
+    plotValue$ID<-1:length(fieldShape)
+  stopCluster(cl)}
   fieldShape@data<-cbind.data.frame(fieldShape@data,plotValue)
   Out<-list(fieldShape=fieldShape,plotValue=plotValue,cropPlot=CropPlot)
   if(plot){
