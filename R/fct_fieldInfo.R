@@ -41,7 +41,7 @@ fieldInfo <- function(mosaic, fieldShape, fun = "mean", plot = FALSE, buffer = N
       CropPlot <- crop(x = mosaic, y = single)
       extract(x = CropPlot, y = single, fun = eval(parse(text = fun)),buffer = buffer, na.rm = T, df = T)}
     plotValue$ID<-1:length(fieldShape)
-  stopCluster(cl)}
+  parallel::stopCluster(cl)}
   fieldShape@data<-cbind.data.frame(fieldShape@data,plotValue)
   Out<-list(fieldShape=fieldShape,plotValue=plotValue,cropPlot=CropPlot)
   if(plot){
