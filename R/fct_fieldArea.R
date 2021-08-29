@@ -15,7 +15,7 @@
 #' @param na.rm logical. Should missing values (including NaN) be used?. 
 #' 
 #' @importFrom raster stack extract crop
-#' @importFrom parallel detectCores
+#' @importFrom parallel detectCores stopCluster makeCluster
 #' @importFrom graphics par 
 #' @importFrom foreach %dopar% foreach
 #' @importFrom doParallel registerDoParallel
@@ -68,6 +68,7 @@ fieldArea <- function(mosaic, areaValue = 0, fieldShape = NULL, buffer = NULL, n
           extract(x = CropPlot, y = single, buffer = buffer)
         }
       names(extM) <- 1:length(fieldShape)
+      parallel::stopCluster(cl)
       porarea <- as.data.frame(do.call(rbind,lapply(extM, function(x){pc(as.numeric(x[[1]]),p = areaValue)})))
     }
     fieldShape@data<-cbind.data.frame(fieldShape@data,porarea)
