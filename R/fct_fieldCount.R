@@ -63,6 +63,7 @@ fieldCount <- function(mosaic, fieldShape, value = 0, minSize = 0.01, n.core = N
       extract(x = CropPlot, y = single)
     }
     names(extM) <- 1:length(fieldShape)
+    parallel::stopCluster(cl)
   }
   objects<-lapply(extM, function(x){table(x)})
   cent <- lapply(objects, function(x){as.numeric(names(x))[-1]})
