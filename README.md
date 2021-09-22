@@ -63,7 +63,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 shell("R CMD build FIELDimageR") # or system("R CMD build FIELDimageR")
-install.packages("FIELDimageR_0.3.0.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.3.0)
+install.packages("FIELDimageR_0.3.2.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.3.2)
 ```
 <br />
 
@@ -148,7 +148,7 @@ setwd("~/FIELDimageR-master.zip") # ~ is the path from where you saved the file.
 unzip("FIELDimageR-master.zip") 
 file.rename("FIELDimageR-master", "FIELDimageR") 
 system("R CMD build FIELDimageR") #only system works on linux
-install.packages("FIELDimageR_0.3.0.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.3.0)
+install.packages("FIELDimageR_0.3.2.tar.gz", repos = NULL, type="source") # Make sure to use the right version (e.g. 0.3.2)
 
 ```
 <br />
