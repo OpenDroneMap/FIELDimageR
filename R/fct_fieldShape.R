@@ -16,6 +16,7 @@
 #' @param theta angle of rotation used on function \code{\link{fieldRotate}}. It is an important step to fit the fieldShape on the original image.
 #' @param plot if is TRUE the crop image and fieldShape will be plotted.
 #' @param fast.plot if TRUE only the grey scale image will be plotted as reference (faster approach).
+#' @param extent if is TRUE the entire image area will be the fieldShape (one unique plot).
 #' 
 #' @importFrom raster raster projection plotRGB res projectRaster crs extent atan2 crop rasterToPolygons mask extract clump drawLine drawPoly xyFromCell
 #' @importFrom graphics abline axis lines par plot points locator legend
@@ -35,17 +36,20 @@
 #'
 #' @export
 fieldShape <- function(mosaic, ncols = 10, nrows = 10, nPoint = 4, fieldMap = NULL, fieldData = NULL,
-                       ID = NULL, theta = NULL, plot = TRUE, fast.plot = FALSE) {
+                       ID = NULL, theta = NULL, plot = TRUE, fast.plot = FALSE, extent = FALSE) {
   mosaic <- stack(mosaic)
   num.band<-length(mosaic@layers)
   print(paste(num.band," layers available", sep = ""))
+  if(!extent){
   if(nPoint<4|nPoint>50){stop("nPoint must be >= 4 and <= 50")}
+    }
   par(mfrow=c(1,2))
   if(fast.plot){
     raster::plot(mosaic[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
   if(!fast.plot){
     if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
     if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}}
+  if(!extent){
   print(paste("Select ",nPoint," points at the corners of field of interest in the plots space.",sep = ""))
   c1<-NULL
   for(i in 1:nPoint){
@@ -54,7 +58,10 @@ fieldShape <- function(mosaic, ncols = 10, nrows = 10, nPoint = 4, fieldMap = NU
   }
   c1<-rbind(c1,c1[1,])
   colnames(c1)<-c("x","y")
-  lines(c1, col= "red", type="l", lty=2, lwd=3)
+  lines(c1, col= "red", type="l", lty=2, lwd=3)}
+  if(extent){
+    c1<-extent(mosaic)
+  }
   p1 <- Polygons(list(Polygon(c1)), "x")
   f1 <- SpatialPolygonsDataFrame( SpatialPolygons(list(p1)), data.frame( z=1, row.names=c("x") ) )
   raster::projection(f1) <- raster::projection(mosaic)
