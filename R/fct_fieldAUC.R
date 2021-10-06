@@ -63,5 +63,5 @@ fieldAUC<-function(data,
       DataAUC<-cbind(DataAUC,DataAUC.1)
       colnames(DataAUC)[dim(DataAUC)[2]]<-paste(trait1,"AUC",sep="_")}
   }
-  DataAUC<-as.data.frame(DataAUC)
+  DataAUC<-as.data.frame(as.matrix(DataAUC))
   return(DataAUC)}
