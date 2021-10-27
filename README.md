@@ -1295,6 +1295,7 @@ EX.Table.Parallel <- foreach(i = 1:length(pics), .packages = c("raster","FIELDim
                        EX.L.Info<- fieldInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
                        EX.L.Info$plotValue # Combine information from all images in one table
                      }})
+stopCluster(cl)
 rownames(EX.Table.Parallel)<-pics
 EX.Table.Parallel 
 
