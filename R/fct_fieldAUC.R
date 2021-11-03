@@ -39,7 +39,7 @@ fieldAUC<-function(data,
       y1<-c(y.start,as.numeric(D1[,trait1]))
       if(frame == c("long")){
         DataAUC <- rbind(DataAUC,
-                         c(D1[1,c(keep.columns)],
+                         c(as.matrix(D1[1,c(keep.columns)]),
                            TRAIT=trait1,
                            AUC=AUC(x = x1[!is.na(y1)], 
                                    y = y1[!is.na(y1)],
@@ -48,9 +48,10 @@ fieldAUC<-function(data,
       if(frame=="wide"){
         if(i==1){
           DataAUC <- rbind(DataAUC,
-                           c(D1[1,c(keep.columns)],AUC(x = x1[!is.na(y1)], 
-                                                       y = y1[!is.na(y1)],
-                                                       method = method)))
+                           c(as.matrix(D1[1,c(keep.columns)]),
+                             AUC(x = x1[!is.na(y1)], 
+                                 y = y1[!is.na(y1)],
+                                 method = method)))
         }
         if(i!=1){
           DataAUC.1 <- c(DataAUC.1,AUC(x = x1[!is.na(y1)], 
@@ -64,6 +65,7 @@ fieldAUC<-function(data,
       colnames(DataAUC)[dim(DataAUC)[2]]<-paste(trait1,"AUC",sep="_")}
   }
   namesAUC<-colnames(DataAUC)
+  namesAUC[1:length(keep.columns)]<-c(keep.columns)
   DataAUC<-as.data.frame(matrix(unlist(DataAUC), ncol = dim(DataAUC)[2], nrow = dim(DataAUC)[1]))
   colnames(DataAUC)<-namesAUC
   return(DataAUC)}
