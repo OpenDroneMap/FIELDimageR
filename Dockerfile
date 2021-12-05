@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsqlite3-dev \ 		
     libudunits2-dev
 
+RUN Rscript -e 'BiocManager::install(version = "3.13", ask = FALSE)'
 RUN Rscript -e 'BiocManager::install("EBImage", version = "3.13")'
 
 RUN install2.r --error \
