@@ -1175,7 +1175,8 @@ writeRaster(EX1.Indices, filename="EX1.Indices.tif", options="INTERLEAVE=BAND", 
 ### FieldShape file
 library(rgdal)
 writeOGR(EX1.Info$fieldShape, ".", "EX1.fieldShape", driver="ESRI Shapefile")
-# EX1.fieldShape.2 <- readOGR("EX1.fieldShape.shp") # Reading the saved shapefile.
+# EX1.fieldShape.2 <- terra::vect("EX1.fieldShape.shp") # Reading the saved shapefile option 01.
+# EX1.fieldShape.2 <- readOGR("EX1.fieldShape.shp") # Reading the saved shapefile option 02.
 
 ### CSV file (table)
 write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names = F)
@@ -1333,8 +1334,8 @@ rm(previous_mosaic)
 
 4) Using ShapeFile from other software (e.g. [QGIS](https://www.qgis.org/en/site/))
 ```
-library(rgdal)
-ShapeFile <- readOGR("Other_Software_ShapeFile.shp")
+ShapeFile <- rgdal::readOGR("Other_Software_ShapeFile.shp") # Option 01
+ShapeFile <- terra::vect("Other_Software_ShapeFile.shp") # Option 02
 ```
 
 5) Combining ShapeFiles: sometimes it is better to split the mosaic into smaller areas to better draw the shapefile. For instance, the user can combine the split shapefiles to one for the next step as extractions
