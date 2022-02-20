@@ -25,7 +25,7 @@ fieldAUC(
 
 \item{y.start}{value of y to start the AUC (default is 0).}
 
-\item{frame}{format of output data. "long" is used for AUC values on the 1st column and traits ID on the2nd column. While "wide" is for objects with dimension n \times m where traits must be in columns and plots/sample in rows.}
+\item{frame}{format of output data. "long" is used for AUC values on the first column and traits ID on the second column. While "wide" is for objects with dimension n times m where traits must be in columns and plots by sample in rows.}
 
 \item{Data}{data table from \code{\link{fieldInfo}}.}
 }
