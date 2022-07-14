@@ -46,7 +46,7 @@
 **With RStudio**
 
 > First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
-> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R. For Windows users who have an R version higher than 4.0, you need to install RTools, tutorial [RTools For Windows](https://cran.r-project.org/bin/windows/Rtools/).
+> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/OpenDroneMap/FIELDimageR), you need to install the following packages in R. For Windows users who have an R version higher than 4.0, you need to install RTools, tutorial [RTools For Windows](https://cran.r-project.org/bin/windows/Rtools/).
 
 <br />
 
@@ -54,7 +54,7 @@
 
 ```r
 install.packages("devtools")
-devtools::install_github("filipematias23/FIELDimageR")
+devtools::install_github("OpenDroneMap/FIELDimageR")
 ```
 > If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
 
