@@ -1,5 +1,5 @@
 
-## [FIELDimageR](https://github.com/filipematias23/FIELDimageR): A Tool to Analyze Images From Agricultural Field Trials and Lab in [R](https://www.r-project.org).
+## [FIELDimageR](https://github.com/OpenDroneMap/FIELDimageR): A Tool to Analyze Images From Agricultural Field Trials and Lab in [R](https://www.r-project.org).
 
 > This package is a compilation of functions to analyze orthomosaic images from research fields. To prepare the image it first allows to crop the image, remove soil and weeds and rotate the image. The package also builds a plot shapefile in order to extract information for each plot to evaluate different wavelengths, vegetation indices, stand count, canopy percentage, and plant height.
 
@@ -46,7 +46,7 @@
 **With RStudio**
 
 > First of all, install [R](https://www.r-project.org/) and [RStudio](https://rstudio.com/).
-> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/filipematias23/FIELDimageR), you need to install the following packages in R. For Windows users who have an R version higher than 4.0, you need to install RTools, tutorial [RTools For Windows](https://cran.r-project.org/bin/windows/Rtools/).
+> Then, in order to install R/FIELDimageR from GitHub [GitHub repository](https://github.com/OpenDroneMap/FIELDimageR), you need to install the following packages in R. For Windows users who have an R version higher than 4.0, you need to install RTools, tutorial [RTools For Windows](https://cran.r-project.org/bin/windows/Rtools/).
 
 <br />
 
@@ -54,7 +54,7 @@
 
 ```r
 install.packages("devtools")
-devtools::install_github("filipematias23/FIELDimageR")
+devtools::install_github("OpenDroneMap/FIELDimageR")
 ```
 > If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
 
