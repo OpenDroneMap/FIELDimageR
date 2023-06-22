@@ -26,7 +26,6 @@
 #' @importFrom graphics abline axis lines par plot points locator legend
 #' @importFrom grDevices grey rgb col2rgb
 #' @importFrom sp bbox Polygons Polygon SpatialPolygonsDataFrame SpatialPolygons spsample SpatialPointsDataFrame over proj4string
-#' @importFrom maptools elide 
 #' 
 #'
 #' @return A list with two element

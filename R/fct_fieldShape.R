@@ -21,8 +21,7 @@
 #' @importFrom raster raster projection plotRGB res projectRaster crs extent atan2 crop rasterToPolygons mask extract clump drawLine drawPoly xyFromCell
 #' @importFrom graphics abline axis lines par plot points locator legend
 #' @importFrom grDevices grey rgb col2rgb
-#' @importFrom sp bbox Polygons Polygon SpatialPolygonsDataFrame SpatialPolygons spsample SpatialPointsDataFrame over proj4string
-#' @importFrom maptools elide 
+#' @importFrom sp bbox Polygons Polygon SpatialPolygonsDataFrame SpatialPolygons spsample SpatialPointsDataFrame over proj4string elide
 #' 
 #'
 #' @return A list with two element
