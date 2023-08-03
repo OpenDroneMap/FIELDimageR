@@ -21,7 +21,6 @@ Imports:
     fftwtools,
     git2r,
     glue,
-    maptools,
     DescTools,
     methods,
     raster,
