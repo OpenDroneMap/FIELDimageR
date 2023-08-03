@@ -12,51 +12,51 @@
 ---------------------------------------------
 ## Resources
   
-[Installation](#Instal)
+[Installation](#instal)
 
-[1. First steps](#P1)
+[1. First steps](#p1)
 
-[2. Selecting the targeted field](#P2)
+[2. Selecting the targeted field](#p2)
 
-[3. Rotating the image](#P3)
+[3. Rotating the image](#p3)
 
-[4. Removing soil using vegetation indices](#P4)
+[4. Removing soil using vegetation indices](#p4)
 
-[5. Building the plot shapefile](#P5)
+[5. Building the plot shapefile](#p5)
 
-[6. Building vegetation indices](#P6)
+[6. Building vegetation indices](#p6)
 
-[7. Counting the number of objects (e.g. plants, seeds, etc)](#P7)
+[7. Counting the number of objects (e.g. plants, seeds, etc)](#p7)
 
-[8. Evaluating the object area percentage (e.g. canopy)](#P8)
+[8. Evaluating the object area percentage (e.g. canopy)](#p8)
 
-[9. Extracting data from field images](#P9)
+[9. Extracting data from field images](#p9)
 
-[10. Estimating plant height](#P10)
+[10. Estimating plant height](#p10)
 
-[11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#P11)
+[11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#p11)
 
-[12. Resolution and computing time](#P12)
+[12. Resolution and computing time](#p12)
 
-[13. Crop growth cycle](#P13)
+[13. Crop growth cycle](#p13)
 
-[14. Multispectral and Hyperspectral images](#P14)
+[14. Multispectral and Hyperspectral images](#p14)
 
-[15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#P15)
+[15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#p15)
 
-[16. Making plots](#P16)
+[16. Making plots](#p16)
 
-[17. Saving output files](#P17)
+[17. Saving output files](#p17)
 
-[Orthomosaic using the open source software OpenDroneMap](#P18)
+[Orthomosaic using the open source software OpenDroneMap](#p18)
 
-[Parallel and loop to evaluate multiple images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#P19)
+[Parallel and loop to evaluate multiple images (e.g. images from roots, leaves, ears, seed, damaged area, etc.)](#p19)
 
-[Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#P20)
+[Quick tips (memory limits, splitting shapefile, using shapefile from other software, etc)](#p20)
 
-[Contact](#P21)
+[Contact](#p21)
 
-<div id="Instal" />
+<div id="instal" />
 
 ---------------------------------------------
 ### Installation
@@ -176,7 +176,7 @@ install.packages("FIELDimageR_0.3.2.tar.gz", repos = NULL, type="source") # Make
 
 [Menu](#menu)
 
-<div id="P1" />
+<div id="p1" />
 
 ---------------------------------------------
 
@@ -198,7 +198,7 @@ library(raster)
 ```
 [Menu](#menu)
 
-<div id="P2" />
+<div id="p2" />
 
 ---------------------------------------------
 #### 2. Selecting the targeted field from the original image
@@ -230,7 +230,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 
 [Menu](#menu)
 
-<div id="P3" />
+<div id="p3" />
 
 ---------------------------------------------
 #### 3. Rotating the image
@@ -256,7 +256,7 @@ EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
 
 [Menu](#menu)
 
-<div id="P4" />
+<div id="p4" />
 
 ---------------------------------------------
 #### 4. Removing soil using vegetation indices 
@@ -275,7 +275,7 @@ EX1.RemSoil <- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, ind
 
 [Menu](#menu)
 
-<div id="P5" />
+<div id="p5" />
 
 ---------------------------------------------
 #### 5. Building the plot shape file
@@ -399,7 +399,7 @@ plot(EX1.Shape$fieldShapeGIS,add=T)
 
 [Menu](#menu)
 
-<div id="P6" />
+<div id="p6" />
 
 ---------------------------------------------
 #### 6. Building vegetation indices 
@@ -457,7 +457,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 
 [Menu](#menu)
 
-<div id="P7" />
+<div id="p7" />
 
 ---------------------------------------------
 #### 7. Counting the number of objects (e.g. plants, seeds, etc)
@@ -585,7 +585,7 @@ EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape,
 
 [Menu](#menu)
 
-<div id="P8" />
+<div id="p8" />
 
 ---------------------------------------------
 #### 8. Evaluating the object area percentage (e.g. canopy)
@@ -619,7 +619,7 @@ EX1.Canopy$areaPorcent
 
 [Menu](#menu)
 
-<div id="P9" />
+<div id="p9" />
 
 ---------------------------------------------
 #### 9. Extracting data from field images 
@@ -638,7 +638,7 @@ EX1.Info$fieldShape@data
 
 [Menu](#menu)
 
-<div id="P10" />
+<div id="p10" />
 
 ---------------------------------------------
 #### 10. Estimating plant height
@@ -688,7 +688,7 @@ EPH.DataTotal
 
 [Menu](#menu)
 
-<div id="P11" />
+<div id="p11" />
 
 ---------------------------------------------
 #### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
@@ -826,7 +826,7 @@ plot(EX.Dist.Draw.3$Draw1$drawObject, col="red",add=T)
 
 [Menu](#menu)
 
-<div id="P12" />
+<div id="p12" />
 
 ---------------------------------------------
 #### 12. Resolution and computing time
@@ -915,7 +915,7 @@ cor(DataRed)
 
 [Menu](#menu)
 
-<div id="P13" />
+<div id="p13" />
 
 ---------------------------------------------
 #### 13. Crop growth cycle
@@ -995,7 +995,7 @@ Data.Cycle
 
 [Menu](#menu)
 
-<div id="P14" />
+<div id="p14" />
 
 ---------------------------------------------
 #### 14. Multispectral and Hyperspectral images
@@ -1109,7 +1109,7 @@ legend(list(x = 2000,y = 0.5),c("Blue (445nm)","Green (545nm)","Red (650nm)","Re
 
 [Menu](#menu)
 
-<div id="P15" />
+<div id="p15" />
 
 ---------------------------------------------
 #### 15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
@@ -1160,7 +1160,7 @@ fieldPlot(fieldShape=EX.polygon.Info$fieldShape,
 
 [Menu](#menu)
 
-<div id="P16" />
+<div id="p16" />
 
 ---------------------------------------------
 #### 16. Making plots
@@ -1183,7 +1183,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 [Menu](#menu)
 
-<div id="P17" />
+<div id="p17" />
 
 ---------------------------------------------
 #### 17. Saving output files
@@ -1206,7 +1206,7 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 ```
 [Menu](#menu)
 
-<div id="P18" />
+<div id="p18" />
 
 ---------------------------------------------
 #### Orthomosaic using the open source software **[OpenDroneMap](https://www.opendronemap.org)**
@@ -1253,7 +1253,7 @@ EX.ODM.Info$plotValue$myIndex
 
 [Menu](#menu)
 
-<div id="P19" />
+<div id="p19" />
 
 ---------------------------------------------
 #### Parallel and loop to evaluate multiple images
@@ -1330,7 +1330,7 @@ EX.Table.Parallel
 
 [Menu](#menu)
 
-<div id="P20" />
+<div id="p20" />
 
 ---------------------------------------------
 #### Quick tips (image analyze in R)
@@ -1372,7 +1372,7 @@ options(device = "quartz")
 
 [Menu](#menu)
 
-<div id="P21" />
+<div id="p21" />
 
 ---------------------------------------------
 ### YouTube Tutorial
