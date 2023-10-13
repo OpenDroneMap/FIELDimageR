@@ -8,8 +8,10 @@
 #'
 #' @noRd
 RGB.rescale <- function(mosaic, num.band) {
-  for(i in 1:num.band) {
-    mosaic[[i]] <- scales::rescale(values(mosaic[[i]]), to = c(0, 255))
+  for (i in 1:num.band) {
+    values_i <- values(mosaic[[i]])
+    values_i <- pmin(pmax(values_i, 0), 255)
+    values(mosaic[[i]]) <- values_i
   }
   return(mosaic)
 }

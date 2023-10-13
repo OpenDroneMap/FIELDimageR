@@ -1,6 +1,6 @@
 Package: FIELDimageR
 Title: A Tool to Analyze Orthomosaic Images From Agricultural Field Trials
-Version: 0.3.3
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Filipe",
              family = "Matias",
@@ -36,7 +36,7 @@ Imports:
     spatialEco
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Author: Filipe Matias [cre, aut]
 Maintainer: Filipe Matias <filipematias23@gmail.com>
 Suggests: 

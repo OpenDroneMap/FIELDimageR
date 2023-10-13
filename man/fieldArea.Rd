@@ -4,35 +4,17 @@
 \alias{fieldArea}
 \title{Percentage of object area}
 \usage{
-fieldArea(
-  mosaic,
-  areaValue = 0,
-  fieldShape = NULL,
-  n.core = NULL,
-  plot = TRUE,
-  na.rm = FALSE
-)
+fieldArea(mosaic, fieldShape, field = NULL)
 }
 \arguments{
 \item{mosaic}{object mask of class stack from the function \code{\link{fieldMask}}.}
 
-\item{areaValue}{referent value of object area in the image.}
+\item{fieldShape}{evaluate the object area percentage per plot using the fieldShape as reference.}
 
-\item{fieldShape}{evaluate the object area percentage per plot using the fieldShape as reference. If fieldShape=NULL, 
-the object area percentage will be calculated directly for the entire original image.}
-
-\item{n.core}{number of cores to use for multicore processing (Parallel).}
-
-\item{plot}{if is TRUE the crop image and fieldShape will be plotted.}
-
-\item{na.rm}{logical. Should missing values (including NaN) be used?.}
+\item{field}{character (field name) or numeric (length nrow). Check \code{\link{terra::rasterize}}.}
 }
 \value{
-A list with two element
-\itemize{
-  \item \code{areaPorcent} is the percentage of object area per plot represented in \code{DataFrame}.
-  \item \code{fieldShape} is the new \code{fieldShape} format \code{SpatialPolygonsDataFrame}.
-}
+\code{AreaPercentage} in the new \code{fieldShape} .
 }
 \description{
 It calculates the percentage of object area in the entire mosaic or per plot using the fieldShape file.

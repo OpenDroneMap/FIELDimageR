@@ -4,7 +4,7 @@
 #' 
 #' @description Calculate the area under the curve given by vectors of xy-coordinates.
 #' 
-#' @param Data data table from \code{\link{fieldInfo}}.
+#' @param data data table from \code{\link{fieldInfo}}.
 #' @param trait one or more traits to be evaluated. 
 #' @param keep.columns columns names to be maintained in the output dataset.
 #' @param method the type of interpolation. Can be "trapezoid" (default), "step", "linear" or "spline". More information on ??DescTools::AUC. 
@@ -31,7 +31,7 @@ fieldAUC<-function(data,
   for(i in 1:length(trait)){
     trait1<-trait[i] 
     print(paste("Evaluating AUC for ",trait1,sep=""))
-    Plot<-as.character(unique(Data$PlotName))
+    Plot<-as.character(unique(data$PlotName))
     DataAUC.1 <-NULL
     for(a1 in 1:length(Plot)){
       D1<-data[as.character(data$PlotName)==Plot[a1],]

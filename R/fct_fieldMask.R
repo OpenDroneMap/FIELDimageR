@@ -31,13 +31,12 @@
 #' 
 #'
 #' @export
-fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR = NULL, mask = NULL, index = "HUE",
-                      myIndex = NULL, cropValue = 0, cropAbove = TRUE, projection = TRUE, DSMmosaic = NULL, 
-                      DSMcropAbove = TRUE, DSMcropValue = 0, plot = TRUE) {
+fieldMask<- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR = NULL, mask = NULL, index = "HUE",
+                     myIndex = NULL, cropValue = 0, cropAbove = TRUE, projection = TRUE, DSMmosaic = NULL, 
+                     DSMcropAbove = TRUE, DSMcropValue = 0, plot = TRUE) {
   Ind <- read.csv(file=system.file("extdata", "Indices.txt", package = "FIELDimageR", mustWork = TRUE),
                   header = TRUE, sep = "\t")
-  mosaic <- stack(mosaic)
-  num.band<-length(mosaic@layers)
+  num.band <- nlyr(mosaic)
   print(paste(num.band," layers available", sep = ""))
   if(is.null(mask)){
     if(num.band<3){stop("At least 3 bands (RGB) are necessary to calculate indices available in FIELDimageR")}
@@ -50,17 +49,18 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
     if(!all(index%in%IRGB)){stop(paste("Index: ",as.character(index[!index%in%IRGB])," is not available in FIELDimageR",sep = ""))}
     NIR.RE<-as.character(Ind$index[Ind$band%in%c("RedEdge","NIR")])
     if(any(NIR.RE%in%index)&is.null(NIR)){stop(paste("Index: ",as.character(NIR.RE[NIR.RE%in%index])," need NIR/RedEdge band to be calculated",sep = ""))}
-    B<-mosaic@layers[[Blue]]
-    G<-mosaic@layers[[Green]]
-    R<-mosaic@layers[[Red]]
-    names(mosaic)[c(Blue,Green,Red)]<-c("Blue","Green","Red")
-    if(!is.null(RedEdge)){
-      RE<-mosaic@layers[[RedEdge]]
-      names(mosaic)[RedEdge]<-c("RedEdge")
+    B <- mosaic[[Blue]]
+    G <- mosaic[[Green]]
+    R <- mosaic[[Red]]
+    names(mosaic)[c(Blue, Green, Red)] <- c("Blue", "Green", "Red")
+    if (!is.null(RedEdge)) {
+      RE <- mosaic[[RedEdge]]
+      names(mosaic)[RedEdge] <- "RedEdge"
     }
-    if(!is.null(NIR)){
-      NIR1<-mosaic@layers[[NIR]]
-      names(mosaic)[NIR]<-c("NIR")
+    
+    if (!is.null(NIR)) {
+      NIR1 <- mosaic[[NIR]]
+      names(mosaic)[NIR] <- "NIR"
     }
     mr<-eval(parse(text = as.character(Ind$eq[as.character(Ind$index)==index])))
     if(!is.null(myIndex)){
@@ -74,12 +74,11 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
     }
   }
   if(!is.null(mask)){
-    mask <- stack(mask)
-    if(length(mask@layers)>1){stop("Mask must have only one band.")}
+    if(nlyr(mask)>1){stop("Mask must have only one band.")}
     mr<-mask
-    mosaic<-crop(x = mosaic, y = mr)
+    mosaic<-terra::crop(x = mosaic, y = mr)
     if(projection){
-      mosaic <- projectRaster(mosaic, mr, method = "ngb")
+      mosaic <- project(mosaic, mask, method = "near")
     }
   }
   
@@ -96,19 +95,17 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
     if(projection(DSMmosaic)!=projection(mosaic)){stop("DSMmosaic and RGBmosaic must have the same projection CRS, use fieldRotate() in both files.")}}
   
   if(plot){if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
-    if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}
-    raster::plot(m, col=grey(1:100/100), axes=FALSE, box=FALSE)}
+    if(num.band<3){terra::plot(mosaic, axes=FALSE, box=FALSE)}
+    terra::plot(m, col=grey(1:100/100), axes=FALSE, box=FALSE)}
   
-  mosaic <- mask(mosaic, m, maskvalue=TRUE)
+  mosaic <- terra::mask(mosaic, m, maskvalue=TRUE)
   
   if(plot){if(num.band>2){plotRGB(RGB.rescale(mosaic,num.band=3), r = 1, g = 2, b = 3)}
-    if(num.band<3){raster::plot(mosaic, axes=FALSE, box=FALSE)}}
+    if(num.band<3){terra::plot(mosaic, axes=FALSE, box=FALSE)}}
   
-  mosaic <- stack(mosaic)
-  m <- stack(m)
   Out<-list(newMosaic=mosaic,mask=m)
   if(!is.null(DSMmosaic)){
-    DSMmosaic <- crop(x = DSMmosaic, y = m)
+    DSMmosaic <-terra::crop(x = DSMmosaic, y = m)
     if(DSMcropAbove){
       mDEM<-m>DSMcropValue
     }
@@ -116,11 +113,10 @@ fieldMask <- function(mosaic, Red = 1, Green = 2, Blue = 3, RedEdge = NULL, NIR 
       mDEM<-m<DSMcropValue
     }
     if(projection){
-      DSMmosaic <- projectRaster(DSMmosaic,mDEM,method = 'ngb')
+      DSMmosaic <- project(DSMmosaic,mDEM,method = 'near')
     }
-    DSMmosaic <- mask(DSMmosaic, mDEM, maskvalue=TRUE)
-    if(plot){raster::plot(DSMmosaic, axes=FALSE, box=FALSE)}
-    DSMmosaic <- stack(DSMmosaic)
+    DSMmosaic <- terra::mask(DSMmosaic, mDEM, maskvalue=TRUE)
+    if(plot){terra::plot(DSMmosaic, axes=FALSE, box=FALSE)}
     Out<-list(newMosaic=mosaic,mask=m,DSM=DSMmosaic)
   }
   par(mfrow=c(1,1))

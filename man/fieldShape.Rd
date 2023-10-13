@@ -14,7 +14,8 @@ fieldShape(
   ID = NULL,
   theta = NULL,
   plot = TRUE,
-  fast.plot = FALSE
+  fast.plot = FALSE,
+  extent = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ fieldShape(
 \item{plot}{if is TRUE the crop image and fieldShape will be plotted.}
 
 \item{fast.plot}{if TRUE only the grey scale image will be plotted as reference (faster approach).}
+
+\item{extent}{if is TRUE the entire image area will be the fieldShape (one unique plot).}
 }
 \value{
 A list with two element
