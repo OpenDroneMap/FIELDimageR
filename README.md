@@ -593,12 +593,9 @@ EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape,
 > *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldArea`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
 
 ```r
-EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape)
-EX1.Canopy$areaPorcent
+EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$newMosaic, fieldShape = EX1.Shape$fieldShape)
+EX1.Canopy
 
-### Parallel (n.core = 3)
-EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3)
-EX1.Canopy$areaPorcent
 ```
 
 <br />
