@@ -32,8 +32,7 @@ Imports:
     doParallel,
     plyr,
     processx,
-    grDevices,
-    spatialEco (< 2.0)
+    grDevices
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
