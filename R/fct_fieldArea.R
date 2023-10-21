@@ -28,7 +28,8 @@ fieldArea <- function(mosaic, fieldShape, field = NULL) {
     area_pixel <- zonal(mosaic[[1]], terra_rast, fun = "notNA", weighted = TRUE)
   }
   area_percentage <- round(area_pixel[2] / total_pixelcount[2] * 100,3)
-  names(area_percentage)<-"AreaPercentage"
-  area_percentage<-cbind(fieldShape,AreaPixel=area_pixel[,2],area_percentage)
+  area_percentage<-cbind(fieldShape,
+                         AreaPixel=area_pixel[,2],
+                         AreaPercentage=area_percentage)
   return(area_percentage)
 }
