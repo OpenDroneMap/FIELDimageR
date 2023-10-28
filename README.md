@@ -296,12 +296,12 @@ EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 <br />
 
-> **Attention:** The plots are identified in ascending order from left to right and top to bottom being evenly spaced and distributed inside the selected area independent of alleys. 
+> **Attention:** The plots are identified in ascending order from *left to right* and *bottom to top* (this is another difference from the **`FIELDimageR::fieldShape`** ) being evenly spaced and distributed inside the selected area independent of alleys. 
 
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F24.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/Fex5.jpg" width="60%" height="60%">
 </p>
 
 <br />
