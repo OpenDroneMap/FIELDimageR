@@ -329,7 +329,7 @@ EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldM
 ### Joing all information in one "fieldShape_render" file:
 
 EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
-                      fieldData = DataTable, ID = "Plot")
+                      fieldData = DataTable, PlotID = "Plot")
                       
 # The new column PlotName is identifying the plots:                      
 EX1.Shape                     
