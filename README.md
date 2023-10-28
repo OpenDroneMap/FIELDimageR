@@ -237,7 +237,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 ---------------------------------------------
 #### 3. Rotating the image
 
-> To build the plot shape file first we need to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). If not, it is necessary to find the right-angle *theta* to rotate the field, **`fieldRotate`** allows you to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
+> Rotation is not a required step anymore for FIELDimageR pipeline, due to the new package [FIELDimageR.Extra: **`fieldShape_render`**](https://github.com/filipematias23/FIELDimageR.Extra#p3). However, to build the plot shape file you may want to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). In this case, you can find the right-angle *theta* to rotate the field using the function **`fieldRotate`** that allows to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
 
 ```r
 # Codeline when you don't know the rotation angle "Theta":
@@ -432,11 +432,11 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 > *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
 
 ```r
-EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, cex=0.4, col="blue")
+EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape, cex=0.4, col="blue")
 EX1.SC$fieldCount
 
 ### Parallel (n.core = 3)
-EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape$fieldShape, n.core = 3, cex=0.4, col="blue")
+EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape, n.core = 3, cex=0.4, col="blue")
 EX1.SC$fieldCount
 ```
 <br />
@@ -458,7 +458,7 @@ plotRGB(EX.SC, r = 1, g = 2, b = 3)
 EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 # Building the plot shapefile (ncols = 1 and nrows = 7)
-EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
+EX.SC.Shape<-fieldShape_render(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 ```
 <br />
 
@@ -472,7 +472,7 @@ EX.SC.Shape<-fieldShape(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 ### When all shapes are counted: minSize = 0.00
 
 EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
-                   fieldShape = EX.SC.Shape$fieldShape,
+                   fieldShape = EX.SC.Shape,
                    minSize = 0.00)
                    
 EX1.SC$objectSel[[4]] # Identifies 14 points, but point 6 and 9 are small artifacts
@@ -490,7 +490,7 @@ EX1.SC$objectReject[[4]] # No shape rejected because minSize = 0.00
 ### When all shapes with size greater than 0.04% of plot area are counted: minSize = 0.04
 
 EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
-                   fieldShape = EX.SC.Shape$fieldShape,
+                   fieldShape = EX.SC.Shape,
                    minSize = 0.04)
 
 EX1.SC$objectSel[[4]] # Identifies 12 points
