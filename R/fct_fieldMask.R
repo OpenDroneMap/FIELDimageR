@@ -23,6 +23,7 @@
 #' @param plot if is TRUE the original and crop image will be plotted.
 #' 
 #' @importFrom utils read.csv
+#' @importFrom terra nlyr
 #' 
 #'@return A list with elements:
 #' \itemize{

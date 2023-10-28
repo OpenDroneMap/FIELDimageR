@@ -1,6 +1,6 @@
 Package: FIELDimageR
 Title: A Tool to Analyze Orthomosaic Images From Agricultural Field Trials
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
     c(person(given = "Filipe",
              family = "Matias",
@@ -24,7 +24,7 @@ Imports:
     DescTools,
     methods,
     raster,
-    rgdal,
+    terra,
     scales,
     sp,
     xml2,
