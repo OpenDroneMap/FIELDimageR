@@ -76,6 +76,7 @@
 ```r
 install.packages("devtools")
 devtools::install_github("OpenDroneMap/FIELDimageR")
+devtools::install_github("filipematias23/FIELDimageR.Extra")
 ```
 > If the method above doesn't work, use the next lines by downloading the FIELDimageR-master.zip file
 
@@ -194,6 +195,7 @@ install.packages("FIELDimageR_0.3.2.tar.gz", repos = NULL, type="source") # Make
 > **Taking the first step:**
 ```r
 library(FIELDimageR)
+library(FIELDimageR.Extra)
 library(raster)
 ```
 [Menu](#menu)
