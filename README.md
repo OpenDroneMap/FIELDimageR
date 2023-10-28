@@ -280,10 +280,10 @@ EX1.RemSoil <- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, ind
 ---------------------------------------------
 #### 5. Building the plot shape file
 
-> Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use: **`fieldShape`** 
+> Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use is from [FIELDimageR.Extra: **`fieldShape_render`**](https://github.com/filipematias23/FIELDimageR.Extra#p3) 
 
 ```r
-EX1.Shape<-fieldShape(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
+EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
 
 ```
 <br />
@@ -314,7 +314,7 @@ fieldMap<-fieldMap(fieldPlot=DataTable$Plot, fieldColumn=DataTable$Row, fieldRow
 fieldMap
 
 # The new column PlotName is identifying the plots:
-EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap)
+EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap)
 ```
 <br />
 
@@ -326,13 +326,13 @@ EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fi
 
 
 ```r
-### Joing all information in one "fieldShape" file:
+### Joing all information in one "fieldShape_render" file:
 
-EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
+EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
                       fieldData = DataTable, ID = "Plot")
                       
 # The new column PlotName is identifying the plots:                      
-EX1.Shape$fieldShape@data                      
+EX1.Shape                     
 ```
 <br />
 
@@ -346,53 +346,18 @@ EX1.Shape$fieldShape@data
 ### Different plot dimensions using "fieldShape":
 
 # ncols = 14 and nrows = 9
-EX1.Shape.1Line<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9)
+EX1.Shape.1Line<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9)
 
 # ncols = 7 and nrows = 9
-EX1.Shape.2lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 9)
+EX1.Shape.2lines<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 7, nrows = 9)
 
 # ncols = 7 and nrows = 3
-EX1.Shape.6lines<-fieldShape(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)                     
+EX1.Shape.6lines<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)                     
 ```
 <br />
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F26.jpeg">
-</p>
-
-<br />
-
-> **Important:** Code showing how to make **ShapeFile** using original *GIS*
-
-> **Example 01:** Using the rotation angle **(theta=2.3)** from step 3 (*fieldRotate*) to fit the *"fieldShape"* file back to the original image GIS (*fieldShapeGIS*): 
-
-```r
-### Rotation angle "theta=2.3" from fieldRotate():
-
-EX1.Shape<-fieldShape(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
-                      fieldData = DataTable, ID = "Plot", theta = 2.3)
-                      
-plotRGB(EX1.RemSoil$newMosaic)
-plot(EX1.Shape$fieldShape,add=T)
-
-plotRGB(EX1)
-plot(EX1.Shape$fieldShapeGIS,add=T) 
-
-```
-<br />
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS.jpg">
-</p>
-
-<br />
-
-> **Example 02:** Comparing the outputs *$fieldShape* **(straight)** with *$fieldShapeGIS* **(theta = -60)**: 
-
-<br />
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FigFieldGIS2.jpg">
 </p>
 
 <br />
@@ -621,15 +586,11 @@ EX1.Canopy
 ---------------------------------------------
 #### 9. Extracting data from field images 
 
-> The function *extract* from **[raster](https://CRAN.R-project.org/package=raster)** is adapted for agricultural field experiments through function **`fieldInfo`**. The parameter *n.core* is used to accelerate the plot extraction (parallel).
+> The function *extract* from **[terra](https://CRAN.R-project.org/package=terra)** is adapted for agricultural field experiments through function [**`FIELDimageR.Extra::fieldInfo_extra`**](https://github.com/filipematias23/FIELDimageR.Extra#p6). 
 
 ```r
-EX1.Info<- fieldInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
-EX1.Info$fieldShape@data
-
-### Parallel (n.core = 3)
-EX1.Info<- fieldInfo(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape, n.core = 3)
-EX1.Info$fieldShape@data
+EX1.Info<- fieldInfo_extra(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
+EX1.Info
 
 ```
 
@@ -662,17 +623,17 @@ CHM.R<-fieldRotate(CHM, theta = 2.3)
 CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
 
 # Extracting the estimate plant height average (EPH):
-EPH <- fieldInfo(CHM.S$newMosaic, fieldShape = EX1.Shape$fieldShape, fun = "mean")
-EPH$plotValue
+EPH <- fieldInfo_extra(CHM.S$newMosaic, fieldShape = EX1.Shape)
+EPH
 
 # Extracting the estimate plant height at 10% and 90% of quantile:
 probs = c(0.1,0.9)
-EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape$fieldShape)
+EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape)
 EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = probs, na.rm=TRUE))
 EPH.10.90
 
 # Data:
-EPH.DataTotal<-data.frame(EPH$fieldShape@data,EPH.10.90)
+EPH.DataTotal<-data.frame(EPH,EPH.10.90)
 colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean",paste("EPH_",probs*100,"%",sep=""))
 EPH.DataTotal
 
@@ -750,18 +711,17 @@ EX.RemObj.Crop <- fieldCrop(mosaic = EX.RemObj, remove = T, nPoint = 10) # Selec
 EX.RemObj.RemSoil<- fieldMask(mosaic = EX.RemObj.Crop,index = "HUE")
 
 # Building the plot shapefile (ncols = 8 and nrows = 4)
-EX.RemObj.Shape<-fieldShape(mosaic = EX.RemObj.RemSoil,ncols = 8, nrows = 4)
+EX.RemObj.Shape<-fieldShape_render(mosaic = EX.RemObj.RemSoil,ncols = 8, nrows = 4)
 
 # Building indice (NGRDI)
 EX.RemObj.Indices<- fieldIndex(mosaic = EX.RemObj.RemSoil$newMosaic,index = c("NGRDI"))
 
 # Extracting data (NGRDI)
-EX.RemObj.Info<- fieldInfo(mosaic = EX.RemObj.Indices$NGRDI,
-                      fieldShape = EX.RemObj.Shape$fieldShape,
-                      n.core = 3)
+EX.RemObj.Info<- fieldInfo_extra(mosaic = EX.RemObj.Indices$NGRDI,
+                      fieldShape = EX.RemObj.Shape)
                       
 # Comparing plots values (the plant in plot 13 was removed and its value must be lower than plot 12 and 14)                      
-EX.RemObj.Info$plotValue[c(12,13,14),]
+EX.RemObj.Info[c(12,13,14),]
 
 ```
 <br />
@@ -872,30 +832,30 @@ system.time({RES_4_I <- fieldIndex(RES_4_S$newMosaic,index=c("BGI"))})
   
 ### Get Information (1 Band)
   
-system.time({RES_1_Info <- fieldInfo(RES_1_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_2_Info <- fieldInfo(RES_2_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_4_Info <- fieldInfo(RES_4_I$BGI,fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_1_Info <- fieldInfo_extra(RES_1_I$BGI,fieldShape = EX1.Shape)})
+system.time({RES_2_Info <- fieldInfo_extra(RES_2_I$BGI,fieldShape = EX1.Shape)})
+system.time({RES_4_Info <- fieldInfo_extra(RES_4_I$BGI,fieldShape = EX1.Shape)})
   
 ### Get Information (3 Bands)
   
-system.time({RES_1_Info2 <- fieldInfo(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_2_Info2 <- fieldInfo(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
-system.time({RES_4_Info2 <- fieldInfo(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape$fieldShape,n.core = 3)})
+system.time({RES_1_Info2 <- fieldInfo_extra(RES_1_I[[c(1,2,3)]],fieldShape = EX1.Shape)})
+system.time({RES_2_Info2 <- fieldInfo_extra(RES_2_I[[c(1,2,3)]],fieldShape = EX1.Shape)})
+system.time({RES_4_Info2 <- fieldInfo_extra(RES_4_I[[c(1,2,3)]],fieldShape = EX1.Shape)})
 
 ### Correlation
 
-DataBGI <- data.frame(R1=RES_1_Info$plotValue$BGI,
-                    R2=RES_2_Info$plotValue$BGI,
-                    R4=RES_4_Info$plotValue$BGI)
-DataBlue <- data.frame(R1=RES_1_Info2$plotValue$Blue,
-                       R2=RES_2_Info2$plotValue$Blue,
-                       R4=RES_4_Info2$plotValue$Blue)
-DataGreen <- data.frame(R1=RES_1_Info2$plotValue$Green,
-                       R2=RES_2_Info2$plotValue$Green,
-                       R4=RES_4_Info2$plotValue$Green)
-DataRed <- data.frame(R1=RES_1_Info2$plotValue$Red,
-                       R2=RES_2_Info2$plotValue$Red,
-                       R4=RES_4_Info2$plotValue$Red)
+DataBGI <- data.frame(R1=RES_1_Info$BGI,
+                    R2=RES_2_Info$BGI,
+                    R4=RES_4_Info$BGI)
+DataBlue <- data.frame(R1=RES_1_Info2$Blue,
+                       R2=RES_2_Info2$Blue,
+                       R4=RES_4_Info2$Blue)
+DataGreen <- data.frame(R1=RES_1_Info2$Green,
+                       R2=RES_2_Info2$Green,
+                       R4=RES_4_Info2$Green)
+DataRed <- data.frame(R1=RES_1_Info2$Red,
+                       R2=RES_2_Info2$Red,
+                       R4=RES_4_Info2$Red)
 cor(DataBGI)
 cor(DataBlue)
 cor(DataGreen)
@@ -957,12 +917,12 @@ EX3.Indices <- fieldIndex(EX3.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
 
 # Extracting data using the same fieldShape file from step 5:
 
-EX2.Info<- fieldInfo(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
-EX3.Info<- fieldInfo(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX2.Info<- fieldInfo_extra(mosaic = EX2.Indices$myIndex,fieldShape = EX1.Shape)
+EX3.Info<- fieldInfo_extra(mosaic = EX3.Indices$myIndex,fieldShape = EX1.Shape)
 
-Data.Cycle<-data.frame(EX1=EX1.Info$plotValue$myIndex,
-      EX2=EX2.Info$plotValue$myIndex,
-      EX3=EX3.Info$plotValue$myIndex)
+Data.Cycle<-data.frame(EX1=EX1.Info$myIndex,
+      EX2=EX2.Info$myIndex,
+      EX3=EX3.Info$myIndex)
 
 Data.Cycle
 ```
@@ -1028,7 +988,7 @@ EX1.5b.Indices <- fieldIndex(EX1.5b.RemSoil$newMosaic,Red=1,Green=2,Blue=3,RedEd
                  index = c("NDVI","NDRE"))
 
 # Extracting data using the same fieldShape file from step 5:
-EX1.5b.Info<- fieldInfo(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX1.5b.Info<- fieldInfo_extra(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shape)
 
 ```
 
@@ -1065,16 +1025,16 @@ Data<-read.csv("DataHYP.csv")
 Map<-fieldMap(fieldPlot = as.character(Data$Plot),fieldRow = as.character(Data$Range),fieldColumn = as.character(Data$Row),decreasing = T)
 
 # Building plot shapefile using RGB as base
-plotFile<-fieldShape(RGB.S,ncols = 14, nrows = 14, fieldMap = Map,fieldData = Data, ID = "Plot")
+plotFile<-fieldShape_render(RGB.S,ncols = 14, nrows = 14, fieldMap = Map,fieldData = Data, PlotID = "Plot")
 
 # Removing soil using the RGB mask
 EX.HYP.S<-fieldMask(EX.HYP,mask = RGB.S$mask, plot = F)
 
 # Extracting data (474 bands)
-EX.HYP.I<-fieldInfo(EX.HYP.S$newMosaic,fieldShape = plotFile$fieldShape,n.core = 3)
+EX.HYP.I<-fieldInfo_extra(EX.HYP.S$newMosaic,fieldShape = plotFile)
 
 # Saving the new csv with hyperspectral information per plot
-DataHYP<-EX.HYP.I$fieldShape@data
+DataHYP<-EX.HYP.I[,-dim(EX.HYP.I)[2]]
 colnames(DataHYP)<-c(colnames(DataHYP)[1:9],NamesHYP)
 write.csv(DataHYP,"DataHypNew.csv",col.names = T,row.names = F)
 
@@ -1140,12 +1100,12 @@ EX.polygon.Indices<- fieldIndex(mosaic = EX.polygon.RemSoil$newMosaic, Red = 1, 
                              index = c("NGRDI","BGI"))
 
 # Extracting data (NGRDI and BGI)
-EX.polygon.Info<- fieldInfo(mosaic = EX.polygon.Indices[[c("NGRDI","BGI")]],
-                   fieldShape = EX.polygon.Shape$fieldShape, n.core = 3)
-EX.polygon.Info$fieldShape@data
+EX.polygon.Info<- fieldInfo_extra(mosaic = EX.polygon.Indices[[c("NGRDI","BGI")]],
+                   fieldShape = EX.polygon.Shape)
+EX.polygon.Info
 
 # Making graphics (BGI)
-fieldPlot(fieldShape=EX.polygon.Info$fieldShape,
+fieldPlot(fieldShape=EX.polygon.Info,
           fieldAttribute="BGI",
           mosaic=EX.polygon, color=c("red","blue"), alpha = 0.5)
 ```
@@ -1237,9 +1197,9 @@ EX.ODM.Indices <- fieldIndex(EX.ODM.RemSoil$newMosaic,Red=1,Green=2,Blue=3,
                  index = c("NGRDI","BGI"), myIndex = c("(Red-Blue)/Green"))
 
 # Extracting data using the same fieldShape file from step 5:
-EX.ODM.Info<- fieldInfo(mosaic = EX.ODM.Indices$myIndex,fieldShape = EX1.Shape$fieldShape,n.core = 3)
+EX.ODM.Info<- fieldInfo_extra(mosaic = EX.ODM.Indices$myIndex,fieldShape = EX1.Shape)
 
-EX.ODM.Info$plotValue$myIndex
+EX.ODM.Info$myIndex
 
 ```
 <br />
@@ -1280,7 +1240,7 @@ for(i in 1:length(pics)){
   EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
   EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
   EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
-  EX.L.Info<- fieldInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
+  EX.L.Info<- fieldInfo_extra(mosaic=EX.L5, fieldShape=EX.L.Shape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
   plot(EX.L5,col = grey(1:100/100))
   EX.Table.Loop<-rbind(EX.Table.Loop, EX.L.Info$plotValue) # Combine information from all images in one table
 }})
@@ -1311,7 +1271,7 @@ EX.Table.Parallel <- foreach(i = 1:length(pics), .packages = c("raster","FIELDim
                        EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
                        EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
                        EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
-                       EX.L.Info<- fieldInfo(mosaic=EX.L5, fieldShape=EX.L.Shape$fieldShape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
+                       EX.L.Info<- fieldInfo_extra(mosaic=EX.L5, fieldShape=EX.L.Shape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
                        EX.L.Info$plotValue # Combine information from all images in one table
                      }})
 stopCluster(cl)
