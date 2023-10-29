@@ -16,7 +16,7 @@
 
 [1. First steps](#p1)
 
-[2. Uploading field orthomosaic and visualization](#p2)
+[2. Loading mosaics and visualizing](#p2)
 
 [3. Removing soil using vegetation indices](#p3)
 
@@ -205,14 +205,23 @@ library(stars)
 <div id="p2" />
 
 ---------------------------------------------
-#### 2. Uploading field orthomosaic and visualization
+#### 2. Loading mosaics and visualizing
 
 > The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). If necessary, the image/mosaic size can be reduced around the field boundaries for faster image analysis using the function: **`fieldCrop`**.
 
 ```r
+# Uploading an example mosaic
 EX1 <- rast("EX1_RGB.tif")
-plotRGB(EX1, r = 1, g = 2, b = 3)
+
+# Visualization Option-01 (FIELDimageR.Extra):
 fieldView(EX1)
+
+# Visualization Option-02 (raster):
+plotRGB(EX1, r = 1, g = 2, b = 3)
+
+# Only if necessary you can crop the mosaic/image to reduce size:
+# x11()
+# EX1 <- rast(fieldCrop(mosaic = EX1)) # For heavy images (large, high resolution, etc.) please use: fast.plot=T
 
 ```
 <br />
