@@ -546,7 +546,7 @@ EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape,
 > *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldArea`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
 
 ```r
-EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$newMosaic, fieldShape = EX1.Shape$fieldShape)
+EX1.Canopy<-fieldArea(mosaic = EX1.RemSoil$newMosaic, fieldShape = EX1.Shape)
 EX1.Canopy
 
 ```
@@ -577,7 +577,7 @@ EX1.Canopy
 > The function *extract* from **[terra](https://CRAN.R-project.org/package=terra)** is adapted for agricultural field experiments through function [**`FIELDimageR.Extra::fieldInfo_extra`**](https://github.com/filipematias23/FIELDimageR.Extra#p6). 
 
 ```r
-EX1.Info<- fieldInfo_extra(mosaic = EX1.Indices,fieldShape = EX1.Shape$fieldShape)
+EX1.Info<- fieldInfo_extra(mosaic = EX1.Indices,fieldShape = EX1.Shape)
 EX1.Info
 
 ```
@@ -596,19 +596,12 @@ EX1.Info
 DSM0 <- rast("EX_DSM0.tif")
 DSM1 <- rast("EX_DSM1.tif")
 
-# Cropping the image using the previous shape from step 2:
-DSM0.C <- fieldCrop(mosaic = DSM0,fieldShape = EX1.Crop)
-DSM1.C <- fieldCrop(mosaic = DSM1,fieldShape = EX1.Crop)
-
 # Canopy Height Model (CHM):
-DSM0.R <- resample(DSM0.C, DSM1.C)
+DSM0.R <- resample(DSM0, DSM1)
 CHM <- DSM1.C-DSM0.R
 
-# Rotating the image using the same theta from step 3:
-CHM.R<-fieldRotate(CHM, theta = 2.3)
-
 # Removing the soil using mask from step 4:
-CHM.S <- fieldMask(CHM.R, mask = EX1.RemSoil$mask)
+CHM.S <- fieldMask(CHM, mask = EX1.RemSoil$mask)
 
 # Extracting the estimate plant height average (EPH):
 EPH <- fieldInfo_extra(CHM.S$newMosaic, fieldShape = EX1.Shape)
