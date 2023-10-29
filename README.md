@@ -224,6 +224,7 @@ fieldView(EX1)
 <br />
 
 ```r
+x11()
 EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, etc.) please use: fast.plot=T
 
 ```
@@ -243,7 +244,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
-EX1.RemSoil <- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, index = "HUE")
+EX1.RemSoil <- fieldMask(mosaic = EX1.Crop, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 ```
 <br />
