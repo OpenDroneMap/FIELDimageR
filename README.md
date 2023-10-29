@@ -261,7 +261,10 @@ EX1.RemSoil <- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, index = "HU
 
 ```r
 EX1.Shape<-fieldShape_render(mosaic = EX1,ncols = 14, nrows = 9)
-
+fieldView(mosaic = EX1,
+          fieldShape = EX1.Shape,
+          type = 2,
+          alpha = 0.2)
 ```
 <br />
 
@@ -292,6 +295,11 @@ fieldMap
 
 # The new column PlotName is identifying the plots:
 EX1.Shape<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9, fieldMap = fieldMap, fieldData = DataTable, PlotID = "Plot")
+fieldView(mosaic = EX1,
+          fieldShape = EX1.Shape,
+          type = 2,
+          alpha = 0.2)
+
 ```
 <br />
 
@@ -306,6 +314,10 @@ EX1.Shape<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9, fieldMap = fie
 ### Joing all information in one "fieldShape_render" file:
 
 EX1.Shape<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9, fieldMap = fieldMap, fieldData = DataTable, PlotID = "Plot")
+fieldView(mosaic = EX1,
+          fieldShape = EX1.Shape,
+          type = 2,
+          alpha = 0.2)
                       
 # The new column PlotName is identifying the plots:                      
 EX1.Shape                     
