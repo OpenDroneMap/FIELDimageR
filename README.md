@@ -391,12 +391,12 @@ EX1.Indices.myIndex<- fieldIndex(mosaic = EX1.RemSoil$newMosaic, Red = 1, Green 
 > *Sugestion:* This function could also be used to build an index to remove soil or weeds. First it is necessary to identify the threshold to differentiate soil from the plant material. At the example below (B), all values above 0.7 were considered as soil and further removed using **`fieldMask`** (C & D).
 
 ```r
-EX1.Indices.BGI<- fieldIndex(mosaic = EX1.Rotated, index = c("BGI"))
+EX1.Indices.BGI<- fieldIndex(mosaic = EX1, index = c("BGI"))
 
 dev.off()
 hist(EX1.Indices.BGI$BGI) # Image segmentation start from 0.7 (soil and plants)
 
-EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, 
+EX1.BGI<- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, 
                    index = "BGI", cropValue = 0.7, cropAbove = T) 
 
 #Check if: cropValue=0.8 or cropValue=0.6 works better.
