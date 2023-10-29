@@ -260,7 +260,7 @@ EX1.RemSoil <- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, index = "HU
 > Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use is from [FIELDimageR.Extra: **`fieldShape_render`**](https://github.com/filipematias23/FIELDimageR.Extra#p3) 
 
 ```r
-EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil,ncols = 14, nrows = 9)
+EX1.Shape<-fieldShape_render(mosaic = EX1,ncols = 14, nrows = 9)
 
 ```
 <br />
@@ -291,7 +291,7 @@ fieldMap<-fieldMap(fieldPlot=DataTable$Plot, fieldColumn=DataTable$Row, fieldRow
 fieldMap
 
 # The new column PlotName is identifying the plots:
-EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap)
+EX1.Shape<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9, fieldMap = fieldMap, fieldData = DataTable, PlotID = "Plot")
 ```
 <br />
 
@@ -305,8 +305,7 @@ EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldM
 ```r
 ### Joing all information in one "fieldShape_render" file:
 
-EX1.Shape<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9, fieldMap = fieldMap, 
-                      fieldData = DataTable, PlotID = "Plot")
+EX1.Shape<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9, fieldMap = fieldMap, fieldData = DataTable, PlotID = "Plot")
                       
 # The new column PlotName is identifying the plots:                      
 EX1.Shape                     
@@ -323,13 +322,13 @@ EX1.Shape
 ### Different plot dimensions using "fieldShape":
 
 # ncols = 14 and nrows = 9
-EX1.Shape.1Line<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 14, nrows = 9)
+EX1.Shape.1Line<-fieldShape_render(mosaic = EX1, ncols = 14, nrows = 9)
 
 # ncols = 7 and nrows = 9
-EX1.Shape.2lines<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 7, nrows = 9)
+EX1.Shape.2lines<-fieldShape_render(mosaic = EX1, ncols = 7, nrows = 9)
 
 # ncols = 7 and nrows = 3
-EX1.Shape.6lines<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)                     
+EX1.Shape.6lines<-fieldShape_render(mosaic = EX1, ncols = 7, nrows = 3)                     
 ```
 <br />
 
