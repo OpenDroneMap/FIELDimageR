@@ -18,35 +18,33 @@
 
 [2. Selecting the targeted field](#p2)
 
-[3. Rotating the image](#p3)
+[3. Removing soil using vegetation indices](#p3)
 
-[4. Removing soil using vegetation indices](#p4)
+[4. Building the plot shapefile](#p5)
 
-[5. Building the plot shapefile](#p5)
+[5. Building vegetation indices](#p6)
 
-[6. Building vegetation indices](#p6)
+[6. Counting the number of objects (e.g. plants, seeds, etc)](#p7)
 
-[7. Counting the number of objects (e.g. plants, seeds, etc)](#p7)
+[7. Evaluating the object area percentage (e.g. canopy)](#p8)
 
-[8. Evaluating the object area percentage (e.g. canopy)](#p8)
+[8. Extracting data from field images](#p9)
 
-[9. Extracting data from field images](#p9)
+[9. Estimating plant height](#p10)
 
-[10. Estimating plant height](#p10)
+[10. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#p11)
 
-[11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#p11)
+[11. Resolution and computing time](#p12)
 
-[12. Resolution and computing time](#p12)
+[12. Crop growth cycle](#p13)
 
-[13. Crop growth cycle](#p13)
+[13. Multispectral and Hyperspectral images](#p14)
 
-[14. Multispectral and Hyperspectral images](#p14)
+[14. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#p15)
 
-[15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)](#p15)
+[15. Making plots](#p16)
 
-[16. Making plots](#p16)
-
-[17. Saving output files](#p17)
+[16. Saving output files](#p17)
 
 [Orthomosaic using the open source software OpenDroneMap](#p18)
 
@@ -197,6 +195,10 @@ install.packages("FIELDimageR_0.3.2.tar.gz", repos = NULL, type="source") # Make
 library(FIELDimageR)
 library(FIELDimageR.Extra)
 library(raster)
+library(terra)
+library(mapview)
+library(sf)
+library(stars)
 ```
 [Menu](#menu)
 
@@ -208,8 +210,9 @@ library(raster)
 > It is necessary to first reduce the image/mosaic size around the field boundaries for faster image analysis. Function to use: **`fieldCrop`**. The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
 
 ```r
-EX1 <- stack("EX1_RGB.tif")
+EX1 <- rast("EX1_RGB.tif")
 plotRGB(EX1, r = 1, g = 2, b = 3)
+fieldView(EX1)
 
 ```
 <br />
@@ -235,38 +238,12 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 <div id="p3" />
 
 ---------------------------------------------
-#### 3. Rotating the image
-
-> Rotation is not a required step anymore for FIELDimageR pipeline, due to the new package [FIELDimageR.Extra: **`fieldShape_render`**](https://github.com/filipematias23/FIELDimageR.Extra#p3). However, to build the plot shape file you may want to make sure that the image base line (dashed in red) has a correct straight position (vertical or horizontal). In this case, you can find the right-angle *theta* to rotate the field using the function **`fieldRotate`** that allows to click directly on the image and select two points on where you want to base your field and return the theta value to finally rotate the image. 
-
-```r
-# Codeline when you don't know the rotation angle "Theta":
-EX1.Rotated <- fieldRotate(mosaic = EX1.Crop, clockwise = F, h=F) # h=horizontal
-
-# Codeline when you know the rotation angle "Theta" (theta = 2.3):
-EX1.Rotated <- fieldRotate(mosaic = EX1.Crop, theta = 2.3)
-
-# Codeline with "extentGIS=TRUE" to fit back the shapefile to the original image GIS. More information at section "5. Building the plot shape file":
-EX1.Rotated<-fieldRotate(mosaic = EX1.Crop, theta = 2.3, extentGIS=TRUE)
-
-```
-<br />
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F4.jpeg">
-</p>
-
-[Menu](#menu)
-
-<div id="p4" />
-
----------------------------------------------
-#### 4. Removing soil using vegetation indices 
+#### 3. Removing soil using vegetation indices 
 
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
-EX1.RemSoil <- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, index = "HUE")
+EX1.RemSoil <- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 ```
 <br />
@@ -280,7 +257,7 @@ EX1.RemSoil <- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3, ind
 <div id="p5" />
 
 ---------------------------------------------
-#### 5. Building the plot shape file
+#### 4. Building the plot shape file
 
 > Once the field has reached a correct straight position, the plot shape file can be drawn by selecting at least four points at the corners of the experiment. The number of columns and rows must be informed. At this point the experimental borders can be eliminated, in the example bellow the borders were removed in all the sides. Function to use is from [FIELDimageR.Extra: **`fieldShape_render`**](https://github.com/filipematias23/FIELDimageR.Extra#p3) 
 
@@ -369,7 +346,7 @@ EX1.Shape.6lines<-fieldShape_render(mosaic = EX1.RemSoil, ncols = 7, nrows = 3)
 <div id="p6" />
 
 ---------------------------------------------
-#### 6. Building vegetation indices 
+#### 5. Building vegetation indices 
 
 > A general number of indices are implemented in *FIELDimageR* using the function **`fieldIndex`**. Also, you can build your own index using the parameter `myIndex`. 
 
@@ -427,7 +404,7 @@ EX1.BGI<- fieldMask(mosaic = EX1.Rotated, Red = 1, Green = 2, Blue = 3,
 <div id="p7" />
 
 ---------------------------------------------
-#### 7. Counting the number of objects (e.g. plants, seeds, etc)
+#### 6. Counting the number of objects (e.g. plants, seeds, etc)
 
 > *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
 
@@ -451,7 +428,7 @@ EX1.SC$fieldCount
 
 ```r
 # Uploading file
-EX.SC<-stack("EX_StandCount.tif")
+EX.SC<-rast("EX_StandCount.tif")
 plotRGB(EX.SC, r = 1, g = 2, b = 3)
 
 # Removing the soil
@@ -520,7 +497,7 @@ EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from pr
 
 ```r
 # Uploading image
-EX.P<-stack("EX_Pollen.jpeg")
+EX.P<-rast("EX_Pollen.jpeg")
 
 # Reducing image resolution (fast analysis)
 EX.P<-aggregate(EX.P,fact=4) 
@@ -555,7 +532,7 @@ EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape,
 <div id="p8" />
 
 ---------------------------------------------
-#### 8. Evaluating the object area percentage (e.g. canopy)
+#### 7. Evaluating the object area percentage (e.g. canopy)
 
 > *FIELDimageR* can also be used to evaluate the canopy percentage per plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldArea`**. The parameter *n.core* is used to accelerate the canopy extraction (parallel).
 
@@ -586,7 +563,7 @@ EX1.Canopy
 <div id="p9" />
 
 ---------------------------------------------
-#### 9. Extracting data from field images 
+#### 8. Extracting data from field images 
 
 > The function *extract* from **[terra](https://CRAN.R-project.org/package=terra)** is adapted for agricultural field experiments through function [**`FIELDimageR.Extra::fieldInfo_extra`**](https://github.com/filipematias23/FIELDimageR.Extra#p6). 
 
@@ -601,14 +578,14 @@ EX1.Info
 <div id="p10" />
 
 ---------------------------------------------
-#### 10. Estimating plant height
+#### 9. Estimating plant height
 
-> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`fieldInfo`**. 
+> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`fieldInfo_extra`**. 
 
 ```r
 # Uploading files from soil base (EX_DSM0.tif) and vegetative growth (EX_DSM1.tif):
-DSM0 <- stack("EX_DSM0.tif")
-DSM1 <- stack("EX_DSM1.tif")
+DSM0 <- rast("EX_DSM0.tif")
+DSM1 <- rast("EX_DSM1.tif")
 
 # Cropping the image using the previous shape from step 2:
 DSM0.C <- fieldCrop(mosaic = DSM0,fieldShape = EX1.Crop)
@@ -651,13 +628,13 @@ EPH.DataTotal
 <div id="p11" />
 
 ---------------------------------------------
-#### 11. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
+#### 10. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.) 
 
 > The function **`fieldObject`** can be used to take relative measurement from objects (e.g., area, "x" distance, "y" distance, number, extent, etc.) in the entire mosaic or per plot using the fieldShape file. Download example here: [EX_Obj.jpg](https://drive.google.com/file/d/1F189a1LKA9_l0Xn8hdBOshL5eC_fQLPs/view?usp=sharing).
 
 ```r
 # Uploading file (EX_Obj.tif)
-EX.Obj <- stack("EX_Obj.jpg")
+EX.Obj <- rast("EX_Obj.jpg")
 plotRGB(EX.Obj)
 EX.Obj <- aggregate(EX.Obj,4)
 EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
@@ -680,15 +657,15 @@ plot(EX.Obj.D$single.obj[[1]], add=T, col="yellow")
 lines(EX.Obj.D$x.position[[1]], col="red", lty=2)
 lines(EX.Obj.D$y.position[[1]], col="red", lty=2)
 EX.Obj.I<- fieldIndex(mosaic = EX.Obj,index = c("SI","BGI","BI"))
-EX.Obj.Data<-fieldInfo(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
-EX.Obj.Data$fieldShape@data
+EX.Obj.Data<-fieldInfo_extra(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
+EX.Obj.Data
 
 # Perimeter:
 # install.packages("spatialEco")
 library(spatialEco)
 perimeter<-polyPerimeter(EX.Obj.D$Objects)
 box<-polyPerimeter(EX.Obj.D$Polygons)
-Data.Obj<-cbind(EX.Obj.Data$fieldShape@data,EX.Obj.D$Dimension,perimeter=perimeter,box=box)
+Data.Obj<-cbind(EX.Obj.Data,EX.Obj.D$Dimension,perimeter=perimeter,box=box)
 Data.Obj
 
 ```
@@ -704,7 +681,7 @@ Data.Obj
 
 ```r
 # Uploading file (EX_RemObj.tif)
-EX.RemObj <- stack("EX_RemObj.tif")
+EX.RemObj <- rast("EX_RemObj.tif")
 
 # Selecting the object boundaries to be removed (nPoint = 10)
 EX.RemObj.Crop <- fieldCrop(mosaic = EX.RemObj, remove = T, nPoint = 10) # Selecting the plant in plot 13
@@ -738,7 +715,7 @@ EX.RemObj.Info[c(12,13,14),]
 
 ```r
 # Uploading file (EX_RemObj.tif)
-EX.Dist <- stack("EX_RemObj.tif")
+EX.Dist <- rast("EX_RemObj.tif")
 
 # vegetation indices
 EX.Dist.Ind <- fieldIndex(mosaic = EX.Dist,index = c("NGRDI"))
@@ -788,14 +765,14 @@ plot(EX.Dist.Draw.3$Draw1$drawObject, col="red",add=T)
 <div id="p12" />
 
 ---------------------------------------------
-#### 12. Resolution and computing time
+#### 11. Resolution and computing time
 
 > The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
 
 ```r
 ### Image and resolution decrease 
 
-RES_1<-stack("EX1_RGB_HighResolution.tif")
+RES_1<-rast("EX1_RGB_HighResolution.tif")
 RES_2<-aggregate(RES_1, fact=2)
 RES_4<-aggregate(RES_1, fact=4)
 
@@ -877,7 +854,7 @@ cor(DataRed)
 <div id="p13" />
 
 ---------------------------------------------
-#### 13. Crop growth cycle
+#### 12. Crop growth cycle
 
 > The same rotation theta from step 3, mask from step 4, and plot shape file from step 5, can be used to evaluate mosaics from other stages in the crop growth cycle. Here you can download specific images from flowering and senecense stages in potatoes.  ([**Flowering: EX2_RGB.tif**](https://drive.google.com/open?id=1B1HrIYUVqSpKdDN8E8VudpI8jT8MYbWY) and [**Senescence: EX3_RGB.tif**](https://drive.google.com/open?id=15GpLy669mICpkorbUk1M9vqfSUMHbdc5))
 
@@ -891,8 +868,8 @@ cor(DataRed)
 
 ```r
 # Uploading Flowering (EX2_RGB.tif) and Senescence (EX3_RGB.tif) files:
-EX2 <- stack("EX2_RGB.tif")
-EX3 <- stack("EX3_RGB.tif")
+EX2 <- rast("EX2_RGB.tif")
+EX3 <- rast("EX3_RGB.tif")
 
 # Cropping the image using the previous shape from step 2:
 
@@ -957,7 +934,7 @@ Data.Cycle
 <div id="p14" />
 
 ---------------------------------------------
-#### 14. Multispectral and Hyperspectral images
+#### 13. Multispectral and Hyperspectral images
 
 > **`FIELDimageR`** can be used to analyze multispectral and hyperspectral images. The same rotation theta, mask, and plot shape file used to analyze RGB mosaic above can be used to analyze multispectral or hyperspectral mosaic from the same field. 
 
@@ -974,7 +951,7 @@ Data.Cycle
 #####################
 
 # Uploading multispectral mosaic:
-EX1.5b <- stack("EX1_5Band.tif")
+EX1.5b <- rast("EX1_5Band.tif")
 
 # Cropping the image using the previous shape from step 2:
 EX1.5b.Crop <- fieldCrop(mosaic = EX1.5b,fieldShape = EX1.Crop, plot = T)
@@ -1007,7 +984,7 @@ EX1.5b.Info<- fieldInfo_extra(mosaic = EX1.5b.Indices$NDVI,fieldShape = EX1.Shap
 #####################
 
 # Uploading hyperspectral file with 474 bands (EX_HYP.tif)
-EX.HYP<-stack("EX_HYP.tif")
+EX.HYP<-rast("EX_HYP.tif")
 
 # Wavelengths (namesHYP.csv)
 NamesHYP<-as.character(read.csv("namesHYP.csv")$NameHYP)
@@ -1016,7 +993,7 @@ NamesHYP<-as.character(read.csv("namesHYP.csv")$NameHYP)
 R<-EX.HYP[[78]] # 651nm (Red)
 G<-EX.HYP[[46]] # 549nm (Green)
 B<-EX.HYP[[15]] # 450nm (Blue)
-RGB<-stack(c(R,G,B))
+RGB<-rast(c(R,G,B))
 plotRGB(RGB, stretch="lin")
 
 # Removing soil using RGB (index NGRDI)
@@ -1071,13 +1048,13 @@ legend(list(x = 2000,y = 0.5),c("Blue (445nm)","Green (545nm)","Red (650nm)","Re
 <div id="p15" />
 
 ---------------------------------------------
-#### 15. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
+#### 14. Building shapefile with polygons (field blocks, pest damage, soil differences, etc)
 
 > If your field area does not have a pattern to draw plots using the function **fieldShape** you can draw different polygons using the function **fieldPolygon**. To make the fieldshape file the number of polygons must be informed. For instance, for each polygon, you should select at least four points at the polygon boundaries area. This function is recommended to make shapefile to extract data from specific field blocks, pest damage area, soil differences, etc. If *extent=TRUE* the whole image area will be the shapefile (used to analyze multiple images for example to evaluate seeds, ears, leaves, diseases, etc.). Function to use: **fieldPolygon**. The following example uses an image available to download here: [EX_polygonShape.tif](https://drive.google.com/open?id=1b42EAi3A3X54z00JWjFvsmUAm3yQClPk). 
 
 ```r
 # Uploading file (EX_polygonShape.tif)
-EX.polygon<-stack("EX_polygonShape.tif")
+EX.polygon<-rast("EX_polygonShape.tif")
 plotRGB(EX.polygon, r = 1, g = 2, b = 3)
 
 # Removing soil
@@ -1122,7 +1099,7 @@ fieldPlot(fieldShape=EX.polygon.Info,
 <div id="p16" />
 
 ---------------------------------------------
-#### 16. Making plots
+#### 15. Making plots
 
 > Graphic visualization of trait values for each plot using the **fieldShape file** and the **Mosaic** of your preference. Function to use: **`fieldPlot`**.
 
@@ -1145,21 +1122,19 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 <div id="p17" />
 
 ---------------------------------------------
-#### 17. Saving output files
+#### 16. Saving output files
 
 ```r
 ### Images (single and multi layers)
 writeRaster(EX1.Indices, filename="EX1.Indices.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
-# EX1.Indices.2 <- stack("EX1.Indices.tif") # Reading the saved image.
+# EX1.Indices.2 <- rast("EX1.Indices.tif") # Reading the saved image.
 
 ### FieldShape file
-library(rgdal)
-writeOGR(EX1.Info$fieldShape, ".", "EX1.fieldShape", driver="ESRI Shapefile")
-# EX1.fieldShape.2 <- terra::vect("EX1.fieldShape.shp") # Reading the saved shapefile option 01.
-# EX1.fieldShape.2 <- readOGR("EX1.fieldShape.shp") # Reading the saved shapefile option 02.
+st_write(EX1.Info$fieldShape, ".", "EX1.fieldShape", driver="ESRI Shapefile")
+# EX1.fieldShape.2 <- st_read("EX1.fieldShape.shp") # Reading the saved shapefile option 01.
 
 ### CSV file (table)
-write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names = F)
+write.csv(EX1.Info,file = "EX1.Info.csv",col.names = T,row.names = F)
 # Data.EX1.Info<-read.csv("EX1.Info.csv",header = T,check.names = F) # Reading the saved data table.
 
 ```
@@ -1182,7 +1157,7 @@ write.csv(EX1.Info$fieldShape@data,file = "EX1.Info.csv",col.names = T,row.names
 
 ```r
 # Uploading file (odm_orthophoto.tif):
-EX.ODM<-stack("odm_orthophoto.tif")
+EX.ODM<-rast("odm_orthophoto.tif")
 plotRGB(EX.ODM, r = 1, g = 2, b = 3)
 
 # Cropping the image to select only one trial (Selecting the same trial as EX.2 from step.13):
@@ -1235,13 +1210,13 @@ index<- c("BGI","VARI","SCI")
 system.time({ # system.time: used to compare the processing time using loop and parallel
 EX.Table.Loop<-NULL
 for(i in 1:length(pics)){
-  EX.L1<-stack(paste("./images/",pics[i],sep = ""))
+  EX.L1<-rast(paste("./images/",pics[i],sep = ""))
   plotRGB(EX.L1)
   EX.L.Shape<-fieldPolygon(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
   EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
   EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
   EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
-  EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
+  EX.L5<-rast(EX.L3$mask, EX.L4[[index]]) # Making a new rast raster with new layers (demage area and indices)
   EX.L.Info<- fieldInfo_extra(mosaic=EX.L5, fieldShape=EX.L.Shape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
   plot(EX.L5,col = grey(1:100/100))
   EX.Table.Loop<-rbind(EX.Table.Loop, EX.L.Info$plotValue) # Combine information from all images in one table
@@ -1267,12 +1242,12 @@ registerDoParallel(cl)
 system.time({
 EX.Table.Parallel <- foreach(i = 1:length(pics), .packages = c("raster","FIELDimageR"), 
                      .combine = rbind) %dopar% {
-                       EX.L1<-stack(paste("./images/",pics[i],sep = ""))
+                       EX.L1<-rast(paste("./images/",pics[i],sep = ""))
                        EX.L.Shape<-fieldPolygon(mosaic=EX.L1, extent=T, plot=F) # extent=T (The whole image area will be the shapefile)
                        EX.L2<-fieldMask(mosaic=EX.L1, index="BGI", cropValue=0.8, cropAbove=T, plot=F) # Select one index to identify leaves and remove the background
                        EX.L3<-fieldMask(mosaic=EX.L2$newMosaic, index="VARI", cropValue=0.1, cropAbove=T, plot=F) # Select one index to identify demaged area in the leaves  
                        EX.L4<-fieldIndex(mosaic=EX.L2$newMosaic, index=index, plot=F) # Indices
-                       EX.L5<-stack(EX.L3$mask, EX.L4[[index]]) # Making a new stack raster with new layers (demage area and indices)
+                       EX.L5<-rast(EX.L3$mask, EX.L4[[index]]) # Making a new rast raster with new layers (demage area and indices)
                        EX.L.Info<- fieldInfo_extra(mosaic=EX.L5, fieldShape=EX.L.Shape, projection=F) # projection=F (Ignore projection. Normally used only with remote sensing images)
                        EX.L.Info$plotValue # Combine information from all images in one table
                      }})
