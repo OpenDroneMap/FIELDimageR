@@ -16,7 +16,7 @@
 
 [1. First steps](#p1)
 
-[2. Selecting the targeted field](#p2)
+[2. Uploading field orthomosaic and visualization](#p2)
 
 [3. Removing soil using vegetation indices](#p3)
 
@@ -205,9 +205,9 @@ library(stars)
 <div id="p2" />
 
 ---------------------------------------------
-#### 2. Selecting the targeted field from the original image
+#### 2. Uploading field orthomosaic and visualization
 
-> It is necessary to first reduce the image/mosaic size around the field boundaries for faster image analysis. Function to use: **`fieldCrop`**. The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). 
+> The following example uses an image available to download here: [EX1_RGB.tif](https://drive.google.com/open?id=1S9MyX12De94swjtDuEXMZKhIIHbXkXKt). If necessary, the image/mosaic size can be reduced around the field boundaries for faster image analysis using the function: **`fieldCrop`**.
 
 ```r
 EX1 <- rast("EX1_RGB.tif")
@@ -221,18 +221,6 @@ fieldView(EX1)
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F1.jpeg">
 </p>
 
-<br />
-
-```r
-x11()
-EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, etc.) please use: fast.plot=T
-
-```
-<br />
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F2.jpeg">
-</p>
 
 [Menu](#menu)
 
@@ -244,7 +232,7 @@ EX1.Crop <- fieldCrop(mosaic = EX1) # For heavy images (large, high resolution, 
 > The presence of soil can introduce bias in the data extracted from the image. Therefore, removing soil from the image is one of the most important steps for image analysis in agricultural science. Function to use: **`fieldMask`** 
 
 ```r
-EX1.RemSoil <- fieldMask(mosaic = EX1.Crop, Red = 1, Green = 2, Blue = 3, index = "HUE")
+EX1.RemSoil <- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
 ```
 <br />
