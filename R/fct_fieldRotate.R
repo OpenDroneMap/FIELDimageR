@@ -89,7 +89,7 @@ fieldRotate <- function(mosaic, theta = NULL, clockwise = TRUE, h = FALSE, n.cor
     raster::extent(r)<-c(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
     raster::crs(r)<-raster::crs(mosaic)
   }
-  Out<-r
+  Out<-rast(r)
   if(plot){
     if(fast.plot){
       raster::plot(r[[1]], col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)}
@@ -107,7 +107,7 @@ fieldRotate <- function(mosaic, theta = NULL, clockwise = TRUE, h = FALSE, n.cor
       raster::extent(DSMmosaic)<-c(as.numeric(c(m11[1]-m22[1])), as.numeric(c(m11[1]+m22[1])), as.numeric(c(m11[2]-m22[2])), as.numeric(c(m11[2]+m22[2])))
       raster::crs(DSMmosaic)<-raster::crs(mosaic)
     }
-    Out<-list(rotatedMosaic=r,rotatedDSM=DSMmosaic)
+    Out<-list(rotatedMosaic=rast(r),rotatedDSM=rast(DSMmosaic))
   }
   par(mfrow=c(1,1))
   return(Out)
