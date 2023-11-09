@@ -58,6 +58,7 @@ fieldCount<-function(mosaic,
       suppressWarnings(terra::plot(st_geometry(st_centroid(st_as_sf(poly))), 
                             pch = pch, col = col))
       terra::plot(fieldShape$geometry,col='#00008800',alpha=0,add=TRUE)
+      par(mfrow=c(1,1))
     }
     perimeter<-perim(poly)
     area<-expanse(poly)
@@ -81,7 +82,8 @@ fieldCount<-function(mosaic,
     if(plot){
       par(mfrow=c(1,2))
       terra::plot(rast_obj)
-      terra::plot(poly)}
+      terra::plot(poly)
+    par(mfrow=c(1,1))}
     perimeter<-perim(poly)
     area<-expanse(poly)
     width<-width(poly)
@@ -105,7 +107,8 @@ fieldCount<-function(mosaic,
       par(mfrow=c(1,2))
       terra::plot(rast_obj)
       suppressWarnings(terra::plot(st_geometry(st_centroid(st_as_sf(poly))), 
-                            pch = pch,cex=0.05,col = col))}
+                            pch = pch,cex=0.05,col = col))
+    par(mfrow=c(1,1))}
     perimeter<-perim(poly)
     area<-expanse(poly)
     width<-width(poly)
