@@ -6,119 +6,113 @@
 #' 
 #' @param mosaic object mask of class stack from the function \code{\link{fieldMask}}.
 #' @param fieldShape plot shape file.
-#' @param value referent value to vegetation pixels in the mask. If "HUE" was used on 
-#'   \code{\link{fieldMask}} the value=0.
-#' @param minSize used to set the minimum size percentage of plant canopy  (to remove weeds and more).
-#' @param n.core number of cores to use for multicore processing (Parallel). 
+#' @param watershed numeric (defaut). It is the same as \code{tolerance} parameter at \code{\link{EBImage::watershed}}. It is the minimum height of the object in the units of image intensity between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If \code{NULL} all touching objects will be considered as one polygon.
+#' @param plot if it is TRUE the original and segmented image will be plotted with identified objects. 
 #' @param pch point symbol, please check \code{help("points")}.
-#' @param cex character (or symbol) expansion: a numerical vector, please check \code{help("points")}.
 #' @param col color code or name, please check \code{help("points")}.
-#' @param na.rm logical. Should missing values (including NaN) be removed?.
 #' 
-#' @importFrom raster projection extract xyFromCell
 #' @importFrom EBImage distmap watershed
-#'
+#' @importFrom terra ifel is.bool crds as.array
+#' @importFrom dplyr summarize group_by n
 #' 
-#' @return A list with five element
+#' @return A list with two elements when fieldShape is provided:
 #' \itemize{
-#'   \item \code{fieldCount} is the number of objects per plot represented in DataFrame.
-#'   \item \code{fieldShape} is the new shapeFile with stand count.
-#'   \item \code{mosaic} is the Watershed layer.
-#'   \item \code{objectSel} is the objects area per plot.
-#'   \item \code{objectReject} is the objects position in the image.
+#'   \item \code{fieldShape$plot_level} is the new shapeFile with objects in the plot area, perimeter, count, and mean_width.
+#'   \item \code{fieldShape$object_level} is the new shapeFile of single objects area, perimeter, width, x and y position.
 #' }
 #' 
 #'
 #' @export
-fieldCount <- function(mosaic, fieldShape, value = 0, minSize = 0.01, n.core = NULL, pch = 16, 
-                       cex = 0.7, col = "red", na.rm = FALSE) {
-  if(!is.na(projection(fieldShape))&is.na(projection(mosaic))){
-    if(projection(fieldShape)!=projection(mosaic)){stop("fieldShape and mosaic must have the same projection CRS, strongly suggested to use fieldRotate() for both files.")}}
-  mosaic <- stack(mosaic)
-  num.band<-length(mosaic@layers)
-  if(num.band>1){stop("Only mask with values of 1 and 0 can be processed, use the mask output from fieldMask()")}
-  if(!value%in%c(1,0)){stop("Values in the mask must be 1 or 0 to represent the objects, use the mask output from fieldMask()")}
-  if(!all(c(raster::minValue(mosaic),raster::maxValue(mosaic))%in%c(1,0))){stop("Values in the mask must be 1 or 0 to represent the objects, use the mask output from fieldMask()")}
-  mosaic <- crop(x = mosaic, y = fieldShape)
-  print("Identifying objects... ")
-  print(paste("You can speed up this step using n.core=", detectCores(), " or less.", sep = ""))
-  par(mfrow=c(1,1))
-  raster::plot(mosaic, col=grey(1:100/100), axes=FALSE, box=FALSE, legend=FALSE)
-  sp::plot(fieldShape, add=T)
-  names(mosaic)<-"mask"
-  if(na.rm){
-    mosaic$mask[is.na(mosaic$mask)] <- c(0,1)[c(0,1)!=value] 
+fieldCount<-function(mosaic, 
+                     fieldShape=NULL, 
+                     watershed=0.05,
+                     plot=FALSE,
+                     pch ="+", 
+                     col = 'red') {
+  # Check if the input is a valid terra raster object
+  if ((!terra::is.bool(mosaic)== TRUE && !length(dim(mosaic)) >= 2)) {
+    stop("fieldCount requires a 2-dimensional terra raster object (mask layer)")
   }
-  mask <- raster::as.matrix(mosaic$mask) == value
-  dd <- distmap(mask)
-  mosaic$watershed <- watershed(dd)
-  if(is.null(n.core)){extM <- extract(x = mosaic$watershed, y = fieldShape)}
-  if (!is.null(n.core)){
-    if(n.core>detectCores()){stop(paste(" 'n.core' must be less than ",detectCores(),sep = ""))}
-    cl <- parallel::makeCluster(n.core, output = "", setup_strategy = "sequential")
-    registerDoParallel(cl)
-    extM <- foreach(i = 1:length(fieldShape), .packages = c("raster")) %dopar% {
-      single <- fieldShape[i, ]
-      CropPlot <- crop(x = mosaic$watershed, y = single)
-      extract(x = CropPlot, y = single)
+  
+  # Define variables
+  all_attri <- NULL
+  rast_obj <- NULL
+  
+  if(!is.null(watershed) && !is.null(fieldShape)){
+    binay<-terra::ifel(mosaic,0,1)
+    img<-terra::as.array(t(as.matrix(binay, wide=TRUE)))
+    dis<-EBImage::distmap(img)
+    seg<-EBImage::watershed(dis,watershed)
+    ebi<-terra::as.array(seg)
+    rast_obj <- terra::rast(t(as.matrix(rast(ebi), wide=TRUE)))
+    rast_obj[rast_obj== 0] <- NA
+    crs(rast_obj)<-crs(mosaic)
+    ext(rast_obj)<-ext(mosaic)
+    # Convert to polygons
+    poly <- as.polygons(rast_obj)
+    # Plot and add text labels
+    if(plot){
+      par(mfrow=c(1,2))
+      terra::plot(rast_obj)
+      terra::plot(fieldShape$geometry,col='#00008800',alpha=0,add=TRUE)
+      suppressWarnings(terra::plot(st_geometry(st_centroid(st_as_sf(poly))), 
+                            pch = pch, col = col))
+      terra::plot(fieldShape$geometry,col='#00008800',alpha=0,add=TRUE)
     }
-    names(extM) <- 1:length(fieldShape)
-    parallel::stopCluster(cl)
-  }
-  objects<-lapply(extM, function(x){table(x)})
-  cent <- lapply(objects, function(x){as.numeric(names(x))[-1]})
-  objectsPosition<- lapply(cent, function(x){
-    if(length(x)==0){return(NULL)}
-    pos<-NULL
-    for(i in 1:length(x)){pos<-rbind(pos,colMeans(xyFromCell(mosaic$watershed, which(mosaic$watershed[]==x[i]))))}
-    if(abs(max(pos[,1])-min(pos[,1]))>=abs(max(pos[,2])-min(pos[,2]))){ord<-order(pos[,1])}
-    if(abs(max(pos[,1])-min(pos[,1]))<abs(max(pos[,2])-min(pos[,2]))){ord<-order(pos[,2])}
-    pos<-pos[ord,]
-    return(list(seqName=ord,Position=pos))})
-  objectSel<-list()
-  objectReject<-list()
-  for(j in 1:length(cent)){
-    x1<-objects[[j]]
-    y<-objectsPosition[[j]]
-    x<-NULL
-    PS<-NULL
-    PR<-NULL
-    if(!is.null(y)){
-      for (i in 2:length(x1)) {x<-c(x,round(100*(x1[i]/sum(x1,na.rm = na.rm)),3))}
-      x<-x[y$seqName]
-      
-      if(dim(as.matrix(y$Position))[2]==1){
-        PS <- data.frame(objectArea = x[x >= minSize], x = y$Position[1][x >= minSize], y = y$Position[2][x >= minSize])
-        PR <- data.frame(objectArea = x[x < minSize], x = y$Position[1][x < minSize], y = y$Position[2][x < minSize])
-      }
-      if(dim(as.matrix(y$Position))[2]!=1){
-        PS <- data.frame(objectArea = x[x >= minSize], 
-                         x = y$Position[x >= minSize, 1], 
-                         y = y$Position[x >= minSize, 2])
-        PR <- data.frame(objectArea = x[x < minSize], 
-                         x = y$Position[x < minSize, 1], 
-                         y = y$Position[x < minSize, 2])
-      }}
-    rownames(PS)<-NULL
-    rownames(PR)<-NULL
-    objectSel[[j]]<-PS
-    objectReject[[j]]<-PR
-  }
-  if(length(objectSel)!=length(cent)){
-    objectSel[[length(cent)+1]] <- NA
-    objectReject[[length(cent)+1]] <- NA
-    objectSel[[length(cent)+1]] <- NULL
-    objectReject[[length(cent)+1]] <- NULL
-  }
-  field <- unlist(lapply(objectSel, function(x){length(x$objectArea)}))
-  fieldShape@data$fieldCount <- field
-  print(paste("Number of objects: ", sum(field), sep = ""))
-  graphics::points(do.call(rbind,objectSel)[,c(2,3)], pch=pch, cex=cex, col=col)
-  sp::plot(fieldShape, add=T)
-  Out <- list(fieldCount=field, 
-              fieldShape=fieldShape, 
-              mosaic=mosaic$watershed, 
-              objectSel=objectSel, 
-              objectReject=objectReject)
-  return(Out)
+    perimeter<-perim(poly)
+    area<-expanse(poly)
+    width<-width(poly)
+    attri<-st_as_sf(poly)
+    xy<-terra::crds(vect(st_centroid(attri)))
+    
+    attributes<-cbind(attri[,-1],area,perimeter,width,xy)
+    att<-cbind(ID = 1:nrow(attri[,-1]),attri[,-1],area,perimeter,width,xy)
+    c<-st_join(fieldShape, st_as_sf(attributes))
+    all<- c%>% group_by(ID) %>% 
+      summarize(area =round(sum(area),3),
+                perimeter=round(sum(perimeter),3),count=n(),mean_width=round(mean(width),3))
+    all_attri<-list(plot_level=all,
+                    object_level=att)
+  }else if(is.null(watershed) || is.null(fieldShape)){
+    logi<-terra::ifel(mosaic,NA,1)
+    rast_obj<- patches(logi, directions = 4)
+    poly <- as.polygons(rast_obj)
+    poly$ID <- seq.int(nrow(poly))
+    if(plot){
+      par(mfrow=c(1,2))
+      terra::plot(rast_obj)
+      terra::plot(poly)}
+    perimeter<-perim(poly)
+    area<-expanse(poly)
+    width<-width(poly)
+    attri<-st_as_sf(poly)
+    attributes<-cbind(attri[,-1],area,perimeter,width)
+    all_attri<-st_as_sf(attributes)[-1,]
+  }else if(!is.null(watershed) && is.null(fieldShape)){
+    binay<-terra::ifel(mosaic,0,1)
+    img<-terra::as.array(t(as.matrix(binay,wide=TRUE)))
+    dis<-EBImage::distmap(img)
+    seg<-EBImage::watershed(dis,watershed)
+    ebi<-terra::as.array(seg)
+    rast_obj <- terra::rast(t(as.matrix(rast(ebi), wide=TRUE)))
+    rast_obj[rast_obj== 0] <- NA
+    crs(rast_obj)<-crs(mosaic)
+    ext(rast_obj)<-ext(mosaic)
+    # Convert to polygons
+    poly <- as.polygons(rast_obj)
+    # Plot and add text labels
+    if(plot){
+      par(mfrow=c(1,2))
+      terra::plot(rast_obj)
+      suppressWarnings(terra::plot(st_geometry(st_centroid(st_as_sf(poly))), 
+                            pch = pch,cex=0.05,col = col))}
+    perimeter<-perim(poly)
+    area<-expanse(poly)
+    width<-width(poly)
+    attri<-st_as_sf(poly)
+    attributes<-cbind(attri[,-1],area,perimeter,width)
+    all_atti<-st_as_sf(attributes)
+  } 
+  
+  return(all_attri)
 }

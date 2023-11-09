@@ -6,14 +6,11 @@
 \usage{
 fieldCount(
   mosaic,
-  fieldShape,
-  value = 0,
-  minSize = 0.01,
-  n.core = NULL,
-  pch = 16,
-  cex = 0.7,
-  col = "red",
-  na.rm = FALSE
+  fieldShape = NULL,
+  watershed = 0.05,
+  plot = FALSE,
+  pch = "+",
+  col = "red"
 )
 }
 \arguments{
@@ -21,29 +18,19 @@ fieldCount(
 
 \item{fieldShape}{plot shape file.}
 
-\item{value}{referent value to vegetation pixels in the mask. If "HUE" was used on 
-\code{\link{fieldMask}} the value=0.}
+\item{watershed}{numeric (defaut). It is the same as \code{tolerance} parameter at \code{\link{EBImage::watershed}}. It is the minimum height of the object in the units of image intensity between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If \code{NULL} all touching objects will be considered as one polygon.}
 
-\item{minSize}{used to set the minimum size percentage of plant canopy  (to remove weeds and more).}
-
-\item{n.core}{number of cores to use for multicore processing (Parallel).}
+\item{plot}{if it is TRUE the original and segmented image will be plotted with identified objects.}
 
 \item{pch}{point symbol, please check \code{help("points")}.}
 
-\item{cex}{character (or symbol) expansion: a numerical vector, please check \code{help("points")}.}
-
 \item{col}{color code or name, please check \code{help("points")}.}
-
-\item{na.rm}{logical. Should missing values (including NaN) be removed?.}
 }
 \value{
-A list with five element
+A list with two elements when fieldShape is provided:
 \itemize{
-  \item \code{fieldCount} is the number of objects per plot represented in DataFrame.
-  \item \code{fieldShape} is the new shapeFile with stand count.
-  \item \code{mosaic} is the Watershed layer.
-  \item \code{objectSel} is the objects area per plot.
-  \item \code{objectReject} is the objects position in the image.
+  \item \code{fieldShape$plot_level} is the new shapeFile with objects in the plot area, perimeter, count, and mean_width.
+  \item \code{fieldShape$object_level} is the new shapeFile of single objects area, perimeter, width, x and y position.
 }
 }
 \description{
