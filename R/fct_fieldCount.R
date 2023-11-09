@@ -41,6 +41,7 @@ fieldCount<-function(mosaic,
   if(!is.null(watershed) && !is.null(fieldShape)){
     binay<-terra::ifel(mosaic,0,1)
     img<-terra::as.array(t(as.matrix(binay, wide=TRUE)))
+    img[is.na(img)] <- TRUE
     dis<-EBImage::distmap(img)
     seg<-EBImage::watershed(dis,watershed)
     ebi<-terra::as.array(seg)
@@ -93,6 +94,7 @@ fieldCount<-function(mosaic,
   }else if(!is.null(watershed) && is.null(fieldShape)){
     binay<-terra::ifel(mosaic,0,1)
     img<-terra::as.array(t(as.matrix(binay,wide=TRUE)))
+    img[is.na(img)] <- TRUE
     dis<-EBImage::distmap(img)
     seg<-EBImage::watershed(dis,watershed)
     ebi<-terra::as.array(seg)
