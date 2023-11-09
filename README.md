@@ -242,7 +242,7 @@ fieldView(EX1)
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew1.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew1.jpg">
 </p>
 
 [Menu](#menu)
