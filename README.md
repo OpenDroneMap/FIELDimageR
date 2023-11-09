@@ -461,8 +461,14 @@ plotRGB(EX.SC, r = 1, g = 2, b = 3)
 # Removing the soil
 EX.SC.RemSoil<- fieldMask(mosaic = EX.SC, Red = 1, Green = 2, Blue = 3, index = "HUE")
 
-# Building the plot shapefile (ncols = 1 and nrows = 7)
-EX.SC.Shape<-fieldShape_render(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
+# Building the plot shapefile (ncols = 7 and nrows = 1)
+EX.SC.Shape<-fieldShape_render(mosaic = EX.SC,
+                               ncols = 7, 
+                               nrows = 1)
+fieldView(mosaic = EX.SC,
+          fieldShape = EX.SC.Shape,
+          type = 2,
+          alpha = 0.2)
 ```
 <br />
 
@@ -477,10 +483,15 @@ EX.SC.Shape<-fieldShape_render(mosaic = EX.SC.RemSoil,ncols = 1, nrows = 7)
 
 EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
                    fieldShape = EX.SC.Shape,
-                   minSize = 0.00)
-                   
-EX1.SC$objectSel[[4]] # Identifies 14 points, but point 6 and 9 are small artifacts
-EX1.SC$objectReject[[4]] # No shape rejected because minSize = 0.00
+                   watershed = 0.05,
+                   plot = T)
+
+EX1.SC$object_level # Identifies plants and small artifacts
+
+fieldView(mosaic = EX.SC,
+          fieldShape = EX1.SC$object_level,
+          type = 2,
+          alpha = 0.2)
 ```
 <br />
 
@@ -491,19 +502,26 @@ EX1.SC$objectReject[[4]] # No shape rejected because minSize = 0.00
 <br />
 
 ```r
-### When all shapes with size greater than 0.04% of plot area are counted: minSize = 0.04
+### When all shapes with perimeter greater than 0.4 and lower than 4 are selected:
 
-EX1.SC<-fieldCount(mosaic = EX.SC.RemSoil$mask, 
-                   fieldShape = EX.SC.Shape,
-                   minSize = 0.04)
+hist(EX1.SC$object_level$perimeter,breaks=30) # Errors= 0.4 < perimeter > 4
+max(EX1.SC$object_level$perimeter)
+min(EX1.SC$object_level$perimeter)
+mean(EX1.SC$object_level$perimeter)
 
-EX1.SC$objectSel[[4]] # Identifies 12 points
-EX1.SC$objectReject[[4]] # Shows 2 artifacts that were rejected (6 and 9 from previous example)
+finalcount<-EX1.SC$object_level %>% dplyr::filter(perimeter>0.4 & perimeter<4) # Errors= 0.4 < perimeter > 4
+
+mapview(list(EX.SC.Shape,finalcount))
+
+fieldView(mosaic = EX.SC,
+          fieldShape = finalcount,
+          type = 2,
+          alpha = 0.2)
 ```
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F22.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew2.jpg">
 </p>
 
 <br />
