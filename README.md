@@ -230,6 +230,20 @@ plotRGB(EX1, r = 1, g = 2, b = 3)
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F1.jpeg">
 </p>
 
+<br />
+
+```r
+# If necessary you can crop the mosaic/image to reduce size by selecting the aoi (area of interest) using fieldView with editor=TRUE:
+aoi<-fieldView(EX1,editor = TRUE)
+EX1<-crop(EX1,aoi) # For heavy images (large, high resolution, etc.) please use: fast.plot=T
+fieldView(EX1)
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew1.jpeg">
+</p>
 
 [Menu](#menu)
 
