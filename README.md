@@ -521,7 +521,7 @@ fieldView(mosaic = EX.SC,
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew2.jpg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew2a.jpg">
 </p>
 
 <br />
