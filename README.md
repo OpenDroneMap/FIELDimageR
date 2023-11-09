@@ -429,15 +429,19 @@ EX1.BGI<- fieldMask(mosaic = EX1, Red = 1, Green = 2, Blue = 3,
 ---------------------------------------------
 #### 6. Counting the number of objects (e.g. plants, seeds, etc)
 
-> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. The parameter *n.core* is used to accelerate the counting (parallel).
+> *FIELDimageR* can be used to evaluate stand count during early stages. A good weed control practice should be performed to avoid misidentification inside the plot.  The *mask* output from **`fieldMask`** and the *fieldshape* output from **`fieldShape`** must be used. Function to use: **`fieldCount`**. 
 
 ```r
-EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape, cex=0.4, col="blue")
-EX1.SC$fieldCount
+EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, 
+                   fieldShape = EX1.Shape,
+                   plot=T, 
+                   col="blue")
 
-### Parallel (n.core = 3)
-EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask, fieldShape = EX1.Shape, n.core = 3, cex=0.4, col="blue")
-EX1.SC$fieldCount
+# New shapeFile with objects in the plot. Data per plot in the grid: area, perimeter, count, and mean_width.
+EX1.SC$plot_level
+
+# New shapeFile of single objects. Data per object (plant, pollen, etc.): area, perimeter, width, x and y position.
+EX1.SC$object_level
 ```
 <br />
 
