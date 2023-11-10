@@ -566,22 +566,33 @@ EX.P<-rast("EX_Pollen.jpeg")
 EX.P<-aggregate(EX.P,fact=4) 
 plotRGB(EX.P, r = 1, g = 2, b = 3)
 
-# Shapefile using the entire image (extent = T)
-EX.P.shapeFile<-fieldPolygon(EX.P,extent = T)
-
 # Using index "BIM" to remove background (above 19)
+EX.P<-imgLAB(EX.P)
 EX.P.R1<- fieldMask(mosaic = EX.P,index = "BIM", cropValue = 19, cropAbove = T)
-plotRGB(EX.P.R1$newMosaic)
+fieldView(EX.P.R1$newMosaic)
 
-# Counting all pollens above 0.01 size (all sample)
-EX.P.Total<-fieldCount(mosaic = EX.P.R1$mask, fieldShape = EX.P.shapeFile$fieldShape, minSize = 0.01) 
+# Counting all pollens area>1000 (all sample)
+EX.P.Total<-fieldCount(mosaic = EX.P.R1$mask, plot=T) 
+
+library(leafsync)
+m1<-fieldView(EX.P)
+m2<-mapview(EX.P.Total)
+sync(m1,m2)
+
+hist(EX.P.Total$area,breaks=50)
+pollen_count<-EX.P.Total %>% dplyr::filter(area>1000)
+m2<-mapview(pollen_count)
+sync(m1,m2)
 
 # Using index "BIM" to identify germinated pollen grain (removing values above 16)
 EX.P.R2<- fieldMask(mosaic = EX.P, index = "BIM", cropValue = 16, cropAbove = T)
-plotRGB(EX.P.R2$newMosaic)
+m2<-fieldView(EX.P.R2$newMosaic)
+sync(m1,m2)
 
-# Counting all germinated pollen above 0.005 
-EX.P.<-fieldCount(mosaic = EX.P.R2$mask, fieldShape = EX.P.shapeFile$fieldShape, minSize = 0.005)
+# Counting all germinated pollen  
+EX.P.Ger<-fieldCount(mosaic = EX.P.R2$mask, plot=T)
+m2<-mapview(EX.P.Ger)
+sync(m1,m2)
 
 ```
 <br />
