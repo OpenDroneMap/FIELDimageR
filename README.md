@@ -439,9 +439,17 @@ EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask,
 
 # New shapeFile with objects in the plot. Data per plot in the grid: area, perimeter, count, and mean_width.
 EX1.SC$plot_level
+fieldView(mosaic = EX1.RemSoil$newMosaic,
+          fieldShape = EX1.SC$plot_level,
+          type = 2,
+          alpha = 0.2)
 
 # New shapeFile of single objects. Data per object (plant, pollen, etc.): area, perimeter, width, x and y position.
 EX1.SC$object_level
+fieldView(mosaic = EX1.RemSoil$newMosaic,
+          fieldShape = EX1.SC$object_level,
+          type = 2,
+          alpha = 0.5)
 ```
 <br />
 
