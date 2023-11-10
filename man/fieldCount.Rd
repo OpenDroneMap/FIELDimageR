@@ -7,7 +7,7 @@
 fieldCount(
   mosaic,
   fieldShape = NULL,
-  watershed = 0.05,
+  watershed = TRUE,
   plot = FALSE,
   pch = "+",
   col = "red"
@@ -18,7 +18,7 @@ fieldCount(
 
 \item{fieldShape}{plot shape file.}
 
-\item{watershed}{numeric (defaut). It is the same as \code{tolerance} parameter at \code{\link{EBImage::watershed}}. It is the minimum height of the object in the units of image intensity between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If \code{NULL} all touching objects will be considered as one polygon.}
+\item{watershed}{TRUE (defaut) or FALSE. Use or not watershed to identify objects. Otherwise, all touching objects will be considered as one polygon.}
 
 \item{plot}{if it is TRUE the original and segmented image will be plotted with identified objects.}
 
