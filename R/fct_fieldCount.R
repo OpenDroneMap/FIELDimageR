@@ -6,7 +6,7 @@
 #' 
 #' @param mosaic object mask of class stack from the function \code{\link{fieldMask}}.
 #' @param fieldShape plot shape file.
-#' @param watershed numeric (defaut). It is the same as \code{tolerance} parameter at \code{\link{EBImage::watershed}}. It is the minimum height of the object in the units of image intensity between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If \code{NULL} all touching objects will be considered as one polygon.
+#' @param watershed TRUE (defaut) or FALSE. Use or not watershed to identify objects. Otherwise, all touching objects will be considered as one polygon.
 #' @param plot if it is TRUE the original and segmented image will be plotted with identified objects. 
 #' @param pch point symbol, please check \code{help("points")}.
 #' @param col color code or name, please check \code{help("points")}.
@@ -25,14 +25,14 @@
 #' @export
 fieldCount<-function(mosaic, 
                      fieldShape=NULL, 
-                     watershed=0.05,
+                     watershed=TRUE,
                      plot=FALSE,
                      pch ="+", 
                      col = 'red') {
   # Check if the input is a valid terra raster object
-  if ((!terra::is.bool(mosaic)== TRUE && !length(dim(mosaic)) >= 2)) {
-    stop("fieldCount requires a 2-dimensional terra raster object (mask layer)")
-  }
+  if ((!isTRUE(terra::is.bool(mosaic))) | !length(dim(mosaic)) >= 2) {
+stop("fieldCount requires a 2-dimensional terra raster object (mask layer)")
+}
   
   # Define variables
   all_attri <- NULL
@@ -65,8 +65,7 @@ fieldCount<-function(mosaic,
     area<-expanse(poly)
     width<-width(poly)
     attri<-st_as_sf(poly)
-    xy<-terra::crds(vect(st_centroid(attri)))
-    
+    suppressWarnings(xy<-terra::crds(vect(st_centroid(attri))))    
     attributes<-cbind(attri[,-1],area,perimeter,width,xy)
     att<-cbind(ID = 1:nrow(attri[,-1]),attri[,-1],area,perimeter,width,xy)
     c<-st_join(fieldShape, st_as_sf(attributes))
