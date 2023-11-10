@@ -437,6 +437,16 @@ EX1.SC<-fieldCount(mosaic = EX1.RemSoil$mask,
                    plot=T, 
                    col="blue")
 
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F9.jpeg">
+</p>
+
+<br />
+
+```r
 # New shapeFile with objects in the plot. Data per plot in the grid: area, perimeter, count, and mean_width.
 EX1.SC$plot_level
 fieldView(mosaic = EX1.RemSoil$newMosaic,
@@ -454,7 +464,7 @@ fieldView(mosaic = EX1.RemSoil$newMosaic,
 <br />
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F9.jpeg">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/FexNew3.jpg">
 </p>
 
 <br />
