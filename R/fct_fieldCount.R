@@ -89,7 +89,7 @@ stop("fieldCount requires a 2-dimensional terra raster object (mask layer)")
     width<-width(poly)
     attri<-st_as_sf(poly)
     attributes<-cbind(attri[,-1],area,perimeter,width)
-    all_attri<-st_as_sf(attributes)[-1,]
+    all_attri<-st_as_sf(attributes)
   }else if(!is.null(watershed) && is.null(fieldShape)){
     binay<-terra::ifel(mosaic,0,1)
     img<-terra::as.array(t(as.matrix(binay,wide=TRUE)))
