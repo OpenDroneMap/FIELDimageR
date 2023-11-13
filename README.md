@@ -712,36 +712,33 @@ EPH.DataTotal
 EX.Obj <- rast("EX_Obj.jpg")
 plotRGB(EX.Obj)
 EX.Obj <- aggregate(EX.Obj,4)
-EX.shapeFile<-fieldPolygon(EX.Obj,extent = T)
 
 # Removing the background
+EX.Obj<-imgLAB(EX.Obj)
 EX.Obj.M<- fieldMask(mosaic = EX.Obj, index = "BGI",cropValue = 0.7,cropAbove = T)
-dev.off()
 
-# Taking measurements (Remove artifacts by changing the parameter *minArea* and observing the values on EX.Obj.D$Dimension$area)
-EX.Obj.D<-fieldObject(mosaic = EX.Obj.M$mask, watershed = T, minArea = 0.01)
+# Taking measurements:
+EX.Obj.D<-fieldCount(mosaic = EX.Obj.M$mask,
+                     plot = T)
 
-# Measurement Output:
-EX.Obj.D$numObjects
-EX.Obj.D$Dimension
+fieldView(EX.Obj,EX.Obj.D)
 plotRGB(EX.Obj)
-plot(EX.shapeFile$fieldShape, add=T)
-plot(EX.Obj.D$Objects, add=T, border="red")
-plot(EX.Obj.D$Polygons, add=T, border="blue")
-plot(EX.Obj.D$single.obj[[1]], add=T, col="yellow")
-lines(EX.Obj.D$x.position[[1]], col="red", lty=2)
-lines(EX.Obj.D$y.position[[1]], col="red", lty=2)
+plot(EX.Obj.D$geometry, add=T, border="red")
+plot(EX.Obj.D[1,], add=T, col="yellow")
 EX.Obj.I<- fieldIndex(mosaic = EX.Obj,index = c("SI","BGI","BI"))
-EX.Obj.Data<-fieldInfo_extra(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], fieldShape = EX.Obj.D$Objects, projection = F)
-EX.Obj.Data
+EX.Obj.Data<-fieldInfo_extra(mosaic = EX.Obj.I[[c("SI","BGI","BI")]], 
+                             fieldShape = EX.Obj.D)
+plot(EX.Obj.Data)
 
-# Perimeter:
-# install.packages("spatialEco")
-library(spatialEco)
-perimeter<-polyPerimeter(EX.Obj.D$Objects)
-box<-polyPerimeter(EX.Obj.D$Polygons)
-Data.Obj<-cbind(EX.Obj.Data,EX.Obj.D$Dimension,perimeter=perimeter,box=box)
-Data.Obj
+# Data visualization: 
+library(reshape2)
+Data.Obj1<-melt(EX.Obj.Data,measure.vars = c("area","perimeter","width","SI","BGI","BI"))
+
+library(ggplot2)
+ggplot(Data.Obj1, aes(x=value, fill=variable)) +
+  geom_histogram(aes(y=..density..), colour="black")+
+  geom_density(alpha=.2)+
+  facet_wrap(~variable, scales = "free")
 
 ```
 <br />
