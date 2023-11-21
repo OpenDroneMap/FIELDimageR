@@ -6,12 +6,14 @@
 #' 
 #' @param img image/object class \code{EBImage}
 #' 
+#' @param ref is SpatRaster with the crs that rast_obj should be assigned to
+#' 
 #' @importFrom terra rast
 #' 
 #' @return \code{terra} object
 #'
 #' @export
-imgRAST<-function(img){
+imgRAST<-function(img,ref){
   if (!requireNamespace("EBImage", quietly = TRUE)) {
     stop("EBImage package is required for this function.")
   }
@@ -28,7 +30,9 @@ imgRAST<-function(img){
       stop("Invalid number of channels in the image.")
     }
     rast_obj <- rast(rgb)
-    crs(rast_obj)<-'epsg:3057'
+    crs(rast_obj)<-crs(ref)
+    ext(rast_obj)<-ext(ref)
+    rast_obj[rast_obj==0] <- NA
     return(rast_obj)
   } else {
     stop("Input is not an EBImage object.")
