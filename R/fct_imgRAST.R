@@ -6,7 +6,7 @@
 #' 
 #' @param img image/object class \code{EBImage}
 #' 
-#' @param ref is SpatRaster with the crs that rast_obj should be assigned to
+#' @param ref SpatRaster with the crs that rast_obj should be assigned
 #' 
 #' @importFrom terra rast
 #' 
