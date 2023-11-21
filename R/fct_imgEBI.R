@@ -17,19 +17,20 @@ imgEBI <- function(img) {
     
     if (nBand == 1) {
       if (length(dim(img)) >= 2) {
-        if (terra::is.bool(img) || is.factor(img)) {  # Check if img is boolean or factor
-          x <- as.array(img)
+        if (terra::is.bool(img) || is.factor(img)||isClass(img)) {  # Check if img is boolean or factor
+          img[is.na(img)] <- 0
+          x <- terra::as.array(img)
           x <- t(x[, , 1] * 255)  # Multiply by 255
-          x <- Image(x)
+          x <- EBImage::Image(x)
         }
         else if (!(minmax(img)[1] == 1)) {
-          x <- as.array(img)
+          x <- terra::as.array(img)
           x <- t(x[, , 1] / 255)
-          x <- Image(x)
+          x <- EBImage::Image(x)
         } else if (minmax(img)[1] == 1) {
-          x <- as.array(img)
+          x <- terra::as.array(img)
           x <- t(x[, , 1])
-          x <- Image(x)
+          x <- EBImage::Image(x)
         }
         return(x)
       } else {
@@ -38,9 +39,9 @@ imgEBI <- function(img) {
     } else if (nBand == 3) {
       # Handle the 3-band case
       if (length(dim(img)) >= 3) {
-        band1 <- as.array(t(img[[1]] / 255))
-        band2 <- as.array(t(img[[2]] / 255))
-        band3 <- as.array(t(img[[3]] / 255))
+        band1 <- terra::as.array(t(img[[1]] / 255))
+        band2 <- terra::as.array(t(img[[2]] / 255))
+        band3 <- terra::as.array(t(img[[3]] / 255))
         rgb <- array(c(band1, band2, band3), dim = c(dim(band1)[1], dim(band1)[2], nlyr(img)))
         rgb <- EBImage::Image(rgb)
         colorMode(rgb) = Color
