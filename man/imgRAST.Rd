@@ -8,6 +8,8 @@ imgRAST(img)
 }
 \arguments{
 \item{img}{image/object class \code{EBImage}}
+
+\item{ref}{SpatRaster with the crs that rast_obj should be assigned}
 }
 \value{
 \code{terra} object
