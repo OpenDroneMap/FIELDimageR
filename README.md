@@ -30,7 +30,7 @@
 
 [8. Extracting data from field images](#p9)
 
-[9. Estimating plant height](#p10)
+[9. Estimating plant height and biomass](#p10)
 
 [10. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#p11)
 
@@ -660,36 +660,50 @@ EX1.Info
 <div id="p10" />
 
 ---------------------------------------------
-#### 9. Estimating plant height
+#### 9. Estimating plant height and biomass
 
-> The plant height can be estimated by calculating the Canopy Height Model (CHM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate the plant height, first we used a previously generated *mask* from step 4 to remove the soil, and the output from *fieldshape* in step 5 to assign data to each plot. The user can extract information using the basic R functions mean, max, min, and quantile as a parameter in function **`fieldInfo_extra`**. 
+> The plant height can be estimated by calculating the Canopy Height Model (CHM) and biomass by calculating Canopy Volume Model (CVM). This model uses the difference between the Digital Surface Model (DSM) from the soil base (before there is any sproute, [Download EX_DSM0.tif](https://drive.google.com/open?id=1lrq-5T6x_GrbkCtpDSDiX1ldvSwEBFX-)) and the DSM file from the vegetative growth (once plants are grown, [Download EX_DSM1.tif](https://drive.google.com/open?id=1q_H4Ef1f1yQJOPtkVMJfcb2SvHcxJ3ya)). To calculate CHM and CVM we used the function **`fieldHeight`**, where CVM=cellSize(CHM)*CHM. The next step is removing the soil effect with **`fieldMask`** and then use **`fieldInfo_extra`** to extract information as mean, max, min, sum, and quantile. 
 
 ```r
 # Uploading files from soil base (EX_DSM0.tif) and vegetative growth (EX_DSM1.tif):
 DSM0 <- rast("EX_DSM0.tif")
 DSM1 <- rast("EX_DSM1.tif")
 
-# Canopy Height Model (CHM):
-DSM0.R <- resample(DSM0, DSM1)
-CHM <- DSM1.C-DSM0.R
+# Canopy Height Model (CHM) and Canopy Volume Model (CVM):
+CHVM<-fieldHeight(DSM0,DSM1)
+plot(CHVM)
 
 # Removing the soil using mask from step 4:
-CHM.S <- fieldMask(CHM, mask = EX1.RemSoil$mask)
+CHVM <- fieldMask(CHM, mask = EX1.RemSoil$mask)
 
-# Extracting the estimate plant height average (EPH):
-EPH <- fieldInfo_extra(CHM.S$newMosaic, fieldShape = EX1.Shape)
-EPH
+# Extracting the estimate plant height average (PlantHeight):
+EX1.Shape<- fieldInfo_extra(mosaic = CHVM$newMosaic$height,
+                           fieldShape = EX1.Shape,
+                           fun=mean)
+colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantHeight"
 
 # Extracting the estimate plant height at 10% and 90% of quantile:
 probs = c(0.1,0.9)
-EPH.Extract<-extract(x = CHM.S$newMosaic, y = EX1.Shape)
-EPH.10.90<-do.call(rbind,lapply(EPH.Extract, quantile, probs = probs, na.rm=TRUE))
-EPH.10.90
+EPH.Extract<-extract(x = CHVM$newMosaic$height, y = EX1.Shape,quantile, probs = probs, na.rm=TRUE)
+EX1.Shape<-merge(EX1.Shape,EPH.Extract,by="ID")
+colnames(EX1.Shape)[c(dim(EX1.Shape)[2]-2,
+                      dim(EX1.Shape)[2]-1)]<-c("PH.10","PH.90")
 
-# Data:
-EPH.DataTotal<-data.frame(EPH,EPH.10.90)
-colnames(EPH.DataTotal)[c((dim(EPH.DataTotal)[2]-length(probs)):c(dim(EPH.DataTotal)[2]))]<-c("EPH_Mean",paste("EPH_",probs*100,"%",sep=""))
-EPH.DataTotal
+# Extracting plant volume or digital biomass (PlantBiomass):
+EX1.Shape<- fieldInfo_extra(mosaic = CHVM$newMosaic$volume,
+                       fieldShape = EX1.Shape,
+                       fun=sum)
+colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantBiomass"
+
+# Data Visualization:
+m1<-fieldView(EX1)
+m2<-fieldView(mosaic = CHVM$newMosaic$height,
+          fieldShape = EX1.Shape,
+          type = 2,
+          alpha = 0.5)
+
+library(leafsync)
+sync(m1,m2)
 
 ```
 <br />
