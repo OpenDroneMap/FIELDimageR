@@ -674,26 +674,26 @@ CHVM<-fieldHeight(DSM0,DSM1)
 plot(CHVM)
 
 # Removing the soil using mask from step 4:
-CHVM <- fieldMask(CHM, mask = EX1.RemSoil$mask)
+CHVM <- fieldMask(CHVM, mask = EX1.RemSoil$mask)
 
 # Extracting the estimate plant height average (PlantHeight):
 EX1.Shape<- fieldInfo_extra(mosaic = CHVM$newMosaic$height,
                            fieldShape = EX1.Shape,
                            fun=mean)
-colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantHeight"
+colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantHeight" # Changing trait name!
 
 # Extracting the estimate plant height at 10% and 90% of quantile:
 probs = c(0.1,0.9)
 EPH.Extract<-extract(x = CHVM$newMosaic$height, y = EX1.Shape,quantile, probs = probs, na.rm=TRUE)
 EX1.Shape<-merge(EX1.Shape,EPH.Extract,by="ID")
 colnames(EX1.Shape)[c(dim(EX1.Shape)[2]-2,
-                      dim(EX1.Shape)[2]-1)]<-c("PH.10","PH.90")
+                      dim(EX1.Shape)[2]-1)]<-c("PH.10","PH.90") # Changing trait name!
 
 # Extracting plant volume or digital biomass (PlantBiomass):
 EX1.Shape<- fieldInfo_extra(mosaic = CHVM$newMosaic$volume,
                        fieldShape = EX1.Shape,
                        fun=sum)
-colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantBiomass"
+colnames(EX1.Shape)[dim(EX1.Shape)[2]-1]<-"PlantBiomass" # Changing trait name!
 
 # Data Visualization:
 m1<-fieldView(EX1)
