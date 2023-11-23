@@ -4,7 +4,7 @@
 \alias{imgRAST}
 \title{Converts an EBImage object to a terra object}
 \usage{
-imgRAST(img)
+imgRAST(img, ref)
 }
 \arguments{
 \item{img}{image/object class \code{EBImage}}
