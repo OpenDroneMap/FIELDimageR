@@ -115,7 +115,7 @@ stop("fieldCount requires a 2-dimensional terra raster object (mask layer)")
     width<-width(poly)
     attri<-st_as_sf(poly)
     attributes<-cbind(attri[,-1],area,perimeter,width)
-    all_atti<-st_as_sf(attributes)
+    all_attri<-st_as_sf(attributes)
   } 
   
   return(all_attri)
