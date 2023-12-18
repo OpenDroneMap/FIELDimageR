@@ -1212,7 +1212,7 @@ fieldPlot(fieldShape=EX1.Info$fieldShape,fieldAttribute="myIndex", mosaic=EX1.In
 
 ```r
 ### Images (single and multi layers)
-writeRaster(EX1.Indices, filename="EX1.Indices.tif", options="INTERLEAVE=BAND", overwrite=TRUE)
+writeRaster(EX1.Indices, filename="EX1.Indices.tif", overwrite=TRUE)
 # EX1.Indices.2 <- rast("EX1.Indices.tif") # Reading the saved image.
 
 ### FieldShape file
