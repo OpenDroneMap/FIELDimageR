@@ -6,7 +6,7 @@
 #' 
 #' @param mosaic object mask of class stack from the function \code{\link{fieldMask}}.
 #' @param fieldShape evaluate the object area percentage per plot using the fieldShape as reference. 
-#' @param field character (field name) or numeric (length nrow). Check \code{\link{terra::rasterize}}.
+#' @param field character (field name) or numeric (length nrow) at fieldShape. Default: order by PlotID. Check \code{\link{terra::rasterize}}.
 #'  
 #' @importFrom terra rasterize vect zonal
 #' 
@@ -18,7 +18,7 @@
 fieldArea <- function(mosaic, fieldShape, field = NULL) {
   if (is.null(field)) {
     terra_vect <- vect(fieldShape)
-    terra_rast <- rasterize(terra_vect, mosaic, field = "ID")
+    terra_rast <- rasterize(terra_vect, mosaic, field = "PlotID")
     total_pixelcount <- zonal(terra_rast, terra_rast, fun = "notNA", weighted = TRUE)
     area_pixel <- zonal(mosaic[[1]], terra_rast, fun = "notNA", weighted = TRUE)
   } else {
@@ -29,6 +29,6 @@ fieldArea <- function(mosaic, fieldShape, field = NULL) {
   }
   area_percentage <- round(area_pixel[2] / total_pixelcount[2] * 100,3)
   names(area_percentage)<-"AreaPercentage"
-  area_percentage<-cbind(fieldShape,AreaPixel=area_pixel[,2],area_percentage)
+  area_percentage<- cbind(st_as_sf(as.polygons(terra_rast)), AreaPixel=area_pixel[,2], area_percentage)
   return(area_percentage)
 }
