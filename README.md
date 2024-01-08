@@ -853,7 +853,7 @@ plot(EX.Dist.Draw.3$Draw1$drawObject, col="red",add=T)
 ---------------------------------------------
 #### 11. Resolution and computing time
 
-> The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) cropping image, (*ii*) removing soil, (*iii*) rotating image, (*iv*) building vegetation index (BGI), and (*v*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
+> The influence of image resolution was evaluated at different steps of the FIELDimageR pipeline. For this propose, the resolution of image *EX1_RGB_HighResolution.tif* [Download](https://drive.google.com/open?id=1elZe2jfq4bQSZM8cFAS4q7fRrnXbSBgH) was reduced using the function **raster::aggregate** in order to simulate different flown altitudes Above Ground Surface (AGS). The parameter *fact* was used to modify the original image resolution (0.4x0.4 cm with 15m AGS) to: first, **fact=2** to reduce the original image to 0.8x0.8 cm (simulating 30m AGS), and **fact=4** to reduce the original image to 1.6x1.6 (simulating 60m AGS). The steps (*i*) removing soil, (*ii*) building vegetation index (BGI), and (*iii*) getting information were evaluated using the function **system.time** output *elapsed* (R base).
 
 ```r
 ### Image and resolution decrease 
@@ -871,23 +871,11 @@ plotRGB(RES_1)
 plotRGB(RES_2)
 plotRGB(RES_4)
 
-### Crooping 
-
-system.time({RES_1_C <- fieldCrop(mosaic = RES_1,fieldShape = EX1.Crop, plot = T)})
-system.time({RES_2_C <- fieldCrop(mosaic = RES_2,fieldShape = EX1.Crop, plot = T)})
-system.time({RES_4_C <- fieldCrop(mosaic = RES_4,fieldShape = EX1.Crop, plot = T)})
-
-### Rotating 
-  
-system.time({RES_1_R <- fieldRotate(RES_1_C,theta = 2.3, plot = T)}) 
-system.time({RES_2_R <- fieldRotate(RES_2_C,theta = 2.3, plot = T)})
-system.time({RES_4_R <- fieldRotate(RES_4_C,theta = 2.3, plot = T)})
-  
 ### Removing Soil 
 
-system.time({RES_1_S <- fieldMask(RES_1_R,index="HUE")})
-system.time({RES_2_S <- fieldMask(RES_2_R,index="HUE")})
-system.time({RES_4_S <- fieldMask(RES_4_R,index="HUE")})
+system.time({RES_1_S <- fieldMask(RES_1,index="HUE")})
+system.time({RES_2_S <- fieldMask(RES_2,index="HUE")})
+system.time({RES_4_S <- fieldMask(RES_4,index="HUE")})
 
 ### Indices
   
