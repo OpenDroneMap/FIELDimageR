@@ -19,16 +19,17 @@ fieldArea <- function(mosaic, fieldShape, field = NULL) {
   if (is.null(field)) {
     terra_vect <- vect(fieldShape)
     terra_rast <- rasterize(terra_vect, mosaic, field = "PlotID")
-    total_pixelcount <- zonal(terra_rast, terra_rast, fun = "notNA", weighted = TRUE)
-    area_pixel <- zonal(mosaic[[1]], terra_rast, fun = "notNA", weighted = TRUE)
+    total_pixelcount <- exactextractr::exact_extract(terra_rast, st_as_sf(as.polygons(terra_rast)), fun = "count",force_df = TRUE)
+    area_pixel <- exactextractr::exact_extract(mosaic[[1]], st_as_sf(as.polygons(terra_rast)), fun = "count",force_df = TRUE)
   } else {
     terra_vect <- vect(fieldShape)
     terra_rast <- rasterize(terra_vect, mosaic, field = field)
-    total_pixelcount <- zonal(terra_rast, terra_rast, fun = "notNA", weighted = TRUE)
-    area_pixel <- zonal(mosaic[[1]], terra_rast, fun = "notNA", weighted = TRUE)
+    total_pixelcount <- exactextractr::exact_extract(terra_rast, st_as_sf(as.polygons(terra_rast)), fun = "count",force_df = TRUE)
+    area_pixel <- exactextractr::exact_extract(mosaic[[1]], st_as_sf(as.polygons(terra_rast)), fun = "count",force_df = TRUE)
   }
-  area_percentage <- round(area_pixel[2] / total_pixelcount[2] * 100,3)
+  area_percentage <- round(area_pixel/ total_pixelcount * 100,3)
   names(area_percentage)<-"AreaPercentage"
-  area_percentage<- cbind(st_as_sf(as.polygons(terra_rast)), AreaPixel=area_pixel[,2], area_percentage)
+  names(area_pixel)<-"PixelCount"
+  area_percentage<- cbind(st_as_sf(as.polygons(terra_rast)), AreaPixel=area_pixel, area_percentage)
   return(area_percentage)
 }
