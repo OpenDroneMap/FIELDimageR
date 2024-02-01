@@ -9,8 +9,8 @@
 #' @param field character (field name) or numeric (length nrow) at fieldShape. Default: order by PlotID. Check \code{\link{terra::rasterize}}.
 #'  
 #' @importFrom terra rasterize vect 
-#' 
 #' @importFrom exactextractr exact_extract
+#' 
 #' @return  \code{AreaPercentage} in the new \code{fieldShape} .
 #' 
 #'
