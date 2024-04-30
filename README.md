@@ -712,6 +712,32 @@ sync(m1,m2)
   <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F13.jpeg">
 </p>
 
+<br />
+
+> Attention: In case the user has only one flight (e.g., one DSM) the function  **`fieldInterpolate`** can be used to creat the soil reference based on sampled points on DSM1. 
+
+```r
+# Creating the soil reference based on the DSM1:
+DSM1 <- rast("EX_DSM1.tif")
+
+# Selecting points from soil:
+points<-fieldView(DSM1,editor = T)
+
+# Creating the interpolated soil-base (DSM0.New):
+DSM0.New<-fieldInterpolate(DSM1,points)
+plot(DSM0.New)
+
+# New Canopy-Height-Model (CHM):
+CHM<-DSM1-DSM0.New
+plot(CHM)
+
+```
+<br />
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/filipematias23/images/master/readme/F13_Interpolate1.jpg"  width="70%" height="70%">
+</p>
+
 [Menu](#menu)
 
 <div id="p11" />
