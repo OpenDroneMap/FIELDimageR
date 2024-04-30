@@ -11,7 +11,7 @@ fieldArea(mosaic, fieldShape, field = NULL)
 
 \item{fieldShape}{evaluate the object area percentage per plot using the fieldShape as reference.}
 
-\item{field}{character (field name) or numeric (length nrow). Check \code{\link{terra::rasterize}}.}
+\item{field}{character (field name) or numeric (length nrow) at fieldShape. Default: order by PlotID. Check \code{\link{terra::rasterize}}.}
 }
 \value{
 \code{AreaPercentage} in the new \code{fieldShape} .
