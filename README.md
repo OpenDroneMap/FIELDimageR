@@ -714,7 +714,7 @@ sync(m1,m2)
 
 <br />
 
-> Attention: In case the user has only one flight (e.g., one DSM) the function  **`fieldInterpolate`** can be used to creat the soil reference based on sampled points on DSM1. 
+> Attention: In case the user has only one flight (e.g., one DSM) the function  **`fieldInterpolate`** can be used to creat the soil-reference based on sampled points at the DSM1. 
 
 ```r
 # Creating the soil reference based on the DSM1:
