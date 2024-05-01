@@ -30,7 +30,7 @@
 
 [8. Extracting data from field images](#p9)
 
-[9. Estimating plant height and biomass](#p10)
+[9. Estimating plant height (e.g., biomass) and creating interpolated mosaics based on sampled points](#p10)
 
 [10. Distance between plants, objects length, and removing objects (plot, cloud, weed, etc.)](#p11)
 
@@ -713,6 +713,8 @@ sync(m1,m2)
 </p>
 
 <br />
+
+### Creating interpolated mosaics based on sampled points
 
 > Attention: In case the user has only one flight (e.g., one DSM) the function  **`fieldInterpolate`** can be used to creat the soil-reference based on sampled points at the DSM1. 
 
