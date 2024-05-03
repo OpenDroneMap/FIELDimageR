@@ -76,7 +76,6 @@
 install.packages(c('terra','mapview','sf','stars','caret','mapedit','devtools',"dplyr","fields","leafem","leafsync","lwgeom"))
 
 # FIELDimageR:
-install.packages("devtools")
 devtools::install_github("OpenDroneMap/FIELDimageR")
 devtools::install_github("filipematias23/FIELDimageR.Extra")
 ```
