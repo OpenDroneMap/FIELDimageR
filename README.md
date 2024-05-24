@@ -73,7 +73,8 @@
 
 ```r
 # You may need other packages first:
-install.packages(c('terra','mapview','sf','stars','caret','mapedit','devtools',"dplyr","fields","leafem","leafsync","lwgeom"))
+install.packages(c('terra','mapview','sf','stars','caret','mapedit','devtools',"dplyr","fields","leafem","leafsync","lwgeom","BiocManager"))
+BiocManager::install("EBImage")
 
 # FIELDimageR:
 devtools::install_github("OpenDroneMap/FIELDimageR")
