@@ -73,7 +73,7 @@
 
 ```r
 # You may need other packages first:
-install.packages(c('terra','mapview','sf','stars','caret','mapedit','devtools',"dplyr","fields","leafem","leafsync","lwgeom","BiocManager"))
+install.packages(c('terra','mapview','sf','stars','caret','mapedit','devtools',"dplyr","fields","leafem","leafsync","lwgeom","BiocManager","git2r"))
 BiocManager::install("EBImage")
 
 # FIELDimageR:
